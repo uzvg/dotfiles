@@ -1,0 +1,26 @@
+stage {
+  font-size: 13pt;
+}
+
+.panel-button {
+  font-weight: 600;
+}
+
+StIcon {
+  icon-size: 16px;
+}
+
+
+.calendar-day-base {
+  font-size:11pt;
+}
+
+.calendar-day-heading {
+font-size:12pt;
+font-weight:bold;
+}
+
+.calendar-month-label {
+  font-size:14pt;
+  font-weight:bold;
+}
