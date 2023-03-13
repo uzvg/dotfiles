@@ -1,0 +1,386 @@
+#!/usr/bin/zsh
+
+function warning {
+	echo -e "\033[33m ⚠️  WARNING: $1 \033[0m"
+}
+
+function error {
+	echo -e "\033[31m ❗ ERROR: $1 \033[0m"
+}
+
+function correct {
+	echo -e "\033[32m ⌛ DONE: $1 \033[0m"
+}
+
+# edit configuration
+function zshcfg {
+	mtime_old="$(stat $HOME/.zshrc --printf=%y)"
+	$EDITOR $HOME/.zshrc
+	mtime="$(stat $HOME/.zshrc --printf=%y)"
+	if [[ $mtime != $mtime_old ]]
+	then
+		source $HOME/.zshrc
+		correct "配置文件已重载"
+	fi
+}
+
+
+function alcfg {
+	mtime_old="$(stat $ZSH_CFG_DIR/alias.zsh --printf=%y)"
+	$EDITOR $ZSH_CFG_DIR/alias.zsh
+	mtime="$(stat $ZSH_CFG_DIR/alias.zsh --printf=%y)"
+	if [[ $mtime != $mtime_old ]]
+	then
+		source $ZSH_CFG_DIR/alias.zsh
+		correct "配置文件已重载"
+	fi
+}
+
+function envcfg {
+	mtime_old="$(stat $ZSH_CFG_DIR/environment.zsh --printf=%y)"
+	$EDITOR $ZSH_CFG_DIR/environment.zsh
+	mtime="$(stat $ZSH_CFG_DIR/environment.zsh --printf=%y)"
+	if [[ $mtime != $mtime_old ]]
+	then
+		source $ZSH_CFG_DIR/environment.zsh
+		correct "配置文件已重载"
+	fi
+}
+
+function fucfg {
+	mtime_old="$(stat $ZSH_CFG_DIR/functions.zsh --printf=%y)"
+	$EDITOR $ZSH_CFG_DIR/functions.zsh
+	mtime="$(stat $ZSH_CFG_DIR/functions.zsh --printf=%y)"
+	if [[ $mtime != $mtime_old ]]
+	then
+		source $ZSH_CFG_DIR/functions.zsh
+		correct "配置文件已重载"
+	fi
+}
+
+#判断git仓库是否没有新的修改
+function gsn (){
+	if [ -d $1 ]
+	then
+		if cd $1 && git status &> /dev/null	
+		then
+			
+			if [[ -n $(git status --porcelain) ]]
+			then
+				warning "The repository is dirty"
+				cd -
+				return 1
+			elif [[ -z $(git status --porcelain) ]]
+			then
+				correct "The repository is clean"
+				cd -
+				return 0
+			fi
+		else
+			error "$(realpath $1) 不是git仓库"
+			cd -
+			return 2
+		fi
+	else
+		error "$1不是目录"
+		cd -
+		return 3
+	fi
+}
+
+# transform file code to UTF_8
+function text_utf8 {
+	if [ -e $1 ]; then
+		iconv -f GB2312 -t UTF-8 $1 -o $1
+	else
+		echo "transform ERROR"
+	fi
+}
+
+# Apply dark scheme for correspondending applications
+function dark_mode {
+	sed -i '/\/light-256/s/light/dark/' ~/.taskrc
+	sed -i '/lightTheme/s/true/false/' ~/.config/lazygit/config.yml
+	sed -i 's/Adwaita-Dark/Adwaita/' ~/.config/qt5ct/qt5ct.conf
+	sed -i 's/Adwaita/Adwaita-Dark/' ~/.config/qt5ct/qt5ct.conf
+	sed -i '/background/s/light/dark/' ~/.config/nvim/init.vim
+	sed -i '/useDarkTheme/s/false/true/' ~/.config/qv2ray/Qv2ray.conf
+	sed -i '/CreatorTheme/s/light/dark/' ~/.config/QtProject/QtCreator.ini
+	sed -i '/gtk-application-prefer-dark-theme/s/0/1/' ~/.config/gtk-3.0/settings.ini
+	# gsettings set org.gnome.desktop.interface gtk-theme Adwaita-dark
+	gsettings set org.gnome.shell.extensions.user-theme name Adwaita-dark
+}
+
+# Apply light scheme for correspondending applications
+function light_mode {
+	sed -i '/\/dark-256/s/dark/light/' ~/.taskrc
+	sed -i '/lightTheme/s/false/true/' ~/.config/lazygit/config.yml
+	sed -i 's/Adwaita-Dark/Adwaita/' ~/.config/qt5ct/qt5ct.conf
+	sed -i '/background/s/dark/light/' ~/.config/nvim/init.vim
+	sed -i '/useDarkTheme/s/true/false/' ~/.config/qv2ray/Qv2ray.conf
+	sed -i '/Theme/s/dark/light/' ~/.config/QtProject/QtCreator.ini
+	sed -i '/Theme/s/dark/light/' ~/.config/QtProject/QtCreator.ini
+	sed -i '/gtk-application-prefer-dark-theme/s/1/0/' ~/.config/gtk-3.0/settings.ini
+	# gsettings set org.gnome.desktop.interface gtk-theme Adwaita
+	gsettings set org.gnome.shell.extensions.user-theme name Adwaita-light
+}
+
+function rimeSync {
+	# rime 词库同步
+	if [ -d $RimeDir ]
+	then
+		# 词库合并
+		case $GTK_IM_MODULE in
+		fcitx ):
+			fcitx5-remote -e
+			cd $RimeDir
+			warning "词库合并中......"
+			rime_dict_manager -s &> /dev/null
+			fcitx5-remote -o
+			cd -;;
+		ibus ):
+			ibus exit
+			cd $RimeDir
+			warning "词库合并中......"
+			rime_dict_manager -s &> /dev/null
+			ibus start
+			cd -;;
+		* ):
+			error "词库合并：输入法配置错误";;
+		esac
+
+		correct "词库合并成功,开始同步......"
+		if [ -d "$Rime_Sync_Dir" ];then
+			local COMMIT_WORD="rime sync on Archlinux at $(date +%Y/%m/%d-%H:%M)"
+			cd $Rime_Sync_Dir
+			git add -A > /dev/null
+			git commit -a -m "$COMMIT_WORD" > /dev/null
+			git push &> /dev/null
+			cd -
+			correct "词库同步成功"
+		else
+			error "rime 同步仓库路径错误"
+		fi
+	fi
+}
+
+function rimeicon {
+	if [ -f $RimeDir/uggx_fluency.custom.yaml ]
+	then
+		mtime_old="$(stat $RimeDir/uggx_fluency.custom.yaml --printf=%y)"
+		$EDITOR $RimeDir/uggx_fluency.custom.yaml
+		mtime="$(stat $RimeDir/uggx_fluency.custom.yaml --printf=%y)"
+		if [[ $mtime != $mtime_old ]]
+		then
+			warning "输入法部署中...."
+			case $GTK_IM_MODULE in
+			fcitx ):
+				fcitx5-remote -e
+				rime_deployer --build $RimeDir /usr/share/rime-data $RimeDir/build &> /dev/null
+				fcitx5-remote -o;;
+			ibus ):
+				ibus exit
+				rime_deployer --build $RimeDir /usr/share/rime-data $RimeDir/build &> /dev/null
+				ibus start;;
+			* ):
+				error "输入法框架配置错误";;
+			esac
+			correct "输入法部署完成...."
+		fi
+	fi
+}
+
+function rimewd {
+	if [ -f $RimeDir/custom_phrase.txt ]
+	then
+		mtime_old="$(stat $RimeDir/custom_phrase.txt --printf=%y)"
+		$EDITOR $RimeDir/custom_phrase.txt
+		mtime="$(stat $RimeDir/custom_phrase.txt --printf=%y)"
+		if [[ $mtime != $mtime_old ]]
+		then
+			warning "输入法部署中...."
+			case $GTK_IM_MODULE in
+			fcitx ):
+				fcitx5-remote -e
+				rime_deployer --build $RimeDir /usr/share/rime-data $RimeDir/build &> /dev/null
+				fcitx5-remote -o;;
+			ibus ):
+				ibus exit
+				rime_deployer --build $RimeDir /usr/share/rime-data $RimeDir/build &> /dev/null
+				ibus start;;
+			* ):
+				error "输入法框架配置错误";;
+			esac
+			correct "输入法部署完成...."
+		fi
+	fi
+} 
+
+function svwk {
+	local COMMIT_WORD="save logseq workspace on Archlinux"
+	if [ -d "$LOGSEQ_DIR" ]
+	then
+		warning "同步中...."
+		cd $LOGSEQ_DIR
+		git add -A &> /dev/null
+		git commit -a -m "$COMMIT_WORD"  &> /dev/null
+		git push &> /dev/null
+		cd -
+		correct "logseq工作空间同步成功"
+	else
+		error "logseq wokrspace目录不存在"
+	fi
+}
+
+function svdotfiles {
+	if gsn $Dotfiles_Dir > /dev/null
+	then
+		correct "配置文件已同步，无需操作"
+	else
+		local COMMIT_WORD="dotfiles auto backup on Archlinux"
+		if [ -d "$Dotfiles_Dir" ];then
+			cd $Dotfiles_Dir
+			git add -A > /dev/null
+			git commit -a -m "$COMMIT_WORD" > /dev/null
+			git push > /dev/null
+			correct "配置文件同步成功"
+			cd -
+		else
+			error "dotfiles sync dir do not exist"
+		fi
+	fi
+}
+
+function purge {
+	if ! command -v $1
+	then
+		echo "程序不存在"
+	else
+		echo "正在卸载$1："
+		sudo pacman -Rscn $1
+	fi
+}
+
+function enlarge {
+	if  command -v $1
+		$1 --force-device-scale-factor=1.25 &> /dev/null
+	then
+		echo "程序未安装"
+	fi
+}
+
+# 将文件传输到远程服务器用户的Documents文件夹下
+function ttremote {
+	if [ -f $(realpath -s $1) ];then
+		rsync $1 $RemoteUser:Documents
+		correct "文件已传输到远程服务器的$CloudUser/Documents文件夹下"
+	else
+		error "传输出错"
+	fi
+}
+
+# 备份cache目录中的文件👉cacheDir
+function ccbk {
+	if [ -n "$cacheDir" ]
+	then
+		for Dir in "${cacheDir[@]}"
+		do
+			if [ -d $Dir ]
+			then
+				rsync -av --delete $HOME/.cache/$Dir/ $HOME/Documents/cacheBackup/$Dir &> /dev/null
+				correct "$Dir 缓存已备份"
+			else
+				error "$Dir 不是目录"
+			fi
+		done
+	else
+		error "需缓存的目录未设置"
+	fi
+}
+
+# 复制文件内容到剪贴板
+function cf {
+	if [ -f $(realpath -s $1) ]
+	then
+		if command -v xclip
+		then
+			xclip -selection clipboard -i $1
+		else
+			error "缺乏软件包xclip"	
+		fi
+	else
+		error "文件不存在"
+	fi
+}
+
+# 登录远程服务器
+function lgrmt(){
+	if [ $# -eq 0 ]
+	then
+		ssh -i $PrivKey -l root $CloudServer
+	elif [ -n $PrivKey ] && [ -n $CloudServer ] && [ -n $1 ]
+	then
+		ssh -i $PrivKey -l $1 $CloudServer
+	else
+		error "远程登录出错"
+	fi
+}
+
+# 博客部署
+function blogDeploy {
+	# 部署到本地
+	if [ -n $blogDir ]
+	then
+		cd $blogDir
+		if [ -n $publishDir ]
+		then
+			hugo --destination $publishDir
+			rsync -av --delete $publishDir/ $RemoteUser:/etc/www/uzvg
+			echo "部署完成"
+		fi
+	else
+		echo "博客build目录错误"
+	fi
+}
+
+# gnome-shell 主题修改
+#function gstc {
+#	if [ -d $GnomeShellFolder ] && command -v sassc
+#	then
+#		cd $GnomeShellFolder
+#		sassc gnome-shell.scss > ~/.local/share/themes/adwaita-dakr-shell-theme/gnome-shell/gnome-shell.css
+#	else
+#		echo "something wrong with your gnome shell theme config"
+#	fi
+#}
+
+function genBlog {
+	local title=$(date +%Y-%m-%d-%H-%M)
+	cd $blogDir
+	hugo new post/$title.md
+	$EDITOR $blogDir/content/post/$title.md
+}
+
+#function cfw {}
+#function twlist {}
+#function ktw {}
+#function blogDeploy {}
+
+# archive Dir ARCHIVE_DESTINATION_DIR mtime
+# 如果dir中的文件在mtime时间之内发生改变，就将其打包到归档目录
+# ARCHIVE_DESTINATION_DIR
+function archive {
+	if [ -d $1 ]
+	then
+		local source_name=$(basename $1)
+		if [ $(find $1 -mmin -$2 | wc -l) -ne 0 ] || [ ! -f $ARCHIVE_DESTINATION_DIR/$source_name.tar.xz ]
+		then
+			warning "文档打包中......"
+			tar cJPf $ARCHIVE_DESTINATION_DIR/$source_name.tar.xz $1
+		else
+			correct "源目录无改动，无需归档"
+		fi
+	else
+		error "源目录错误"
+	fi
+}
