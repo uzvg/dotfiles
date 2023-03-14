@@ -300,7 +300,7 @@ function ccbk {
 
 # 复制文件内容到剪贴板
 function cf {
-	if [ -f $(realpath -s $1) ]
+	if [ -f  $1 ]
 	then
 		if command -v xclip
 		then
@@ -370,17 +370,58 @@ function genBlog {
 # 如果dir中的文件在mtime时间之内发生改变，就将其打包到归档目录
 # ARCHIVE_DESTINATION_DIR
 function archive {
-	if [ -d $1 ]
+	if [[ $USER == uzvg ]]
 	then
-		local source_name=$(basename $1)
-		if [ $(find $1 -mmin -$2 | wc -l) -ne 0 ] || [ ! -f $ARCHIVE_DESTINATION_DIR/$source_name.tar.xz ]
+		if [ -d $1 ]
 		then
-			warning "文档打包中......"
-			tar cJPf $ARCHIVE_DESTINATION_DIR/$source_name.tar.xz $1
+			if realpath $1 | grep -q $HOME
+			then
+				local source_name=$(basename $1)
+				if [ $(find $1 -mmin -$2 | wc -l) -ne 0 ] || [ ! -f $ARCHIVE_DESTINATION_DIR/$source_name.tar.xz ]
+				then
+					warning "文档打包中......"
+					local relative_dir=$(realpath $1 | sed 's!'$HOME'/!!g')
+					#echo $relative_dir
+					tar -C $HOME -cJPf $ARCHIVE_DESTINATION_DIR/$source_name.tar.xz $relative_dir
+					correct "$(basename $1)打包完毕"
+				else
+					correct "源目录无改动，无需归档"
+				fi
+				
+			else
+				error "目标文件非家目录中的文件，无法归档"
+			fi
 		else
-			correct "源目录无改动，无需归档"
+			error "源目录错误"
 		fi
 	else
-		error "源目录错误"
+		error "不是主用户，无权限提交归档文件"
+	fi
+}
+
+function archive_deploy {
+	if [ -d $ARCHIVE_DESTINATION_DIR ]
+	then
+		for file in $ARCHIVE_DESTINATION_DIR
+		do
+			tar -C $HOME -xJPf $file
+		done
+	else
+		warning "归档文件下载中....."
+		git clone git@e.coding.net:zerolaboratory/linux-dotfiles/archives.git $ARCHIVE_DESTINATION_DIR
+		correct "归档文件下载完成"
+	fi
+}
+# 问题如下：
+# zimfw 目录替换
+# 如果目标目录不存在的话，使用while循环
+
+function get_ssh_key {
+	if [ -f $HOME/.ssh/id_rsa ] && [[ -f $HOME/.ssh/id_rsa.pub ]]
+	then
+		cf $HOME/.ssh/id_rsa.pub
+	else
+		warning "创建ssh key"
+		ssh-keygen -t rsa -C "1497911983@qq.com"
 	fi
 }

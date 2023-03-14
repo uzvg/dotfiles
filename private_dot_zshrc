@@ -140,4 +140,10 @@ for key ('j') bindkey -M vicmd ${key} history-substring-search-down
 unset key
 # }}} End configuration added by Zim install
 
-
+if [ -d $ARCHIVE_DESTINATION_DIR ]
+then
+	echo "归档备份未部署"
+	#archives_deploy
+else
+	git clone git@e.coding.net:zerolaboratory/linux-dotfiles/archives.git $ARCHIVE_DESTINATION_DIR
+fi

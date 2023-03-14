@@ -77,4 +77,9 @@ export PubKey="$HOME/.ssh/id_rsa.pub"
 export GnomeShellFolder="$HOME/GitRepos/gnome-shell/data/theme/"
 export QT_QPA_PLATFORMTHEME="qt5ct"
 # export GnomeShellTheme="$HOME/.local/share/themes/adwaita-dakr-shell-theme/gnome-shell/gnome-shell.css"
+
+# USUAL config dir
 export ARCHIVE_DESTINATION_DIR="$HOME/Documents/archives"
+export VIM_PLUGGED_DIR="$HOME/.config/nvim/plugged"
+export GNOME_SHELL_EXTENSIONS_DIR="$HOME/.local/share/gnome-shell/extensions"
+export ZIMFW_DIR="$HOME/.zim"
