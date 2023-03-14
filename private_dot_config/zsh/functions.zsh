@@ -354,16 +354,67 @@ function blogDeploy {
 #	fi
 #}
 
-function genBlog {
-	local title=$(date +%Y-%m-%d-%H-%M)
-	cd $blogDir
-	hugo new post/$title.md
-	$EDITOR $blogDir/content/post/$title.md
+#function genBlog {
+#	local title=$(date +%Y-%m-%d-%H-%M)
+#	cd $blogDir
+#	hugo new post/$title.md
+#	$EDITOR $blogDir/content/post/$title.md
+#}
+
+function twLaunch {
+	if [ -d $1 ] && [ -n $2 ]
+	then
+		if ! ps aux | grep tiddlywiki | grep -v grep | grep -q $1
+		then
+			warning "$(basename $1)开始加载......"
+			zsh -c "nohup tiddlywiki $1 --listen port=$2 &> /dev/null &"
+			correct "$(basename $1)已加载，入口地址：https://127.0.0.1:$2"
+		else
+			# warning "$(basename $1)已加载，入口地址：https://127.0.0.1:$(eval echo \$$2)"
+			warning "$(basename $1)已加载，入口地址：https://127.0.0.1:$2"
+		fi
+	else
+		error "tiddlywiki根路径错误"
+	fi
 }
 
-#function cfw {}
-#function twlist {}
-#function ktw {}
+function twlist {
+	ps aux |grep tiddlywiki| grep -v grep | awk -F '[ =]+' '{print "进程号："$2"\t工作目录："$13"\t入口地址为：https://127.0.0.1:"$16}'
+}
+
+function ktw {
+	if [ $# -eq 0 ]
+	then
+		echo "使用帮助："
+		echo "\tktw -a[--all]"
+		echo "\tktw -n[--number]"
+	else
+		IFS_OLD=$IFS
+		IFS=$'\n'
+		local -a twPid
+		twPid=($(ps aux |grep tiddlywiki| grep -v grep | awk '{print $2}'))
+		case $1 in
+			-a|--all)
+				warning "这将关闭所有tiddlywiki进程"
+				for pcs in ${twPid[@]}
+				do
+					kill $pcs
+				done
+				;;
+			-n|--number)
+				if [ -z $2 ]
+				then
+					warning "请指定进程号👉 Number："
+					ps aux | grep tiddlywiki | grep -v grep | gawk -F '[ =]+' 'BEGIN{i=0}{i++}{printf "Number: %d\t进程: %s\n",i,$13}'
+				fi
+				;;
+			*)
+				error "参数错误"
+				ktw
+		esac
+		IFS=$IFS_OLD
+	fi
+}
 #function blogDeploy {}
 
 # archive Dir ARCHIVE_DESTINATION_DIR mtime
@@ -412,6 +463,7 @@ function archive_deploy {
 		correct "归档文件下载完成"
 	fi
 }
+
 # 问题如下：
 # zimfw 目录替换
 # 如果目标目录不存在的话，使用while循环
@@ -425,3 +477,4 @@ function get_ssh_key {
 		ssh-keygen -t rsa -C "1497911983@qq.com"
 	fi
 }
+

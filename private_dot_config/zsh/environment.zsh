@@ -80,6 +80,7 @@ export QT_QPA_PLATFORMTHEME="qt5ct"
 
 # USUAL config dir
 export ARCHIVE_DESTINATION_DIR="$HOME/Documents/archives"
-export VIM_PLUGGED_DIR="$HOME/.config/nvim/plugged"
-export GNOME_SHELL_EXTENSIONS_DIR="$HOME/.local/share/gnome-shell/extensions"
-export ZIMFW_DIR="$HOME/.zim"
+
+# Tiddlywiki 相关配置
+export TIDDLYWIKI_COFFEE_PATH="$HOME/Documents/gitRepos/coffee-weekly"
+export TIDDLYWIKI_COFFEE_PORT=8090

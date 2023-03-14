@@ -14,6 +14,7 @@ alias top="btop"
 alias wd="sdcv --color"
 alias gedit="gnome-text-editor"
 alias vim="$EDITOR"
+alias rlc="source $HOME/.zshrc"
 
 # chezmoi shortcuts
 alias czm="chezmoi"
@@ -68,3 +69,6 @@ alias sss="systemctl status"
 # git bare repository to manage dotfiles
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 config config status.showUntrackedFiles no
+
+# tiddlywiki shortcuts
+alias cfw="twLaunch $TIDDLYWIKI_COFFEE_PATH $TIDDLYWIKI_COFFEE_PORT"
