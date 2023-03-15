@@ -1,0 +1,38 @@
+{
+    "000000000000": {
+        "connections": [
+            "dctcctczxcck",
+            "bkidyyiwmdbz",
+            "uycoutyjwsrp",
+            "nnxtkcmmmnln",
+            "dhwfywhrswwt",
+            "fsuvorsdzhhd",
+            "xikmcqnjrauz",
+            "uhqunuxrybxg",
+            "mbiscazbwaam",
+            "lyhuhirlcsev",
+            "aihtmkxsfrgy",
+            "jcsilydgwtlp"
+        ],
+        "creationDate": 1678547490,
+        "displayName": "Default Group",
+        "isSubscription": true,
+        "lastUpdatedDate": 1678850962,
+        "routeConfigId": "ltuensqocjft",
+        "subscriptionOption": {
+            "address": "https://jiang.netlify.com",
+            "type": "simple_base64"
+        }
+    },
+    "praursrynklx": {
+        "creationDate": 1678875570,
+        "displayName": "New Group - onjtl",
+        "isSubscription": true,
+        "lastUpdatedDate": 1678875606,
+        "routeConfigId": "bojvyqljdgus",
+        "subscriptionOption": {
+            "address": "https://raw.githubusercontent.com/ssrsub/ssr/master/V2Ray",
+            "type": "simple_base64"
+        }
+    }
+}
