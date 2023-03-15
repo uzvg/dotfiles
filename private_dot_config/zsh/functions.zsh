@@ -434,6 +434,7 @@ function archive {
 					local relative_dir=$(realpath $1 | sed 's!'$HOME'/!!g')
 					#echo $relative_dir
 					tar -C $HOME -cJPf $ARCHIVE_DESTINATION_DIR/$source_name.tar.xz $relative_dir
+					tar -X $ARCHIVE_EXCLUDE_FILE -C $HOME -cJPf $ARCHIVE_DESTINATION_DIR/$source_name.tar.xz $relative_dir
 					correct "$(basename $1)打包完毕"
 				else
 					correct "源目录无改动，无需归档"
