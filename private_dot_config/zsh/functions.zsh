@@ -20,7 +20,7 @@ function zshcfg {
 	if [[ $mtime != $mtime_old ]]
 	then
 		source $HOME/.zshrc
-		correct "配置文件已重载"
+		correct "zshrc reloaded completed!"
 	fi
 }
 
@@ -32,7 +32,7 @@ function alcfg {
 	if [[ $mtime != $mtime_old ]]
 	then
 		source $ZSH_CFG_DIR/alias.zsh
-		correct "配置文件已重载"
+		correct "alias configuration files reloaded successfully"
 	fi
 }
 
@@ -433,7 +433,6 @@ function archive {
 					warning "文档打包中......"
 					local relative_dir=$(realpath $1 | sed 's!'$HOME'/!!g')
 					#echo $relative_dir
-					tar -C $HOME -cJPf $ARCHIVE_DESTINATION_DIR/$source_name.tar.xz $relative_dir
 					tar -X $ARCHIVE_EXCLUDE_FILE -C $HOME -cJPf $ARCHIVE_DESTINATION_DIR/$source_name.tar.xz $relative_dir
 					correct "$(basename $1)打包完毕"
 				else

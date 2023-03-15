@@ -83,5 +83,5 @@ export ARCHIVE_DESTINATION_DIR="$HOME/Documents/archives"
 export ARCHIVE_EXCLUDE_FILE="$XDG_CONFIG_HOME/archive_exclude.txt"
 
 # Tiddlywiki 相关配置
-export TIDDLYWIKI_COFFEE_PATH="$HOME/Documents/gitRepos/coffee-weekly"
+export TIDDLYWIKI_COFFEE_PATH="$HOME/Documents/wikis/coffee-weekly"
 export TIDDLYWIKI_COFFEE_PORT=8090
