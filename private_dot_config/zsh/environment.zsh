@@ -85,3 +85,7 @@ export ARCHIVE_EXCLUDE_FILE="$XDG_CONFIG_HOME/archive_exclude.txt"
 # Tiddlywiki 相关配置
 export TIDDLYWIKI_COFFEE_PATH="$HOME/Documents/wikis/coffee-weekly"
 export TIDDLYWIKI_COFFEE_PORT=8090
+export TIDDLYWIKI_PRACTICE_PATH="$HOME/Documents/wikis/practice"
+export TIDDLYWIKI_PRACTICE_PORT=9090
+export TIDDLYWIKI_LOVEPOEM_PATH="$HOME/Documents/wikis/LovePoemForJiayu"
+export TIDDLYWIKI_LOVEPOEM_PORT=9999
