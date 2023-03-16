@@ -14,10 +14,8 @@ function correct {
 
 # edit configuration
 function zshcfg {
-	mtime_old="$(stat $HOME/.zshrc --printf=%y)"
 	$EDITOR $HOME/.zshrc
-	mtime="$(stat $HOME/.zshrc --printf=%y)"
-	if [[ $mtime != $mtime_old ]]
+	if [ -N $HOME/.zshrc ]
 	then
 		source $HOME/.zshrc
 		correct "zshrc reloaded completed!"
@@ -26,10 +24,8 @@ function zshcfg {
 
 
 function alcfg {
-	mtime_old="$(stat $ZSH_CFG_DIR/alias.zsh --printf=%y)"
 	$EDITOR $ZSH_CFG_DIR/alias.zsh
-	mtime="$(stat $ZSH_CFG_DIR/alias.zsh --printf=%y)"
-	if [[ $mtime != $mtime_old ]]
+	if [ -N $ZSH_CFG_DIR/alias.zsh ]
 	then
 		source $ZSH_CFG_DIR/alias.zsh
 		correct "alias configuration files reloaded successfully"
@@ -37,10 +33,8 @@ function alcfg {
 }
 
 function envcfg {
-	mtime_old="$(stat $ZSH_CFG_DIR/environment.zsh --printf=%y)"
 	$EDITOR $ZSH_CFG_DIR/environment.zsh
-	mtime="$(stat $ZSH_CFG_DIR/environment.zsh --printf=%y)"
-	if [[ $mtime != $mtime_old ]]
+	if [ -N $ZSH_CFG_DIR/environment.zsh ]
 	then
 		source $ZSH_CFG_DIR/environment.zsh
 		correct "配置文件已重载"
@@ -48,10 +42,11 @@ function envcfg {
 }
 
 function fucfg {
-	mtime_old="$(stat $ZSH_CFG_DIR/functions.zsh --printf=%y)"
+	#mtime_old="$(stat $ZSH_CFG_DIR/functions.zsh --printf=%y)"
 	$EDITOR $ZSH_CFG_DIR/functions.zsh
-	mtime="$(stat $ZSH_CFG_DIR/functions.zsh --printf=%y)"
-	if [[ $mtime != $mtime_old ]]
+	#mtime="$(stat $ZSH_CFG_DIR/functions.zsh --printf=%y)"
+	#if [[ $mtime != $mtime_old ]]
+	if [ -N $ZSH_CFG_DIR/functions.zsh ]
 	then
 		source $ZSH_CFG_DIR/functions.zsh
 		correct "配置文件已重载"
@@ -167,10 +162,8 @@ function rimeSync {
 function rimeicon {
 	if [ -f $RimeDir/uggx_fluency.custom.yaml ]
 	then
-		mtime_old="$(stat $RimeDir/uggx_fluency.custom.yaml --printf=%y)"
 		$EDITOR $RimeDir/uggx_fluency.custom.yaml
-		mtime="$(stat $RimeDir/uggx_fluency.custom.yaml --printf=%y)"
-		if [[ $mtime != $mtime_old ]]
+		if [ -N $RimeDir/uggx_fluency.custom.yaml ]
 		then
 			warning "输入法部署中...."
 			case $GTK_IM_MODULE in
@@ -193,10 +186,8 @@ function rimeicon {
 function rimewd {
 	if [ -f $RimeDir/custom_phrase.txt ]
 	then
-		mtime_old="$(stat $RimeDir/custom_phrase.txt --printf=%y)"
 		$EDITOR $RimeDir/custom_phrase.txt
-		mtime="$(stat $RimeDir/custom_phrase.txt --printf=%y)"
-		if [[ $mtime != $mtime_old ]]
+		if [ -N $RimeDir/custom_phrase.txt ]
 		then
 			warning "输入法部署中...."
 			case $GTK_IM_MODULE in
@@ -329,18 +320,25 @@ function lgrmt(){
 # 博客部署
 function blogDeploy {
 	# 部署到本地
-	if [ -n $blogDir ]
-	then
-		cd $blogDir
-		if [ -n $publishDir ]
-		then
-			hugo --destination $publishDir
-			rsync -av --delete $publishDir/ $RemoteUser:/etc/www/uzvg
-			echo "部署完成"
-		fi
-	else
-		echo "博客build目录错误"
-	fi
+	#if [ $# -eq 0 ]
+	#then
+	#	warning "usage:"
+	#	echo "blogDeploy -t[--type] tiddlywiki/hugo"
+	#	echo "blogDeploy -p[--path] path of blogDir"
+	#else
+	#	case $1 in
+	#if [ -n $blogDir ]
+	#then
+	#	cd $blogDir
+	#	if [ -n $publishDir ]
+	#	then
+	#		hugo --destination $publishDir
+	#		rsync -av --delete $publishDir/ $RemoteUser:/etc/www/uzvg
+	#		echo "部署完成"
+	#	fi
+	#else
+	#	echo "博客build目录错误"
+	#fi
 }
 
 # gnome-shell 主题修改
@@ -368,10 +366,10 @@ function twLaunch {
 		then
 			warning "$(basename $1)开始加载......"
 			zsh -c "nohup tiddlywiki $1 --listen port=$2 &> /dev/null &"
-			correct "$(basename $1)已加载，入口地址：https://127.0.0.1:$2"
+			correct "$(basename $1)已加载，入口地址：http://127.0.0.1:$2"
 		else
 			# warning "$(basename $1)已加载，入口地址：https://127.0.0.1:$(eval echo \$$2)"
-			warning "$(basename $1)已加载，入口地址：https://127.0.0.1:$2"
+			warning "$(basename $1)已加载，入口地址：http://127.0.0.1:$2"
 		fi
 	else
 		error "tiddlywiki根路径错误"
@@ -395,7 +393,7 @@ function ktw {
 		twPid=($(ps aux |grep tiddlywiki| grep -v grep | awk '{print $2}'))
 		case $1 in
 			-a|--all)
-				warning "这将关闭所有tiddlywiki进程"
+				correct "所有tiddlywiki进程已关闭!"
 				for pcs in ${twPid[@]}
 				do
 					kill $pcs
@@ -406,6 +404,9 @@ function ktw {
 				then
 					warning "请指定进程号👉 Number："
 					ps aux | grep tiddlywiki | grep -v grep | gawk -F '[ =]+' 'BEGIN{i=0}{i++}{printf "Number: %d\t进程: %s\n",i,$13}'
+				elif [ -n $2 ]
+				then
+					kill ${twPid[$2]}
 				fi
 				;;
 			*)
