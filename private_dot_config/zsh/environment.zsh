@@ -81,6 +81,12 @@ export QT_QPA_PLATFORMTHEME="qt5ct"
 # USUAL config dir
 export ARCHIVE_DESTINATION_DIR="$HOME/Documents/archives"
 export ARCHIVE_EXCLUDE_FILE="$XDG_CONFIG_HOME/archive_exclude.txt"
+ARCHIVE_LIST=()
+ARCHIVE_LIST+=("$HOME/.local/share/gnome-shell/extensions")
+ARCHIVE_LIST+=("$HOME/.local/share/applications")
+ARCHIVE_LIST+=("$HOME/.config/nvim/plugged")
+ARCHIVE_LIST+=("$HOME/.logseq")
+ARCHIVE_LIST+=("$HOME/.zim")
 
 # Tiddlywiki 相关配置
 export TIDDLYWIKI_COFFEE_PATH="$HOME/Documents/wikis/coffee-weekly"

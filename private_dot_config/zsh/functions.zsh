@@ -437,11 +437,11 @@ function archive {
 					tar -X $ARCHIVE_EXCLUDE_FILE -C $HOME -cJPf $ARCHIVE_DESTINATION_DIR/$source_name.tar.xz $relative_dir
 					correct "$(basename $1)打包完毕"
 				else
-					correct "源目录无改动，无需归档"
+					correct "$(basename $1)目录$2分钟内无改动，无需归档"
 				fi
 				
 			else
-				error "目标文件非家目录中的文件，无法归档"
+				error "$1非家目录中的文件，无法归档"
 			fi
 		else
 			error "源目录错误"
@@ -451,10 +451,18 @@ function archive {
 	fi
 }
 
+function archive_backup {
+	for file in $ARCHIVE_LIST
+	do
+		echo "============================="
+		archive $file 180
+	done
+}
+
 function archive_deploy {
-	if [ -d $ARCHIVE_DESTINATION_DIR ]
+	if gsn $ARCHIVE_DESTINATION_DIR
 	then
-		for file in $ARCHIVE_DESTINATION_DIR
+		for file in $(find $ARCHIVE_DESTINATION_DIR/ -name "*.tar.xz")
 		do
 			tar -C $HOME -xJPf $file
 		done
@@ -472,6 +480,7 @@ function archive_deploy {
 function get_ssh_key {
 	if [ -f $HOME/.ssh/id_rsa ] && [[ -f $HOME/.ssh/id_rsa.pub ]]
 	then
+		correct "秘钥如下："
 		cf $HOME/.ssh/id_rsa.pub
 	else
 		warning "创建ssh key"
