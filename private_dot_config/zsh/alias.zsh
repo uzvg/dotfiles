@@ -57,9 +57,6 @@ alias hgd="hugo server -s $blogDir -D"
 # 同步配置文件
 alias dotfiles="lazygit -p $HOME/.local/share/chezmoi"
 
-# 将文件中的内容复制到剪贴板 copy file content to clipboard
-alias xcp="xclip -selection clipboard"
-
 # gnome-terminal 主题修改👉https://gogh-co.github.io/Gogh/
 alias gogh='bash -c "$(wget -qO- https://git.io/vQgMr)"'
 
