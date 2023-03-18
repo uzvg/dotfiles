@@ -122,20 +122,20 @@ function light_mode {
 
 function rimeSync {
 	# rime 词库同步
-	if [ -d $RimeDir ]
+	if [ -d $RIME_USER_PATH ]
 	then
 		# 词库合并
 		case $GTK_IM_MODULE in
 		fcitx ):
 			fcitx5-remote -e
-			cd $RimeDir
+			cd $RIME_USER_PATH
 			warning "词库合并中......"
 			rime_dict_manager -s &> /dev/null
 			fcitx5-remote -o
 			cd -;;
 		ibus ):
 			ibus exit
-			cd $RimeDir
+			cd $RIME_USER_PATH
 			warning "词库合并中......"
 			rime_dict_manager -s &> /dev/null
 			ibus start
@@ -145,9 +145,9 @@ function rimeSync {
 		esac
 
 		correct "词库合并成功,开始同步......"
-		if [ -d "$Rime_Sync_Dir" ];then
+		if [ -d "$RIME_SYNC_PATH" ];then
 			local COMMIT_WORD="rime sync on Archlinux at $(date +%Y/%m/%d-%H:%M)"
-			cd $Rime_Sync_Dir
+			cd $RIME_SYNC_PATH
 			git add -A > /dev/null
 			git commit -a -m "$COMMIT_WORD" > /dev/null
 			git push &> /dev/null
@@ -160,20 +160,20 @@ function rimeSync {
 }
 
 function rimeicon {
-	if [ -f $RimeDir/uggx_fluency.custom.yaml ]
+	if [ -f $RIME_USER_PATH/uggx_fluency.custom.yaml ]
 	then
-		$EDITOR $RimeDir/uggx_fluency.custom.yaml
-		if [ -N $RimeDir/uggx_fluency.custom.yaml ]
+		$EDITOR $RIME_USER_PATH/uggx_fluency.custom.yaml
+		if [ -N $RIME_USER_PATH/uggx_fluency.custom.yaml ]
 		then
 			warning "输入法部署中...."
 			case $GTK_IM_MODULE in
 			fcitx ):
 				fcitx5-remote -e
-				rime_deployer --build $RimeDir /usr/share/rime-data $RimeDir/build &> /dev/null
+				rime_deployer --build $RIME_USER_PATH /usr/share/rime-data $RIME_USER_PATH/build &> /dev/null
 				fcitx5-remote -o;;
 			ibus ):
 				ibus exit
-				rime_deployer --build $RimeDir /usr/share/rime-data $RimeDir/build &> /dev/null
+				rime_deployer --build $RIME_USER_PATH /usr/share/rime-data $RIME_USER_PATH/build &> /dev/null
 				ibus start;;
 			* ):
 				error "输入法框架配置错误";;
@@ -184,20 +184,20 @@ function rimeicon {
 }
 
 function rimewd {
-	if [ -f $RimeDir/custom_phrase.txt ]
+	if [ -f $RIME_USER_PATH/custom_phrase.txt ]
 	then
-		$EDITOR $RimeDir/custom_phrase.txt
-		if [ -N $RimeDir/custom_phrase.txt ]
+		$EDITOR $RIME_USER_PATH/custom_phrase.txt
+		if [ -N $RIME_USER_PATH/custom_phrase.txt ]
 		then
 			warning "输入法部署中...."
 			case $GTK_IM_MODULE in
 			fcitx ):
 				fcitx5-remote -e
-				rime_deployer --build $RimeDir /usr/share/rime-data $RimeDir/build &> /dev/null
+				rime_deployer --build $RIME_USER_PATH /usr/share/rime-data $RIME_USER_PATH/build &> /dev/null
 				fcitx5-remote -o;;
 			ibus ):
 				ibus exit
-				rime_deployer --build $RimeDir /usr/share/rime-data $RimeDir/build &> /dev/null
+				rime_deployer --build $RIME_USER_PATH /usr/share/rime-data $RIME_USER_PATH/build &> /dev/null
 				ibus start;;
 			* ):
 				error "输入法框架配置错误";;
@@ -224,13 +224,13 @@ function svwk {
 }
 
 function svdotfiles {
-	if gsn $Dotfiles_Dir > /dev/null
+	if gsn $DOTFILES_PATH > /dev/null
 	then
 		correct "配置文件已同步，无需操作"
 	else
 		local COMMIT_WORD="dotfiles auto backup on Archlinux"
-		if [ -d "$Dotfiles_Dir" ];then
-			cd $Dotfiles_Dir
+		if [ -d "$DOTFILES_PATH" ];then
+			cd $DOTFILES_PATH
 			git add -A > /dev/null
 			git commit -a -m "$COMMIT_WORD" > /dev/null
 			git push > /dev/null

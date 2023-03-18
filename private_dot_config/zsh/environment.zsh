@@ -11,13 +11,13 @@ local function setIm () {
 			export XMODIFIERS=@im=fcitx
 			export SDL_IM_MODULE=fcitx
 			export GLFW_IM_MODULE=ibus
-			export RimeDir="$HOME/.local/share/fcitx5/rime";;
+			export RIME_USER_PATH="$HOME/.local/share/fcitx5/rime";;
 		ibus ):
 			# ibus输入法相关设置
 			export GTK_IM_MODULE=ibus
 			export QT_IM_MODULE=ibus
 			export XMODIFIERS=@im=ibus
-			export RimeDir="$HOME/.config/ibus/rime";;
+			export RIME_USER_PATH="$HOME/.config/ibus/rime";;
 		* ):
 			echo "输入法输入框架设置错误"
 	esac
@@ -41,8 +41,8 @@ export ALIYUNPAN_CONFIG_DIR="$HOME/.config/aliyunpan/config"
 
 # 需要备份的相关数据
 export LOGSEQ_DIR="$HOME/Documents/WorkSpace"
-export Rime_Sync_Dir="$HOME/Documents/gitRepos/rime"
-export Dotfiles_Dir="$XDG_DATA_HOME/chezmoi"
+export RIME_SYNC_PATH="$HOME/Documents/gitRepos/rime"
+export DOTFILES_PATH="$XDG_DATA_HOME/chezmoi"
 
 # ranger config
 # 避免ranger重新加载配置文件
