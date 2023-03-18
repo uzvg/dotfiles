@@ -377,7 +377,7 @@ function twLaunch {
 }
 
 function twlist {
-	ps aux |grep tiddlywiki| grep -v grep | awk -F '[ =]+' '{print "进程号："$2"\t工作目录："$13"\t入口地址为：https://127.0.0.1:"$16}'
+	ps aux |grep tiddlywiki| grep -v grep | awk -F '[ =]+' '{print "进程号："$2"\t工作目录："$13"\t入口地址为：http://127.0.0.1:"$16}'
 }
 
 function ktw {
@@ -460,17 +460,29 @@ function archive_backup {
 }
 
 function archive_deploy {
-	if gsn $ARCHIVE_DESTINATION_DIR
+	if [ -d $ARCHIVE_DESTINATION_DIR ]
 	then
+		cd $ARCHIVE_DESTINATION_DIR
+		warning "更新配置文件"
+		git pull
+		correct "更新完成！开始恢复归档文件"
+
 		for file in $(find $ARCHIVE_DESTINATION_DIR/ -name "*.tar.xz")
 		do
 			tar -C $HOME -xJPf $file
 		done
+		post_archive_deploy
+		correct "归档备份文件恢复完成"
+		cd -
 	else
 		warning "归档文件下载中....."
 		git clone $ARCHIVE_REMOTE_HTTPS $ARCHIVE_DESTINATION_DIR
 		correct "归档文件下载完成"
 	fi
+}
+
+function post_archive_deploy {
+	sed -i 's!/home/uzvg!'$HOME'!g' $HOME/.zim/init.zsh
 }
 
 # 问题如下：
