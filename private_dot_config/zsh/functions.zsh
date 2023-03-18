@@ -468,7 +468,7 @@ function archive_deploy {
 		done
 	else
 		warning "归档文件下载中....."
-		git clone git@e.coding.net:zerolaboratory/linux-dotfiles/archives.git $ARCHIVE_DESTINATION_DIR
+		git clone $ARCHIVE_REMOTE_HTTPS $ARCHIVE_DESTINATION_DIR
 		correct "归档文件下载完成"
 	fi
 }

@@ -79,6 +79,9 @@ export QT_QPA_PLATFORMTHEME="qt5ct"
 # export GnomeShellTheme="$HOME/.local/share/themes/adwaita-dakr-shell-theme/gnome-shell/gnome-shell.css"
 
 # USUAL config dir
+
+export ARCHIVE_REMOTE_HTTPS="https://e.coding.net/zerolaboratory/linux-dotfiles/archives.git"
+export ARCHIVE_REMOTE_SSH="git@e.coding.net:zerolaboratory/linux-dotfiles/archives.git"
 export ARCHIVE_DESTINATION_DIR="$HOME/Documents/archives"
 export ARCHIVE_EXCLUDE_FILE="$XDG_CONFIG_HOME/archive_exclude.txt"
 ARCHIVE_LIST=()
