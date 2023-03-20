@@ -1,4 +1,4 @@
-"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+"=======================================vim setttings=========================================
 set number
 set cursorline
 set relativenumber
@@ -8,7 +8,6 @@ set wildmenu
 set ruler
 set showmode
 set showcmd
-" set clipboard+=unnamedplus
 set scrolloff=5
 set list
 set listchars+=precedes:<,extends:>
@@ -30,7 +29,7 @@ exec "nohlsearch"
 set incsearch
 set ignorecase
 set smartcase
-"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 let mapleader=" "
 nnoremap s <nop>
 nnoremap Q :q<cr>
@@ -81,66 +80,39 @@ nnoremap p "+p
 nnoremap P "+P
 vnoremap d "+d
 nnoremap dd "+dd
-"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+"====================================vim-plug settings============================================
 call plug#begin('~/.config/nvim/plugged')
 Plug 'vim-airline/vim-airline'
-Plug 'rakr/vim-one'
-" Plug 'morhetz/gruvbox'
-Plug 'sainnhe/everforest'
+Plug 'sonph/onehalf', { 'rtp': 'vim' }
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'Raimondi/delimitMate'
 Plug 'tpope/vim-surround'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
 call plug#end()
-"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-"colorscheme configure
-" 开启斜体
-"let g:one_allow_italics = 1 " I love italic for comments
-"if (empty($TMUX))
-"  if (has("nvim"))
-"    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-"  endif
-"  if (has("termguicolors"))
-"    set termguicolors
-"  endif
-"endif
-"
-"set background=dark " for the dark version
-"colorscheme one
-"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-if has('termguicolors')
+
+"====================================onehalf colorscheme configuration============================================
+if exists('+termguicolors')
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
   set termguicolors
 endif
-" For dark version.
-set background=dark
-" For light version.
-" set background=light
-" Set contrast.
-" This configuration option should be placed before `colorscheme everforest`.
-" Available values: 'hard', 'medium'(default), 'soft'
-let g:everforest_background = 'hard'
-" For better performance
-let g:everforest_better_performance = 1
-let g:everforest_enable_italic = 1 " I love italic for comments
-let g:everforest_cursor = 'auto' " I love italic for comments
-" let g:everforest_transparent_background=1
-let g:everforest_show_eob=1
-let g:everforest_current_word='bold'
-colorscheme everforest
-"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-"airline configure
-"let g:airline_theme='one'
-let g:airline_theme = 'everforest'
+let g:one_allow_italics = 1 " I love italic for comments
+
+syntax on
+set t_Co=256
+set cursorline
+"colorscheme onehalflight
+colorscheme onehalfdark
+"=====================================airline configuration===========================================
+let g:airline_theme='onehalfdark'
 let g:airline_powerline_fonts=1
 let g:airline#extensions#tabline#enabled=1
-"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-" 输入法自动切换
-autocmd InsertLeave * :silent !fcitx5-remote -s keyboard-us
-autocmd InsertEnter * :silent !fcitx5-remote -s rime
-"==============================coc config========================================
-" May need for Vim (not Neovim) since coc.nvim calculates byte offset by count
-" utf-8 byte sequence
-set encoding=utf-8
+"=====================================input method auto toggle===========================================
+"
+" autocmd InsertLeave * :silent !fcitx5-remote -s keyboard-us
+" autocmd InsertEnter * :silent !fcitx5-remote -s rime
+"
+"=====================================coc config========================================
 " Some servers have issues with backup files, see #649
 set nobackup
 set nowritebackup
