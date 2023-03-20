@@ -88,6 +88,7 @@ ARCHIVE_LIST=()
 ARCHIVE_LIST+=("$HOME/.local/share/gnome-shell/extensions")
 ARCHIVE_LIST+=("$HOME/.local/share/applications")
 ARCHIVE_LIST+=("$HOME/.config/nvim/plugged")
+ARCHIVE_LIST+=("$HOME/.cache/netease-cloud-music/Cef")
 ARCHIVE_LIST+=("$HOME/.logseq")
 ARCHIVE_LIST+=("$HOME/.zim")
 
