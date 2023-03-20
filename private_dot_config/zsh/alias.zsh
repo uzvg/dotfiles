@@ -1,5 +1,6 @@
 # 一些常用命令的替换
 alias ls='exa'
+alias la='exa -a'
 alias l='exa -lha'
 alias g='lazygit'
 alias c='bat'
@@ -44,7 +45,7 @@ alias ftcfg="$EDITOR $HOME/.config/fontconfig/fonts.conf"
 # pacman
 alias pkug="paru -Syyu"
 alias pkss="sudo pacman -Ss"
-alias rmvop="sudo pacman -Rscn $(paru -Qtdq)"
+alias rmvop="sudo pacman -Rscn `paru -Qtdq`"
 
 # hugo shortcuts
 alias hgs="hugo server -s $blogDir"

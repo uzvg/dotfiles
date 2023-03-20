@@ -390,7 +390,7 @@ function tw5 {
 function ktw {
 	if [ $# -eq 0 ]
 	then
-		echo "使用帮助："
+		echo "ktw(kill tiddlywiki process)使用帮助："
 		echo "\tktw -a[--all]"
 		echo "\tktw -n[--number]"
 	else
