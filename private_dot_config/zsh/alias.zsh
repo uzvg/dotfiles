@@ -42,9 +42,9 @@ alias dkstart="systemctl start docker.service"
 alias ftcfg="$EDITOR $HOME/.config/fontconfig/fonts.conf"
 
 # pacman
-alias pkug="sudo pacman -Syyu"
+alias pkug="paru -Syyu"
 alias pkss="sudo pacman -Ss"
-alias rmvop="sudo pacman -Rscn `pacman -Qtdq`"
+alias rmvop="sudo pacman -Rscn $(paru -Qtdq)"
 
 # hugo shortcuts
 alias hgs="hugo server -s $blogDir"

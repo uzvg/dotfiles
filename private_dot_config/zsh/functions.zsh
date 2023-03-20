@@ -377,7 +377,9 @@ function twLaunch {
 }
 
 function twlist {
-	ps aux |grep tiddlywiki| grep -v grep | awk -F '[ =]+' '{print "进程号："$2"\t工作目录："$13"\t入口地址为：http://127.0.0.1:"$16}'
+	ps aux |grep tiddlywiki| grep -v grep | awk -F '[ =]+' '{print "进程号："$2"\t工作目录："$13"\t\t入口地址为：http://127.0.0.1:"$16}'
+}
+
 function tw5 {
 	cd /usr/lib/node_modules/tiddlywiki/
 	nohup ./bin/serve.sh editions/tw5.com &> /dev/null &
@@ -459,7 +461,7 @@ function archive {
 function archive_backup {
 	for file in $ARCHIVE_LIST
 	do
-		echo "============================="
+		echo "===================================================="
 		archive $file 180
 	done
 }
