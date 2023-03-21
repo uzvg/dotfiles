@@ -1,0 +1,9 @@
+[user]
+	name = uzvg
+	email = 1497911983@qq.com
+[core]
+	editor = nvim
+[init]
+	defaultBranch = master
+[diff]
+	tool = nvimdiff
