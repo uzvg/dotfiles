@@ -104,9 +104,11 @@ set cursorline
 "colorscheme onehalflight
 colorscheme onehalfdark
 "=====================================airline configuration===========================================
+"
 let g:airline_theme='onehalfdark'
 let g:airline_powerline_fonts=1
 let g:airline#extensions#tabline#enabled=1
+"
 "=====================================input method auto toggle===========================================
 "
 " autocmd InsertLeave * :silent !fcitx5-remote -s keyboard-us
