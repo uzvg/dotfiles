@@ -6,6 +6,7 @@ alias g='lazygit'
 alias c='bat'
 alias e="$EDITOR"
 alias q='exit'
+alias Q='exit'
 alias du="dust -r"
 alias df="duf"
 alias tt='taskwarrior-tui'
@@ -43,7 +44,7 @@ alias dkstart="systemctl start docker.service"
 alias ftcfg="$EDITOR $HOME/.config/fontconfig/fonts.conf"
 
 # pacman
-alias pkug="paru -Syyu"
+# alias pkug="paru -Syyu"
 alias pkss="sudo pacman -Ss"
 alias rmvop="sudo pacman -Rscn `paru -Qtdq`"
 
@@ -72,4 +73,5 @@ alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias cfw="twLaunch $TIDDLYWIKI_COFFEE_PATH $TIDDLYWIKI_COFFEE_PORT"
 alias lovePoem="twLaunch $TIDDLYWIKI_LOVEPOEM_PATH $TIDDLYWIKI_LOVEPOEM_PORT"
 alias twPrac="twLaunch $TIDDLYWIKI_PRACTICE_PATH $TIDDLYWIKI_PRACTICE_PORT"
+alias twDoc="twLaunch $TIDDLYWIKI_DOCUMENT_PATH $TIDDLYWIKI_DOCUMENT_PORT"
 alias lovePoemDeploy="rsync -av --delete $TIDDLYWIKI_LOVEPOEM_PATH/output/index.html $RemoteUser:/www/wwwroot/jiangyuanandjiayu.love/"

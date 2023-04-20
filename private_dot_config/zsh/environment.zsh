@@ -10,8 +10,8 @@ local function setIm () {
 			export QT_IM_MODULE=fcitx
 			export XMODIFIERS=@im=fcitx
 			export SDL_IM_MODULE=fcitx
-			export GLFW_IM_MODULE=ibus
-			export RIME_USER_PATH="$HOME/.local/share/fcitx5/rime";;
+			export GLFW_IM_MODULE=ibus;;
+			#export RIME_USER_PATH="$HOME/.local/share/fcitx5/rime";;
 		ibus ):
 			# ibus输入法相关设置
 			export GTK_IM_MODULE=ibus
@@ -19,7 +19,7 @@ local function setIm () {
 			export XMODIFIERS=@im=ibus
 			export RIME_USER_PATH="$HOME/.config/ibus/rime";;
 		* ):
-			echo "输入法输入框架设置错误"
+			error "Wrong Input Module Settings"
 	esac
 }
 
@@ -84,13 +84,16 @@ export ARCHIVE_REMOTE_HTTPS="https://e.coding.net/zerolaboratory/linux-dotfiles/
 export ARCHIVE_REMOTE_SSH="git@e.coding.net:zerolaboratory/linux-dotfiles/archives.git"
 export ARCHIVE_DESTINATION_DIR="$HOME/Documents/archives"
 export ARCHIVE_EXCLUDE_FILE="$XDG_CONFIG_HOME/archive_exclude.txt"
+
 ARCHIVE_LIST=()
 ARCHIVE_LIST+=("$HOME/.local/share/gnome-shell/extensions")
 ARCHIVE_LIST+=("$HOME/.local/share/applications")
 ARCHIVE_LIST+=("$HOME/.config/nvim/plugged")
+ARCHIVE_LIST+=("$ALIYUNPAN_CONFIG_DIR")
 ARCHIVE_LIST+=("$HOME/.cache/netease-cloud-music/Cef")
 ARCHIVE_LIST+=("$HOME/.logseq")
 ARCHIVE_LIST+=("$HOME/.zim")
+ARCHIVE_LIST+=("$HOME/.local/share/icons")
 
 # Tiddlywiki 相关配置
 export TIDDLYWIKI_COFFEE_PATH="$HOME/Documents/wikis/coffee-weekly"
@@ -99,3 +102,9 @@ export TIDDLYWIKI_PRACTICE_PATH="$HOME/Documents/wikis/practice"
 export TIDDLYWIKI_PRACTICE_PORT=9090
 export TIDDLYWIKI_LOVEPOEM_PATH="$HOME/Documents/wikis/LovePoemForJiayu"
 export TIDDLYWIKI_LOVEPOEM_PORT=9999
+export TIDDLYWIKI_DOCUMENT_PATH="/usr/lib/node_modules/tiddlywiki/editions/tw5.com"
+export TIDDLYWIKI_DOCUMENT_PORT=9898
+
+# anki confirm compatibility with Qt6
+export DISABLE_QT5_COMPAT=1
+export SYNC_USER1="1497911983@qq.com:54264hui936"

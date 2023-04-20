@@ -319,6 +319,9 @@ function lgrmt(){
 
 # 博客部署
 function blogDeploy {
+	
+	#case in 
+
 	# 部署到本地
 	#if [ $# -eq 0 ]
 	#then
@@ -377,15 +380,15 @@ function twLaunch {
 }
 
 function twlist {
-	ps aux |grep tiddlywiki| grep -v grep | awk -F '[ =]+' '{print "进程号："$2"\t工作目录："$13"\t\t入口地址为：http://127.0.0.1:"$16}'
+	ps aux |grep tiddlywiki| grep -v grep | awk -F '[ =]+' '{print "进程号: "$2"\t工作目录: "$13"\t入口地址为：http://127.0.0.1:"$16}'
 }
 
-function tw5 {
-	cd /usr/lib/node_modules/tiddlywiki/
-	nohup ./bin/serve.sh editions/tw5.com &> /dev/null &
-	correct "tiddlywiki文档已加载，入口地址：http://127.0.0.1:8080"
-	cd -
-}
+#function tw5 {
+#	cd /usr/lib/node_modules/tiddlywiki/
+#	nohup ./bin/serve.sh editions/tw5.com "" "" "" 8989 &> /dev/null &
+#	correct "tiddlywiki文档已加载，入口地址：http://127.0.0.1:8989"
+#	cd -
+#}
 
 function ktw {
 	if [ $# -eq 0 ]
@@ -507,3 +510,40 @@ function get_ssh_key {
 	fi
 }
 
+#上传图片到云服务器，同时将云服务器中的地址重复到剪贴板
+# step1: 判断图片是否存在并且是否是否真的是图片文件
+# step2: 将图片上传到云服务器
+# step3: 复制图片的地址到剪贴板
+# step4: 将图片同步到远程仓库
+
+function upImage {
+	if [ -f $1 ]
+	then
+		filetype=$(file --mime-type $1)
+		if [[ $filetype == *image* ]]
+		then
+			if rsync -av --delete $1 $RemoteUser:/www/wwwroot/uzvg.site/images/
+			then
+				local filename=$(basename $1 | sed 's/ /%20/g')
+				imageUrl=https://uzvg.site/images/$filename
+				correct "URL of image 👉 $imageUrl"
+				echo $imageUrl | xclip -selection clipboard
+				correct "And the address of the image was copied in your clipboard!"
+				cp $1 $TIDDLYWIKI_COFFEE_PATH/images
+				local COMMIT_WORD="image sync on Archlinux at $(date +%Y/%m/%d-%H:%M)"
+				cd $TIDDLYWIKI_COFFEE_PATH/
+				git add images/$(basename $1) > /dev/null
+				git commit -m "$COMMIT_WORD" > /dev/null
+				git push &> /dev/null
+				cd -
+				correct "Image sync successfully!"
+			else
+				error "file transfer failed"
+			fi
+		else
+			error "The file you uploaded is not image, please check it again!"
+		fi
+	else
+		error "目标文件不存在"
+	fi
+}

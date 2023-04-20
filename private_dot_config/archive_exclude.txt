@@ -1,1 +1,2 @@
 .logseq/graphs
+.local/share/icons/hicolor
