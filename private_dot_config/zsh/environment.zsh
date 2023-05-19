@@ -10,8 +10,8 @@ local function setIm () {
 			export QT_IM_MODULE=fcitx
 			export XMODIFIERS=@im=fcitx
 			export SDL_IM_MODULE=fcitx
-			export GLFW_IM_MODULE=ibus;;
-			#export RIME_USER_PATH="$HOME/.local/share/fcitx5/rime";;
+			export GLFW_IM_MODULE=ibus
+			export RIME_USER_PATH="$HOME/.local/share/fcitx5/rime";;
 		ibus ):
 			# ibus输入法相关设置
 			export GTK_IM_MODULE=ibus
@@ -23,7 +23,7 @@ local function setIm () {
 	esac
 }
 
-setIm ibus
+setIm fcitx
 
 # editor
 export EDITOR='nvim'
@@ -89,11 +89,11 @@ ARCHIVE_LIST=()
 ARCHIVE_LIST+=("$HOME/.local/share/gnome-shell/extensions")
 ARCHIVE_LIST+=("$HOME/.local/share/applications")
 ARCHIVE_LIST+=("$HOME/.config/nvim/plugged")
-ARCHIVE_LIST+=("$ALIYUNPAN_CONFIG_DIR")
 ARCHIVE_LIST+=("$HOME/.cache/netease-cloud-music/Cef")
 ARCHIVE_LIST+=("$HOME/.logseq")
 ARCHIVE_LIST+=("$HOME/.zim")
 ARCHIVE_LIST+=("$HOME/.local/share/icons")
+# ARCHIVE_LIST+=("$ALIYUNPAN_CONFIG_DIR")
 
 # Tiddlywiki 相关配置
 export TIDDLYWIKI_COFFEE_PATH="$HOME/Documents/wikis/coffee-weekly"
@@ -108,3 +108,4 @@ export TIDDLYWIKI_DOCUMENT_PORT=9898
 # anki confirm compatibility with Qt6
 export DISABLE_QT5_COMPAT=1
 export SYNC_USER1="1497911983@qq.com:54264hui936"
+export GTK_THEME="Adwaita"
