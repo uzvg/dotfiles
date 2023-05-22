@@ -32,7 +32,9 @@ alias rr="ranger"
 alias rgcfg="$EDITOR $HOME/.config/ranger/rc.conf"
 
 #hyprland config
-alias hycfg="$EDITOR $HOME/.config/hypr/hyprland.conf"
+alias hyprcfg="$EDITOR $HOME/.config/hypr/hyprland.conf"
+alias hyprbind="$EDITOR $HOME/.config/hypr/hyprbinds.conf"
+alias hyprule="$EDITOR $HOME/.config/hypr/hyprules.conf"
 
 # rime input method
 alias ckemj="cat /usr/share/rime-data/opencc/emoji_word.txt"
