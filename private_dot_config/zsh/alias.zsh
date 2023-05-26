@@ -27,14 +27,19 @@ alias czmf="chezmoi managed -i files"
 alias czma="chezmoi add --follow"
 alias czmst="chezmoi status"
 
-# ranger config
-alias rr="ranger"
-alias rgcfg="$EDITOR $HOME/.config/ranger/rc.conf"
+# joshuto
+# ranger-like file manager written in rust
+ alias fm="joshuto"
 
-#hyprland config
+# hyprland config
 alias hyprcfg="$EDITOR $HOME/.config/hypr/hyprland.conf"
+alias hyprinit="$EDITOR $HOME/.config/hypr/hyprinit.conf"
 alias hyprbind="$EDITOR $HOME/.config/hypr/hyprbinds.conf"
 alias hyprule="$EDITOR $HOME/.config/hypr/hyprules.conf"
+
+# waybar config
+alias wbarcfg="$EDITOR $XDG_CONFIG_HOME/waybar/config"
+alias wbarstyle="$EDITOR $XDG_CONFIG_HOME/waybar/style.css"
 
 # rime input method
 alias ckemj="cat /usr/share/rime-data/opencc/emoji_word.txt"
@@ -43,29 +48,13 @@ alias ckemj="cat /usr/share/rime-data/opencc/emoji_word.txt"
 alias rmsv="ssh -i $HOME/.ssh/id_rsa -l $CloudUser $CloudServer"
 
 # docker shortcuts
-alias dkstart="systemctl start docker.service"
+# alias dkstart="systemctl start docker.service"
 
 # fontconfig
 alias ftcfg="$EDITOR $HOME/.config/fontconfig/fonts.conf"
 
-# pacman
-# alias pkug="paru -Syyu"
-alias pkss="sudo pacman -Ss"
-alias rmvop="sudo pacman -Rscn `paru -Qtdq`"
-
-# hugo shortcuts
-alias hgs="hugo server -s $blogDir"
-alias hgd="hugo server -s $blogDir -D"
-
-# 是否关闭笔记本键盘
-# alias diskb='xinput --set-prop 8 "Device Enabled" 0'
-# alias ebkb='xinput --set-prop 8 "Device Enabled" 1'
-
 # 同步配置文件
 alias dotfiles="lazygit -p $HOME/.local/share/chezmoi"
-
-# gnome-terminal 主题修改👉https://gogh-co.github.io/Gogh/
-alias gogh='bash -c "$(wget -qO- https://git.io/vQgMr)"'
 
 # systemctl
 alias sss="systemctl status"
@@ -80,3 +69,20 @@ alias lovePoem="twLaunch $TIDDLYWIKI_LOVEPOEM_PATH $TIDDLYWIKI_LOVEPOEM_PORT"
 alias twPrac="twLaunch $TIDDLYWIKI_PRACTICE_PATH $TIDDLYWIKI_PRACTICE_PORT"
 alias twDoc="twLaunch $TIDDLYWIKI_DOCUMENT_PATH $TIDDLYWIKI_DOCUMENT_PORT"
 alias lovePoemDeploy="rsync -av --delete $TIDDLYWIKI_LOVEPOEM_PATH/output/index.html $RemoteUser:/www/wwwroot/jiangyuanandjiayu.love/"
+
+# ranger config
+# ranger was depraca
+# alias rr="ranger"
+# alias rgcfg="$EDITOR $XDG_CONFIG_HOME/ranger/rc.conf"
+
+# hugo shortcuts
+# alias hgs="hugo server -s $blogDir"
+# alias hgd="hugo server -s $blogDir -D"
+
+# 是否关闭笔记本键盘
+# alias diskb='xinput --set-prop 8 "Device Enabled" 0'
+# alias ebkb='xinput --set-prop 8 "Device Enabled" 1'
+
+# gnome-terminal 主题修改👉https://gogh-co.github.io/Gogh/
+# alias gogh='bash -c "$(wget -qO- https://git.io/vQgMr)"'
+

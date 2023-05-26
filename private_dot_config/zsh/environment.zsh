@@ -1,5 +1,9 @@
 #!/usr/bin/zsh
 
+# xdg标准存储目录
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$HOME/.local/share"
+
 # unsetopt completealiases
 # 设置输入法框架
 local function setIm () {
@@ -30,10 +34,6 @@ export EDITOR='nvim'
 
 # zsh config dir
 export ZSH_CFG_DIR="$HOME/.config/zsh/"
-
-# xdg标准存储目录
-export XDG_CONFIG_HOME="$HOME/.config"
-export XDG_DATA_HOME="$HOME/.local/share"
 
 # aliyunpan-go 配置文件目录
 export ALIYUNPAN_CONFIG_DIR="$HOME/.config/aliyunpan/config"
@@ -74,7 +74,7 @@ export PrivKey="$HOME/.ssh/id_rsa"
 export PubKey="$HOME/.ssh/id_rsa.pub"
 
 # gnome-shell theme folder
-export GnomeShellFolder="$HOME/GitRepos/gnome-shell/data/theme/"
+# export GnomeShellFolder="$HOME/GitRepos/gnome-shell/data/theme/"
 export QT_QPA_PLATFORMTHEME="qt5ct"
 # export GnomeShellTheme="$HOME/.local/share/themes/adwaita-dakr-shell-theme/gnome-shell/gnome-shell.css"
 
@@ -106,6 +106,6 @@ export TIDDLYWIKI_DOCUMENT_PATH="/usr/lib/node_modules/tiddlywiki/editions/tw5.c
 export TIDDLYWIKI_DOCUMENT_PORT=9898
 
 # anki confirm compatibility with Qt6
-export DISABLE_QT5_COMPAT=1
-export SYNC_USER1="1497911983@qq.com:54264hui936"
-export GTK_THEME="Adwaita"
+# export DISABLE_QT5_COMPAT=1
+# export SYNC_USER1="1497911983@qq.com:54264hui936"
+# export GTK_THEME="Adwaita"
