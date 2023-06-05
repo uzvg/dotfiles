@@ -81,6 +81,8 @@ nnoremap dd "+dd
 "====================================vim-plug settings============================================
 call plug#begin('~/.config/nvim/plugged')
 Plug 'vim-airline/vim-airline'
+Plug 'morhetz/gruvbox'
+Plug 'sainnhe/everforest'
 Plug 'sonph/onehalf', { 'rtp': 'vim' }
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'Raimondi/delimitMate'
@@ -89,20 +91,47 @@ Plug 'elkowar/yuck.vim'
 call plug#end()
 
 "====================================onehalf colorscheme configuration============================================
-if exists('+termguicolors')
-  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-  set termguicolors
-endif
-let g:one_allow_italics = 1 " I love italic for comments
-syntax on
-set t_Co=256
-set cursorline
+"if exists('+termguicolors')
+"  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+"  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+"  set termguicolors
+"endif
+"let g:one_allow_italics = 1 " I love italic for comments
+"
+"set t_Co=256
+"set cursorline
 "colorscheme onehalflight
-colorscheme onehalfdark
+"colorscheme onehalfdark
+"=====================================gruvbox configuration===========================================
+"set t_Co=256
+"set cursorline
+"set background=dark
+"set termguicolors
+"let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+"let g:gruvbox_contrast_light="soft"
+"let g:gruvbox_contrast_dark='hard'
+"let g:gruvbox_transparent_bg=1
+"colorscheme gruvbox
+"=====================================gruvbox configuration===========================================
+"set background=light
+set termguicolors
+set background=dark
+let g:everforest_enable_italic=1
+let g:everforest_sign_column_background='grey'
+let g:everforest_show_eob=1
+let g:everforest_diagnostic_text_highlight=1
+let g:everforest_diagnostic_line_highlight=1
+let g:everforest_disable_terminal_colors=1
+let g:everforest_ui_contrast='high'
+let g:everforest_spell_foreground='colored'
+let g:everforest_transparent_background=0
+" Available values: 'hard', 'medium'(default), 'soft'
+let g:everforest_background = 'hard'
+let g:everforest_better_performance = 1
+colorscheme everforest
 "=====================================airline configuration===========================================
 "
-let g:airline_theme='onehalfdark'
+let g:airline_theme='everforest'
 let g:airline_powerline_fonts=1
 let g:airline#extensions#tabline#enabled=1
 "
