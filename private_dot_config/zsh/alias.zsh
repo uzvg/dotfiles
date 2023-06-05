@@ -28,10 +28,17 @@ alias czmf="chezmoi managed -i files"
 alias czma="chezmoi add --follow"
 alias czmst="chezmoi status"
 
+# eww widget shortcuts
+alias oew="eww open example"
+alias cew="eww close-all"
+
 # joshuto
 # ranger-like file manager written in rust
- alias j="joshuto"
- alias fm="joshuto"
+alias j="joshuto"
+alias fm="joshuto"
+
+# kitty config 
+alias ktcfg="$EDITOR $XDG_CONFIG_HOME/kitty/kitty.conf"
 
 # hyprland config
 alias hyprcfg="$EDITOR $HOME/.config/hypr/hyprland.conf"
@@ -74,9 +81,8 @@ alias twDoc="twLaunch $TIDDLYWIKI_DOCUMENT_PATH $TIDDLYWIKI_DOCUMENT_PORT"
 alias lovePoemDeploy="rsync -av --delete $TIDDLYWIKI_LOVEPOEM_PATH/output/index.html $RemoteUser:/www/wwwroot/jiangyuanandjiayu.love/"
 
 # ranger config
-# ranger was depraca
-# alias rr="ranger"
-# alias rgcfg="$EDITOR $XDG_CONFIG_HOME/ranger/rc.conf"
+alias rr="ranger"
+alias rgcfg="$EDITOR $XDG_CONFIG_HOME/ranger/rc.conf"
 
 # hugo shortcuts
 # alias hgs="hugo server -s $blogDir"
