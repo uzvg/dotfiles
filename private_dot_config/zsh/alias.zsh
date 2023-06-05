@@ -5,6 +5,7 @@ alias l='exa -lha'
 alias g='lazygit'
 alias c='bat'
 alias e="$EDITOR"
+alias se="sudoedit"
 alias q='exit'
 alias Q='exit'
 alias du="dust -r"
@@ -12,7 +13,7 @@ alias df="duf"
 alias tt='taskwarrior-tui'
 alias udd='update-desktop-database $HOME/.local/share/applications/'
 alias fd="fd -H"
-alias top="btop"
+alias t="btop"
 alias wd="sdcv --color"
 alias gedit="gnome-text-editor"
 alias vim="$EDITOR"
@@ -29,6 +30,7 @@ alias czmst="chezmoi status"
 
 # joshuto
 # ranger-like file manager written in rust
+ alias j="joshuto"
  alias fm="joshuto"
 
 # hyprland config
@@ -36,6 +38,7 @@ alias hyprcfg="$EDITOR $HOME/.config/hypr/hyprland.conf"
 alias hyprinit="$EDITOR $HOME/.config/hypr/hyprinit.conf"
 alias hyprbind="$EDITOR $HOME/.config/hypr/hyprbinds.conf"
 alias hyprule="$EDITOR $HOME/.config/hypr/hyprules.conf"
+alias swidlecfg="$EDITOR $XDG_CONFIG_HOME/swayidle/config"
 
 # waybar config
 alias wbarcfg="$EDITOR $XDG_CONFIG_HOME/waybar/config"
