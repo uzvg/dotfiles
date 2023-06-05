@@ -50,6 +50,8 @@ export DOTFILES_PATH="$XDG_DATA_HOME/chezmoi"
 # ranger config
 # 避免ranger重新加载配置文件
 export RANGER_LOAD_DEFAULT_RC=false
+export RANGER_DEVICONS_SEPARATOR=" "
+
 
 # blog 博客相关配置
 export blogDir="$HOME/Documents/Blog/coffee周报"
