@@ -10,6 +10,8 @@ local function setIm () {
 	case $1 in
 		fcitx ):
 			# fcitx5 输入法相关配置
+			# https://fcitx-im.org/wiki/Using_Fcitx_5_on_Wayland
+			export INPUT_METHOD=fcitx
 			export GTK_IM_MODULE=fcitx
 			export QT_IM_MODULE=fcitx
 			export XMODIFIERS=@im=fcitx
@@ -18,6 +20,7 @@ local function setIm () {
 			export RIME_USER_PATH="$HOME/.local/share/fcitx5/rime";;
 		ibus ):
 			# ibus输入法相关设置
+			export INPUT_METHOD=ibus
 			export GTK_IM_MODULE=ibus
 			export QT_IM_MODULE=ibus
 			export XMODIFIERS=@im=ibus
