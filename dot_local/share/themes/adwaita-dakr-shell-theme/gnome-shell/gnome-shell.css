@@ -3,7 +3,7 @@ stage {
 }
 
 .panel-button {
-  font-weight: 600;
+  font-weight: 500;
 }
 
 StIcon {
@@ -17,10 +17,10 @@ StIcon {
 
 .calendar-day-heading {
 font-size:12pt;
-font-weight:bold;
+font-weight:600;
 }
 
 .calendar-month-label {
   font-size:14pt;
-  font-weight:bold;
+  font-weight:600;
 }
