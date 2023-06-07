@@ -28,16 +28,5 @@
             "address": "https://jiang.netlify.com",
             "type": "simple_base64"
         }
-    },
-    "xylogvkfiret": {
-        "creationDate": 1680098394,
-        "displayName": "雷公马",
-        "isSubscription": true,
-        "lastUpdatedDate": 1685429330,
-        "routeConfigId": "puaosdewkciv",
-        "subscriptionOption": {
-            "address": "https://dy3721.top/api/v1/client/subscribe?token=c41064874f0aca8b501bd2449acb4d3c",
-            "type": "simple_base64"
-        }
     }
 }
