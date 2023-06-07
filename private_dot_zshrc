@@ -1,35 +1,18 @@
-# Start configuration added by Zim install {{{
-#
-# User configuration sourced by interactive shells
-#
-# -----------------
-# Customize by uzvg
-# -----------------
-# 添加环境变量
+# ==========================================Add additional env vars==========================================
 export PATH=$PATH:/home/uzvg/.local/bin
 export fpath=($fpath $ZSH_CFG_DIR)
-#
 
-# 配置zoxide
+# ==========================================zoxide configuration==========================================
 eval "$(zoxide init zsh)"
-#
-# 自定义脚本
+
+# ==========================================Some personla scripts==========================================
 source $HOME/.config/zsh/environment.zsh
 source $HOME/.config/zsh/alias.zsh
 source $HOME/.config/zsh/functions.zsh
 
-# -----------------
-# Zsh configuration
-# -----------------
-# 
-# History
-#
+# ==========================================Zsh Options==========================================
 # Remove older command from the history if a duplicate is to be added.
 setopt HIST_IGNORE_ALL_DUPS
-
-#
-# Input/output
-#
 
 # Set editor default keymap to emacs (`-e`) or vi (`-v`)
 # bindkey -v
@@ -43,44 +26,20 @@ setopt HIST_IGNORE_ALL_DUPS
 # Remove path separator from WORDCHARS.
 WORDCHARS=${WORDCHARS//[\/]}
 
-# -----------------
-# Zim configuration
-# -----------------
-
-# Use degit instead of git as the default tool to install and update modules.
-#zstyle ':zim:zmodule' use 'degit'
-
-# --------------------
-# Module configuration
-# --------------------
-
-#
-# git
-#
-
+# ==========================================Zim configuration==========================================
 # Set a custom prefix for the generated aliases. The default prefix is 'G'.
 # zstyle ':zim:git' aliases-prefix 'g'
-
 #
 # input
-#
-
 # Append `../` to your input for each `.` you type after an initial `..`
 zstyle ':zim:input' double-dot-expand yes
-
-#
-# termtitle
-#
 
 # Set a custom terminal title format using prompt expansion escape sequences.
 # See http://zsh.sourceforge.net/Doc/Release/Prompt-Expansion.html#Simple-Prompt-Escapes
 # If none is provided, the default '%n@%m: %~' is used.
 #zstyle ':zim:termtitle' format '%1~'
 
-#
-# zsh-autosuggestions
-#
-
+# --------------------zsh-autosuggestions--------------------
 # Disable automatic widget re-binding on each precmd. This can be set when
 # zsh-users/zsh-autosuggestions is the last module in your ~/.zimrc.
 # ZSH_AUTOSUGGEST_MANUAL_REBIND=1
@@ -89,10 +48,7 @@ zstyle ':zim:input' double-dot-expand yes
 # See https://github.com/zsh-users/zsh-autosuggestions/blob/master/README.md#suggestion-highlight-style
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=242'
 
-#
-# zsh-syntax-highlighting
-#
-
+# --------------------zsh-syntax-highlighting--------------------
 # Set what highlighters will be used.
 # See https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters.md
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
