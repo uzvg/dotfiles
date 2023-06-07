@@ -34,22 +34,24 @@ alias cew="eww close-all"
 
 # joshuto
 # ranger-like file manager written in rust
-alias j="joshuto"
-alias fm="joshuto"
+alias jj="joshuto"
+
+# alacritty config
+alias alacfg="$EDITOR $XDG_CONFIG_HOME/alacritty/alacritty.yml"
 
 # kitty config 
-alias ktcfg="$EDITOR $XDG_CONFIG_HOME/kitty/kitty.conf"
+# alias ktcfg="$EDITOR $XDG_CONFIG_HOME/kitty/kitty.conf"
 
 # hyprland config
-alias hyprcfg="$EDITOR $HOME/.config/hypr/hyprland.conf"
-alias hyprinit="$EDITOR $HOME/.config/hypr/hyprinit.conf"
-alias hyprbind="$EDITOR $HOME/.config/hypr/hyprbinds.conf"
-alias hyprule="$EDITOR $HOME/.config/hypr/hyprules.conf"
-alias swidlecfg="$EDITOR $XDG_CONFIG_HOME/swayidle/config"
+#alias hyprcfg="$EDITOR $HOME/.config/hypr/hyprland.conf"
+#alias hyprinit="$EDITOR $HOME/.config/hypr/hyprinit.conf"
+#alias hyprbind="$EDITOR $HOME/.config/hypr/hyprbinds.conf"
+#alias hyprule="$EDITOR $HOME/.config/hypr/hyprules.conf"
+#alias swidlecfg="$EDITOR $XDG_CONFIG_HOME/swayidle/config"
 
 # waybar config
-alias wbarcfg="$EDITOR $XDG_CONFIG_HOME/waybar/config"
-alias wbarstyle="$EDITOR $XDG_CONFIG_HOME/waybar/style.css"
+#alias wbarcfg="$EDITOR $XDG_CONFIG_HOME/waybar/config"
+#alias wbarstyle="$EDITOR $XDG_CONFIG_HOME/waybar/style.css"
 
 # rime input method
 alias ckemj="cat /usr/share/rime-data/opencc/emoji_word.txt"
@@ -70,12 +72,13 @@ alias dotfiles="lazygit -p $HOME/.local/share/chezmoi"
 alias sss="systemctl status"
 
 # git bare repository to manage dotfiles
-alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+#alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 #config config status.showUntrackedFiles no
 
 # tiddlywiki shortcuts
 alias cfw="twLaunch $TIDDLYWIKI_COFFEE_PATH $TIDDLYWIKI_COFFEE_PORT"
 alias lovePoem="twLaunch $TIDDLYWIKI_LOVEPOEM_PATH $TIDDLYWIKI_LOVEPOEM_PORT"
+alias tmpwiki="twLaunch $HOME/Documents/wikis/tempWiki 9981"
 alias twPrac="twLaunch $TIDDLYWIKI_PRACTICE_PATH $TIDDLYWIKI_PRACTICE_PORT"
 alias twDoc="twLaunch $TIDDLYWIKI_DOCUMENT_PATH $TIDDLYWIKI_DOCUMENT_PORT"
 alias lovePoemDeploy="rsync -av --delete $TIDDLYWIKI_LOVEPOEM_PATH/output/index.html $RemoteUser:/www/wwwroot/jiangyuanandjiayu.love/"
@@ -95,3 +98,8 @@ alias rgcfg="$EDITOR $XDG_CONFIG_HOME/ranger/rc.conf"
 # gnome-terminal 主题修改👉https://gogh-co.github.io/Gogh/
 # alias gogh='bash -c "$(wget -qO- https://git.io/vQgMr)"'
 
+# zimfw alias
+alias zimrc="$EDITOR $HOME/.zimrc"
+
+# tmux config
+alias tmxcfg="$EDITOR $XDG_CONFIG_HOME/tmux/tmux.conf"

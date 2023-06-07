@@ -30,7 +30,7 @@ local function setIm () {
 	esac
 }
 
-setIm fcitx
+setIm ibus
 
 # editor
 export EDITOR='nvim'

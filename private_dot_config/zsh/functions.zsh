@@ -13,7 +13,7 @@ function correct {
 }
 
 # edit configuration
-function zshcfg {
+function zshrc {
 	$EDITOR $HOME/.zshrc
 	if [ -N $HOME/.zshrc ]
 	then
