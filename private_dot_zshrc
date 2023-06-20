@@ -97,3 +97,12 @@ for key ('k') bindkey -M vicmd ${key} history-substring-search-up
 for key ('j') bindkey -M vicmd ${key} history-substring-search-down
 unset key
 # }}} End configuration added by Zim install
+
+
+# ------------------------------
+# pipx completions
+# ------------------------------
+autoload -U bashcompinit
+bashcompinit
+# enable completion for pipx:
+eval "$(register-python-argcomplete pipx)"

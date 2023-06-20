@@ -103,3 +103,5 @@ alias zimrc="$EDITOR $HOME/.zimrc"
 
 # tmux config
 alias tmxcfg="$EDITOR $XDG_CONFIG_HOME/tmux/tmux.conf"
+# pip_search:the replacement of "pip search"
+alias pip="_pip"
