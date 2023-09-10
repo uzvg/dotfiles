@@ -290,7 +290,7 @@ function ccbk {
 }
 
 # 复制文件内容到剪贴板
-function cf {
+function copyfile {
 	if [ -f  $1 ]
 	then
 		if command -v xclip
@@ -379,7 +379,7 @@ function twLaunch {
 	fi
 }
 
-function twlist {
+function twList {
 	ps aux |grep tiddlywiki| grep -v grep | awk -F '[ =]+' '{print "进程号: "$2"\t工作目录: "$13"\t入口地址为：http://127.0.0.1:"$16}'
 }
 
@@ -547,9 +547,15 @@ function upImage {
 		error "目标文件不存在"
 	fi
 }
+
 function _pip(){
     if [ $1 = "search" ]; then
         pip_search "$2";
     else pip "$@";
     fi;
+}
+
+# gogh 
+function gogh(){
+	bash -c "$(curl -sLo- https://git.io/vQgMr)"
 }

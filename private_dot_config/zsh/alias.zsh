@@ -1,7 +1,7 @@
 # 一些常用命令的替换
-alias ls='exa'
-alias la='exa -a'
-alias l='exa -lha'
+alias ls='eza --icons'
+alias la='eza -a'
+alias l='eza -lha'
 alias g='lazygit'
 alias c='bat'
 alias e="$EDITOR"
@@ -34,7 +34,7 @@ alias cew="eww close-all"
 
 # joshuto
 # ranger-like file manager written in rust
-alias jj="joshuto"
+alias js="joshuto"
 
 # alacritty config
 alias alacfg="$EDITOR $XDG_CONFIG_HOME/alacritty/alacritty.yml"
@@ -54,7 +54,7 @@ alias alacfg="$EDITOR $XDG_CONFIG_HOME/alacritty/alacritty.yml"
 #alias wbarstyle="$EDITOR $XDG_CONFIG_HOME/waybar/style.css"
 
 # rime input method
-alias ckemj="cat /usr/share/rime-data/opencc/emoji_word.txt"
+alias ckemj="bat /usr/share/rime-data/opencc/emoji_word.txt"
 
 #CloudServer
 alias rmsv="ssh -i $HOME/.ssh/id_rsa -l $CloudUser $CloudServer"
@@ -76,15 +76,17 @@ alias sss="systemctl status"
 #config config status.showUntrackedFiles no
 
 # tiddlywiki shortcuts
+alias tw="tiddlywiki"
 alias cfw="twLaunch $TIDDLYWIKI_COFFEE_PATH $TIDDLYWIKI_COFFEE_PORT"
 alias lovePoem="twLaunch $TIDDLYWIKI_LOVEPOEM_PATH $TIDDLYWIKI_LOVEPOEM_PORT"
-alias tmpwiki="twLaunch $HOME/Documents/wikis/tempWiki 9981"
+alias twTemp="twLaunch $HOME/Documents/wikis/tempWiki 9981"
 alias twPrac="twLaunch $TIDDLYWIKI_PRACTICE_PATH $TIDDLYWIKI_PRACTICE_PORT"
 alias twDoc="twLaunch $TIDDLYWIKI_DOCUMENT_PATH $TIDDLYWIKI_DOCUMENT_PORT"
+alias twShiraz="tiddlywiki --load $TIDDLYWIKI_COLLECTION_PSTH/tiddlywiki_shiraz.html --listen port=1980"
 alias lovePoemDeploy="rsync -av --delete $TIDDLYWIKI_LOVEPOEM_PATH/output/index.html $RemoteUser:/www/wwwroot/jiangyuanandjiayu.love/"
 
 # ranger config
-alias rr="ranger"
+alias ra="ranger"
 alias rgcfg="$EDITOR $XDG_CONFIG_HOME/ranger/rc.conf"
 
 # hugo shortcuts
@@ -96,12 +98,24 @@ alias rgcfg="$EDITOR $XDG_CONFIG_HOME/ranger/rc.conf"
 # alias ebkb='xinput --set-prop 8 "Device Enabled" 1'
 
 # gnome-terminal 主题修改👉https://gogh-co.github.io/Gogh/
-# alias gogh='bash -c "$(wget -qO- https://git.io/vQgMr)"'
+# alias gogh= bash -c "$(curl -sLo- https://git.io/vQgMr)"
 
 # zimfw alias
 alias zimrc="$EDITOR $HOME/.zimrc"
+# starship config
+alias ssrc="$EDITOR $HOME/.config/starship.toml"
 
 # tmux config
 alias tmxcfg="$EDITOR $XDG_CONFIG_HOME/tmux/tmux.conf"
+
 # pip_search:the replacement of "pip search"
 alias pip="_pip"
+
+# Enlarge steam UI
+alias steam="steam -forcedesktopscaling=1.25"
+
+# neofetch
+alias ff="fastfetch"
+
+# check nvidia status
+alias nvss="watch -n 2 -d nvidia-smi"

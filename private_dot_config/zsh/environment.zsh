@@ -109,8 +109,13 @@ export TIDDLYWIKI_LOVEPOEM_PATH="$HOME/Documents/wikis/LovePoemForJiayu"
 export TIDDLYWIKI_LOVEPOEM_PORT=9999
 export TIDDLYWIKI_DOCUMENT_PATH="/usr/lib/node_modules/tiddlywiki/editions/tw5.com"
 export TIDDLYWIKI_DOCUMENT_PORT=9898
+export TIDDLYWIKI_COLLECTION_PATH="$HOME/Documents/wikis/TiddlywikiCollections"
 
 # anki confirm compatibility with Qt6
 # export DISABLE_QT5_COMPAT=1
 # export SYNC_USER1="1497911983@qq.com:54264hui936"
 # export GTK_THEME="Adwaita"
+
+# proxy config
+export http_proxy=http://127.0.0.1:2081
+export https_proxy=http://127.0.0.1:2081
