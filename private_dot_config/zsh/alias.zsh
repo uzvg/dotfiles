@@ -1,23 +1,26 @@
-# 一些常用命令的替换
+# 常用命令替换
 alias ls='eza --icons'
-alias la='eza -a'
-alias l='eza -lha'
+alias la='ls -a'
+alias l='ls -lha'
 alias g='lazygit'
 alias c='bat'
 alias e="$EDITOR"
 alias se="sudoedit"
 alias q='exit'
 alias Q='exit'
-alias du="dust -r"
+# alias du="dust -r -X Games"
+alias du="dust -X Games"
 alias df="duf"
+alias zlj="zellij"
 alias tt='taskwarrior-tui'
-alias udd='update-desktop-database $HOME/.local/share/applications/'
-alias fd="fd -H"
+alias udd='update-desktop-database $XDG_DATA_HOME/applications/'
+alias fd="fd -H -E Games"
 alias t="btop"
 alias wd="sdcv --color"
 alias gedit="gnome-text-editor"
 alias vim="$EDITOR"
 alias rlc="source $HOME/.zshrc"
+alias macc="macchina -t Helium"
 
 # chezmoi shortcuts
 alias czm="chezmoi"
@@ -35,6 +38,7 @@ alias cew="eww close-all"
 # joshuto
 # ranger-like file manager written in rust
 alias js="joshuto"
+alias jsrc="$EDITOR $XDG_CONFIG_HOME/joshuto/joshuto.toml"
 
 # alacritty config
 alias alacfg="$EDITOR $XDG_CONFIG_HOME/alacritty/alacritty.yml"
@@ -63,7 +67,7 @@ alias rmsv="ssh -i $HOME/.ssh/id_rsa -l $CloudUser $CloudServer"
 # alias dkstart="systemctl start docker.service"
 
 # fontconfig
-alias ftcfg="$EDITOR $HOME/.config/fontconfig/fonts.conf"
+alias ftcfg="$EDITOR $HOME/.config/fontconfig/conf.d/04-prefer-fonts-for-each-class.conf"
 
 # 同步配置文件
 alias dotfiles="lazygit -p $HOME/.local/share/chezmoi"
@@ -108,6 +112,9 @@ alias ssrc="$EDITOR $HOME/.config/starship.toml"
 # tmux config
 alias tmxcfg="$EDITOR $XDG_CONFIG_HOME/tmux/tmux.conf"
 
+# zellij config
+alias zljcfg="$EDITOR $XDG_CONFIG_HOME/zellij/config.kdl"
+
 # pip_search:the replacement of "pip search"
 alias pip="_pip"
 
@@ -119,3 +126,17 @@ alias ff="fastfetch"
 
 # check nvidia status
 alias nvss="watch -n 2 -d nvidia-smi"
+
+# pacman command
+alias pacinfo="pacman -Si"
+
+# gdu for excluding Games disk
+alias gdu="gdu -i $HOME/Games"
+
+# grep
+# alias grep="grep -v grep"
+
+# shadowsocks
+# start shadowsocks service
+# alias ssstart="sudo sslocal -c /etc/shadowsocks/config.json -d start"
+# alias ssstop="sudo sslocal -c /etc/shadowsocks/config.json -d stop"

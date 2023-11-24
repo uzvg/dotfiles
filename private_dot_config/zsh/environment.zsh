@@ -1,11 +1,9 @@
 #!/usr/bin/zsh
 
-# xdg标准存储目录
-export XDG_CONFIG_HOME="$HOME/.config"
-export XDG_DATA_HOME="$HOME/.local/share"
-
+#⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯SeparatorPlaceHolder⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯#
 # unsetopt completealiases
-# 设置输入法框架
+#
+#⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯设置输入法框架⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯#
 local function setIm () {
 	case $1 in
 		fcitx ):
@@ -41,6 +39,8 @@ export ZSH_CFG_DIR="$HOME/.config/zsh/"
 # aliyunpan-go 配置文件目录
 export ALIYUNPAN_CONFIG_DIR="$HOME/.config/aliyunpan/config"
 
+# Git克隆仓库
+export GIT_REPO_DIR="$HOME/Documents/gitRepos"
 
 # 需要备份的相关数据
 export LOGSEQ_DIR="$HOME/Documents/WorkSpace"
@@ -79,8 +79,9 @@ export PrivKey="$HOME/.ssh/id_rsa"
 export PubKey="$HOME/.ssh/id_rsa.pub"
 
 # gnome-shell theme folder
-# export GnomeShellFolder="$HOME/GitRepos/gnome-shell/data/theme/"
+export GNOME_SHELL_THEME_FOLDER="$HOME/Documents/gitRepos/gnome-shell/data/theme"
 export QT_QPA_PLATFORMTHEME="qt5ct"
+# export QT_WAYLAND_DECORATION=adwaita
 # export GnomeShellTheme="$HOME/.local/share/themes/adwaita-dakr-shell-theme/gnome-shell/gnome-shell.css"
 
 # USUAL config dir
@@ -117,5 +118,16 @@ export TIDDLYWIKI_COLLECTION_PATH="$HOME/Documents/wikis/TiddlywikiCollections"
 # export GTK_THEME="Adwaita"
 
 # proxy config
-export http_proxy=http://127.0.0.1:2081
-export https_proxy=http://127.0.0.1:2081
+# export http_proxy=http://127.0.0.1:2081
+# export https_proxy=http://127.0.0.1:2081
+
+
+# zellij environment
+export ZELLIJ_AUTO_ATTACH='false'
+export ZELLIJ_AUTO_EXIT='true'
+export TERMINAL='alacritty'
+#⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯Enable wayland on firefox⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯#
+export MOZ_ENABLE_WAYLAND=1
+
+#⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯Default Merge tool for pacdiff⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯#
+export DIFFPROG="/usr/bin/nvim"

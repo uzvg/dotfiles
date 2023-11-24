@@ -344,16 +344,16 @@ function blogDeploy {
 	#fi
 }
 
-# gnome-shell 主题修改
-#function gstc {
-#	if [ -d $GnomeShellFolder ] && command -v sassc
-#	then
-#		cd $GnomeShellFolder
-#		sassc gnome-shell.scss > ~/.local/share/themes/adwaita-dakr-shell-theme/gnome-shell/gnome-shell.css
-#	else
-#		echo "something wrong with your gnome shell theme config"
-#	fi
-#}
+# GNOME-SHELL theme Css Generation
+function gscg {
+	if [ -d $GNOME_SHELL_THEME_FOLDER ] && command -v sassc
+	then
+		cd $GNOME_SHELL_THEME_FOLDER
+		sassc gnome-shell-dark.scss > ~/.local/share/themes/adwaita-dark-shell-theme/gnome-shell/gnome-shell.css
+	else
+		echo "something wrong with your gnome shell theme config"
+	fi
+}
 
 #function genBlog {
 #	local title=$(date +%Y-%m-%d-%H-%M)
@@ -558,4 +558,23 @@ function _pip(){
 # gogh 
 function gogh(){
 	bash -c "$(curl -sLo- https://git.io/vQgMr)"
+}
+# current window
+# local CURRENT_WINDOW=$(xprop -id $(xprop -root 32x '\t$0' _NET_ACTIVE_WINDOW | cut -f 2) WM_CLASS | awk -F '"' '{print $4}')
+
+function Create_Mount_Dir () {
+	if [ ! -n "$1" ]
+	then
+		echo "Missing Dir Name"	
+	elif [ ! -d $HOME/$1 ]
+	then
+		mkdir $HOME/$1
+	fi
+}
+
+function Delete_Mount_Dir () {
+	if [ -n $1 ]
+	then
+		rm -r "$HOME/$1"
+	fi
 }
