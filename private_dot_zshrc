@@ -1,33 +1,30 @@
-# ==========================================Add additional env vars==========================================
-export PATH=$PATH:/home/uzvg/.local/bin
-export fpath=($fpath $ZSH_CFG_DIR)
+#!usr/bin/zsh
 
-# ==========================================zoxide configuration==========================================
-eval "$(zoxide init zsh)"
-eval "$(starship init zsh)"
-
-# ==========================================Some personla scripts==========================================
-# source $HOME/.config/zsh/environment.zsh
+#⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯Personal scripts⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯#
+source $HOME/.config/zsh/environment.zsh
 source $HOME/.config/zsh/alias.zsh
 source $HOME/.config/zsh/functions.zsh
 
-# ==========================================Zsh Options==========================================
+#⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯Expand PATH environment⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯#
+export PATH=$PATH:/home/uzvg/.local/bin
+export fpath=($fpath $ZSH_CFG_DIR)
+
+#⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯Zsh Options⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯#
 # Remove older command from the history if a duplicate is to be added.
 setopt HIST_IGNORE_ALL_DUPS
 
 # Set editor default keymap to emacs (`-e`) or vi (`-v`)
-# bindkey -v
-
+bindkey -v
+export KEYTIMEOUT=1
 # Prompt for spelling correction of commands.
-# setopt CORRECT
-
+#setopt CORRECT
 # Customize spelling correction prompt.
-# SPROMPT='zsh: correct %F{red}%R%f to %F{green}%r%f [nyae]? '
+#SPROMPT='zsh: correct %F{red}%R%f to %F{green}%r%f [nyae]? '
 
 # Remove path separator from WORDCHARS.
 WORDCHARS=${WORDCHARS//[\/]}
-
-# ==========================================Zim configuration==========================================
+#
+#⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯Zim configuration⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯#
 # Set a custom prefix for the generated aliases. The default prefix is 'G'.
 # zstyle ':zim:git' aliases-prefix 'g'
 #
@@ -40,7 +37,7 @@ zstyle ':zim:input' double-dot-expand yes
 # If none is provided, the default '%n@%m: %~' is used.
 #zstyle ':zim:termtitle' format '%1~'
 
-# --------------------zsh-autosuggestions--------------------
+#⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯zsh-autosuggestions⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯#
 # Disable automatic widget re-binding on each precmd. This can be set when
 # zsh-users/zsh-autosuggestions is the last module in your ~/.zimrc.
 # ZSH_AUTOSUGGEST_MANUAL_REBIND=1
@@ -49,7 +46,7 @@ zstyle ':zim:input' double-dot-expand yes
 # See https://github.com/zsh-users/zsh-autosuggestions/blob/master/README.md#suggestion-highlight-style
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=242'
 
-# --------------------zsh-syntax-highlighting--------------------
+#⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯zsh-syntax-highlighting⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯#
 # Set what highlighters will be used.
 # See https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters.md
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
@@ -59,10 +56,7 @@ ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 typeset -A ZSH_HIGHLIGHT_STYLES
 ZSH_HIGHLIGHT_STYLES[comment]='fg=242'
 
-# ------------------
-# Initialize modules
-# ------------------
-
+#⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯Zimfw Initialize⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯#
 ZIM_HOME=${ZDOTDIR:-${HOME}}/.zim
 # Download zimfw plugin manager if missing.
 if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
@@ -100,14 +94,19 @@ unset key
 # }}} End configuration added by Zim install
 
 
-# ------------------------------
-# pipx completions
-# ------------------------------
+#⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯pipx completions⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯#
+#
 autoload -U bashcompinit
 bashcompinit
 # enable completion for pipx:
 eval "$(register-python-argcomplete pipx)"
-
-# vi mode
-bindkey -v
-export KEYTIMEOUT=1
+#
+#⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯zellij configuration⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯#
+#
+# 如果启动的终端是Alacritty，就自动自动启动zellij
+if [[ "$CURRENT_TERMINAL" == "Alacritty" ]]
+then
+	eval "$(zellij setup --generate-auto-start zsh)"
+fi
+#
+#⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯SeparatorPlaceHolder⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯#
