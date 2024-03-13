@@ -33,10 +33,10 @@ function alcfg {
 }
 
 function envcfg {
-	$EDITOR $ZSH_CFG_DIR/environment.zsh
-	if [ -N $ZSH_CFG_DIR/environment.zsh ]
+	$EDITOR $HOME/.zshenv
+	if [ -N $HOME/.zshenv ]
 	then
-		source $ZSH_CFG_DIR/environment.zsh
+		source $HOME/.zshenv
 		correct "配置文件已重载"
 	fi
 }
