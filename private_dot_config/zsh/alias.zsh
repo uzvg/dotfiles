@@ -1,5 +1,6 @@
 # 常用命令替换
 alias ls='eza --icons'
+# alias ls='lsd'
 alias la='ls -a'
 alias l='ls -lha'
 alias g='lazygit'
