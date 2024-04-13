@@ -82,6 +82,7 @@ alias sss="systemctl status"
 
 # tiddlywiki shortcuts
 alias tw="tiddlywiki"
+alias twProduct="twLaunch $TIDDLYWIKI_PRODUCT_PATH $TIDDLYWIKI_PRODUCT_PORT"
 alias cfw="twLaunch $TIDDLYWIKI_COFFEE_PATH $TIDDLYWIKI_COFFEE_PORT"
 alias lovePoem="twLaunch $TIDDLYWIKI_LOVEPOEM_PATH $TIDDLYWIKI_LOVEPOEM_PORT"
 alias twTemp="twLaunch $HOME/Documents/wikis/tempWiki 9981"
