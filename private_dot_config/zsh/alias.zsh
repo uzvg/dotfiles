@@ -142,3 +142,7 @@ alias gdu="gdu -i $HOME/Games"
 # start shadowsocks service
 # alias ssstart="sudo sslocal -c /etc/shadowsocks/config.json -d start"
 # alias ssstop="sudo sslocal -c /etc/shadowsocks/config.json -d stop"
+#
+# aliyunpan-go config
+alias alypcfg="$EDITOR $ALIYUNPAN_CONFIG_DIR/aliyunpan_config.json"
+alias alypg="aliyunpan-go"
