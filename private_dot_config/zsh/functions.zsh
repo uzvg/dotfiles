@@ -431,35 +431,35 @@ function ktw {
 # archive Dir ARCHIVE_DESTINATION_DIR mtime
 # 如果dir中的文件在mtime时间之内发生改变，就将其打包到归档目录
 # ARCHIVE_DESTINATION_DIR
-function archive {
-	if [[ $USER == uzvg ]]
-	then
-		if [ -d $1 ]
-		then
-			if realpath $1 | grep -q $HOME
-			then
-				local source_name=$(basename $1)
-				if [ $(find $1 -mmin -$2 | wc -l) -ne 0 ] || [ ! -f $ARCHIVE_DESTINATION_DIR/$source_name.tar.xz ]
-				then
-					warning "文档打包中......"
-					local relative_dir=$(realpath $1 | sed 's!'$HOME'/!!g')
-					#echo $relative_dir
-					tar -X $ARCHIVE_EXCLUDE_FILE -C $HOME -cJPf $ARCHIVE_DESTINATION_DIR/$source_name.tar.xz $relative_dir
-					correct "$(basename $1)打包完毕"
-				else
-					correct "$(basename $1)目录$2分钟内无改动，无需归档"
-				fi
-				
-			else
-				error "$1非家目录中的文件，无法归档"
-			fi
-		else
-			error "源目录错误"
-		fi
-	else
-		error "不是主用户，无权限提交归档文件"
-	fi
-}
+# function archive {
+# 	if [[ $USER == uzvg ]]
+# 	then
+# 		if [ -d $1 ]
+# 		then
+# 			if realpath $1 | grep -q $HOME
+# 			then
+# 				local source_name=$(basename $1)
+# 				if [ $(find $1 -mmin -$2 | wc -l) -ne 0 ] || [ ! -f $ARCHIVE_DESTINATION_DIR/$source_name.tar.xz ]
+# 				then
+# 					warning "文档打包中......"
+# 					local relative_dir=$(realpath $1 | sed 's!'$HOME'/!!g')
+# 					#echo $relative_dir
+# 					tar -X $ARCHIVE_EXCLUDE_FILE -C $HOME -cJPf $ARCHIVE_DESTINATION_DIR/$source_name.tar.xz $relative_dir
+# 					correct "$(basename $1)打包完毕"
+# 				else
+# 					correct "$(basename $1)目录$2分钟内无改动，无需归档"
+# 				fi
+# 				
+# 			else
+# 				error "$1非家目录中的文件，无法归档"
+# 			fi
+# 		else
+# 			error "源目录错误"
+# 		fi
+# 	else
+# 		error "不是主用户，无权限提交归档文件"
+# 	fi
+# }
 
 function archive_backup {
 	for file in $ARCHIVE_LIST
