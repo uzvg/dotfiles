@@ -1,7 +1,7 @@
 # ==========================================Modules==========================================
 #
 # Sets sane Zsh built-in environment options.
- zmodule environment
+zmodule environment
 # Provides handy git aliases and functions.
 # zmodule git
 # Applies correct bindkeys for input events.
@@ -27,6 +27,10 @@ zmodule sorin
 
 # zoxide config
 zmodule kiesman99/zim-zoxide
+
+zmodule joke/zim-chezmoi
+zmodule archive
+
 
 # ==========================================Completion==========================================
 #
