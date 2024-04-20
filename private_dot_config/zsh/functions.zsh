@@ -502,7 +502,7 @@ function post_archive_deploy {
 function get_ssh_key {
 	if [ -f $HOME/.ssh/id_rsa ] && [[ -f $HOME/.ssh/id_rsa.pub ]]
 	then
-		correct "秘钥如下："
+		correct "公钥如下："
 		cf $HOME/.ssh/id_rsa.pub
 	else
 		warning "创建ssh key"
@@ -516,37 +516,37 @@ function get_ssh_key {
 # step3: 复制图片的地址到剪贴板
 # step4: 将图片同步到远程仓库
 
-function upImage {
-	if [ -f $1 ]
-	then
-		filetype=$(file --mime-type $1)
-		if [[ $filetype == *image* ]]
-		then
-			if rsync -av --delete $1 $RemoteUser:/www/wwwroot/uzvg.site/images/
-			then
-				local filename=$(basename $1 | sed 's/ /%20/g')
-				imageUrl=https://uzvg.site/images/$filename
-				correct "URL of image 👉 $imageUrl"
-				echo $imageUrl | xclip -selection clipboard
-				correct "And the address of the image was copied in your clipboard!"
-				cp $1 $TIDDLYWIKI_COFFEE_PATH/images
-				local COMMIT_WORD="image sync on Archlinux at $(date +%Y/%m/%d-%H:%M)"
-				cd $TIDDLYWIKI_COFFEE_PATH/
-				git add images/$(basename $1) > /dev/null
-				git commit -m "$COMMIT_WORD" > /dev/null
-				git push &> /dev/null
-				cd -
-				correct "Image sync successfully!"
-			else
-				error "file transfer failed"
-			fi
-		else
-			error "The file you uploaded is not image, please check it again!"
-		fi
-	else
-		error "目标文件不存在"
-	fi
-}
+# function upImage {
+# 	if [ -f $1 ]
+# 	then
+# 		filetype=$(file --mime-type $1)
+# 		if [[ $filetype == *image* ]]
+# 		then
+# 			if rsync -av --delete $1 $RemoteUser:/www/wwwroot/uzvg.site/images/
+# 			then
+# 				local filename=$(basename $1 | sed 's/ /%20/g')
+# 				imageUrl=https://uzvg.site/images/$filename
+# 				correct "URL of image 👉 $imageUrl"
+# 				echo $imageUrl | xclip -selection clipboard
+# 				correct "And the address of the image was copied in your clipboard!"
+# 				cp $1 $TIDDLYWIKI_COFFEE_PATH/images
+# 				local COMMIT_WORD="image sync on Archlinux at $(date +%Y/%m/%d-%H:%M)"
+# 				cd $TIDDLYWIKI_COFFEE_PATH/
+# 				git add images/$(basename $1) > /dev/null
+# 				git commit -m "$COMMIT_WORD" > /dev/null
+# 				git push &> /dev/null
+# 				cd -
+# 				correct "Image sync successfully!"
+# 			else
+# 				error "file transfer failed"
+# 			fi
+# 		else
+# 			error "The file you uploaded is not image, please check it again!"
+# 		fi
+# 	else
+# 		error "目标文件不存在"
+# 	fi
+# }
 
 function _pip(){
     if [ $1 = "search" ]; then
@@ -562,19 +562,19 @@ function gogh(){
 # current window
 # local CURRENT_WINDOW=$(xprop -id $(xprop -root 32x '\t$0' _NET_ACTIVE_WINDOW | cut -f 2) WM_CLASS | awk -F '"' '{print $4}')
 
-function Create_Mount_Dir () {
-	if [ ! -n "$1" ]
-	then
-		echo "Missing Dir Name"	
-	elif [ ! -d $HOME/$1 ]
-	then
-		mkdir $HOME/$1
-	fi
-}
-
-function Delete_Mount_Dir () {
-	if [ -n $1 ]
-	then
-		rm -r "$HOME/$1"
-	fi
-}
+# function Create_Mount_Dir () {
+# 	if [ ! -n "$1" ]
+# 	then
+# 		echo "Missing Dir Name"	
+# 	elif [ ! -d $HOME/$1 ]
+# 	then
+# 		mkdir $HOME/$1
+# 	fi
+# }
+# 
+# function Delete_Mount_Dir () {
+# 	if [ -n $1 ]
+# 	then
+# 		rm -r "$HOME/$1"
+# 	fi
+# }
