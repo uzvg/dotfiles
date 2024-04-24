@@ -4,6 +4,15 @@
 {{- $email := "1497911983@qq.com" -}}
 {{- $recipient := "age1ql3z7hjy54pw3hyww5ayyfg7zqgvc7w3j2elw8zmrj2kg5sfn9aqmcac8p" -}}
 
+{{- $identity := "" -}}
+{{- $hostname := .chezmoi.hostname -}}
+{{- if eq $hostname "ArchLinux" -}}
+{{-   $identity = "/home/uzvg/key.txt" -}}
+{{- else if eq $hostname "lavm-odbpmxitz6" -}}
+{{-   $identity = "/root/key.txt" -}}
+{{- end -}}
+
+
 [merge]
     command = "nvim"
     args = ["-d", "{{ "{{" }} .Destination {{ "}}" }}", "{{ "{{" }} .Source {{ "}}" }}", "{{ "{{" }} .Target {{ "}}" }}"]
@@ -14,6 +23,7 @@
     name = "{{ .chezmoi.username }}"
     email = {{ $email | quote }}
 encryption = "age"
+
 [age]
-    identity = "/home/{{.chezmoi.username}}/key.txt"
+    identity = {{ $identity | quote }}
     recipient = {{ $recipient | quote }}
