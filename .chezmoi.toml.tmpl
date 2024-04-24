@@ -1,0 +1,19 @@
+# Using neovim's diff mode in chezmoi: https://www.chezmoi.io/user-guide/tools/merge/
+# Example chezmoi.toml file 👉 https://github.com/twpayne/dotfiles/blob/master/home/.chezmoi.toml.tmpl
+{{/* s */}}
+{{- $email := "1497911983@qq.com" -}}
+{{- $recipient := "age1ql3z7hjy54pw3hyww5ayyfg7zqgvc7w3j2elw8zmrj2kg5sfn9aqmcac8p" -}}
+
+[merge]
+    command = "nvim"
+    args = ["-d", "{{ "{{" }} .Destination {{ "}}" }}", "{{ "{{" }} .Source {{ "}}" }}", "{{ "{{" }} .Target {{ "}}" }}"]
+[diff]
+    command = "nvim"
+    args = ["-d", "{{ "{{" }} .Destination {{ "}}" }}", "{{ "{{" }} .Target {{ "}}" }}"]
+[data]
+    name = "{{ .chezmoi.username }}"
+    email = {{ $email | quote }}
+encryption = "age"
+[age]
+    identity = "/home/{{.chezmoi.username}}/key.txt"
+    recipient = {{ $recipient | quote }}
