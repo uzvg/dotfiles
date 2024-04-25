@@ -1,6 +1,6 @@
 # 常用命令替换
-alias ls='eza --icons'
-# alias ls='lsd'
+#alias ls='eza --icons'
+alias ls='lsd'
 alias la='ls -a'
 alias l='ls -lha'
 alias g='lazygit'
@@ -15,7 +15,7 @@ alias df="duf"
 alias zlj="zellij"
 alias tt='taskwarrior-tui'
 alias udd='update-desktop-database $XDG_DATA_HOME/applications/'
-alias fd="fd -H -E Games"
+alias fd="fd -H -E Games -E ExtendDisk"
 alias t="btop"
 alias wd="sdcv --color"
 alias gedit="gnome-text-editor"
@@ -30,6 +30,7 @@ alias czmcd="chezmoi cd"
 alias czmd="chezmoi managed -i dirs"
 alias czmf="chezmoi managed -i files"
 alias czma="chezmoi add --follow"
+alias czme="chezmoi edit"
 alias czmst="chezmoi status"
 
 # eww widget shortcuts
@@ -42,7 +43,7 @@ alias js="joshuto"
 alias jsrc="$EDITOR $XDG_CONFIG_HOME/joshuto/joshuto.toml"
 
 # alacritty config
-alias alacfg="$EDITOR $XDG_CONFIG_HOME/alacritty/alacritty.yml"
+alias alacfg="$EDITOR $XDG_CONFIG_HOME/alacritty/alacritty.toml"
 
 # kitty config 
 # alias ktcfg="$EDITOR $XDG_CONFIG_HOME/kitty/kitty.conf"
@@ -133,7 +134,7 @@ alias nvss="watch -n 2 -d nvidia-smi"
 alias pacinfo="pacman -Si"
 
 # gdu for excluding Games disk
-alias gdu="gdu -i $HOME/Games"
+alias gdu="gdu -i $HOME/Games -i $HOME/ExtendDisk"
 
 # grep
 # alias grep="grep -v grep"
@@ -144,5 +145,14 @@ alias gdu="gdu -i $HOME/Games"
 # alias ssstop="sudo sslocal -c /etc/shadowsocks/config.json -d stop"
 #
 # aliyunpan-go config
-alias alypcfg="$EDITOR $ALIYUNPAN_CONFIG_DIR/aliyunpan_config.json"
 alias alypg="aliyunpan-go"
+alias alypcfg="$EDITOR $ALIYUNPAN_CONFIG_DIR/aliyunpan_config.json"
+
+# chezmoi alias
+
+# apply modifications after modifications
+alias edit="chezmoi edit --apply"
+alias czmcfg="chezmoi edit-config-template"
+
+# starship config
+# alias stcfg="$EDITOR $XDG_CONFIG_HOME/starship.toml"
