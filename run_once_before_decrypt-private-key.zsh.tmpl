@@ -1,7 +1,7 @@
 #!/usr/bin/zsh
 
-if [ ! -f "${HOME}/.config/chezmoi/uzvg.key" ]; then
+if [ ! -f "${HOME}/.config/chezmoi/${USERNAME}.key" ]; then
     mkdir -p "${HOME}/.config/chezmoi"
-    chezmoi age decrypt --output "${HOME}/.config/chezmoi/uzvg.key" --passphrase "{{ .chezmoi.sourceDir }}/uzvg.key.age"
-    chmod 600 "${HOME}/.config/chezmoi/uzvg.key"
+    chezmoi age decrypt --output "${HOME}/.config/chezmoi/${USERNAME}.key" --passphrase "{{ .chezmoi.sourceDir }}/${USERNAME}.key.age"
+    chmod 600 "${HOME}/.config/chezmoi/${USERNAME}.key"
 fi
