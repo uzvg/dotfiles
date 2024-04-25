@@ -2,15 +2,16 @@
 # Example chezmoi.toml file 👉 https://github.com/twpayne/dotfiles/blob/master/home/.chezmoi.toml.tmpl
 {{/* s */}}
 {{- $email := "1497911983@qq.com" -}}
+{{- $identity := "~/.config/chezmoi/uzvg.key" -}}
 {{- $recipient := "age1v2vz36kasq9a3wxlvsqygerysu4gjyqtx4gvw7q80l3589ddf3hs2vhg09" -}}
 
-{{- $identity := "" -}}
-{{- $hostname := .chezmoi.hostname -}}
-{{- if eq $hostname "ArchLinux" -}}
-{{-   $identity = "/home/uzvg/key.txt" -}}
-{{- else if eq $hostname "ubuntu22" -}}
-{{-   $identity = "/root/key.txt" -}}
-{{- end -}}
+# {{- $identity := "" -}}
+# {{- $hostname := .chezmoi.hostname -}}
+# {{- if eq $hostname "ArchLinux" -}}
+# {{-   $identity = "~/.config/chezmoi/uzvg.key" -}}
+# {{- else if eq $hostname "ubuntu22" -}}
+# {{-   $identity = "~/.config/chezmoi/uzvg.key" -}}
+# {{- end -}}
 
 [merge]
     command = "nvim"
