@@ -2,7 +2,7 @@
 # Example chezmoi.toml file 👉 https://github.com/twpayne/dotfiles/blob/master/home/.chezmoi.toml.tmpl
 {{/* s */}}
 {{- $email := "1497911983@qq.com" -}}
-{{- $recipient := "age1ql3z7hjy54pw3hyww5ayyfg7zqgvc7w3j2elw8zmrj2kg5sfn9aqmcac8p" -}}
+{{- $recipient := "age1v2vz36kasq9a3wxlvsqygerysu4gjyqtx4gvw7q80l3589ddf3hs2vhg09" -}}
 
 {{- $identity := "" -}}
 {{- $hostname := .chezmoi.hostname -}}
@@ -11,7 +11,6 @@
 {{- else if eq $hostname "lavm-odbpmxitz6" -}}
 {{-   $identity = "/root/key.txt" -}}
 {{- end -}}
-
 
 [merge]
     command = "nvim"
