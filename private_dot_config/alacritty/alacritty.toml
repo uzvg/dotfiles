@@ -1,0 +1,30 @@
+live_config_reload = true
+import = ["/home/uzvg/.config/alacritty/alacritty-theme/themes/catppuccin_latte.toml"]
+
+[window]
+# title = "Alacritty"
+dynamic_title = true
+decorations = "full"
+dimensions = { columns = 130, lines = 35 }
+padding = { x = 5, y = 5 }
+dynamic_padding = false
+opacity = 0.98
+blur = true
+resize_increments = true
+startup_mode = "Windowed"
+class = { general = "Alacritty", instance = "Alacritty" }
+
+[scrolling]
+history = 10000
+multiplier = 3
+
+[font]
+size = 13.0
+
+[colors]
+draw_bold_text_with_bright_colors = true
+transparent_background_colors = true
+
+[env]
+CURRENT_TERMINAL = "Alacritty"
+TERM = "alacritty"

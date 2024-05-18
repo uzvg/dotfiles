@@ -46,7 +46,7 @@ alias jsrc="$EDITOR $XDG_CONFIG_HOME/joshuto/joshuto.toml"
 alias alacfg="$EDITOR $XDG_CONFIG_HOME/alacritty/alacritty.toml"
 
 # kitty config 
-# alias ktcfg="$EDITOR $XDG_CONFIG_HOME/kitty/kitty.conf"
+alias ktcfg="$EDITOR $XDG_CONFIG_HOME/kitty/kitty.conf"
 
 # hyprland config
 #alias hyprcfg="$EDITOR $HOME/.config/hypr/hyprland.conf"
@@ -108,7 +108,7 @@ alias rgcfg="$EDITOR $XDG_CONFIG_HOME/ranger/rc.conf"
 # alias gogh= bash -c "$(curl -sLo- https://git.io/vQgMr)"
 
 # zimfw alias
-alias zimrc="$EDITOR $HOME/.zimrc"
+alias zimrc="chezmoi edit --apply $HOME/.zimrc"
 # starship config
 alias ssrc="$EDITOR $HOME/.config/starship.toml"
 
