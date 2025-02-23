@@ -1,15 +1,16 @@
 # Using neovim's diff mode in chezmoi: https://www.chezmoi.io/user-guide/tools/merge/
 # Example chezmoi.toml file 👉 https://github.com/twpayne/dotfiles/blob/master/home/.chezmoi.toml.tmpl
 
+{{- /* 在go模板中，可以用{{"{{"}}来转义{{ */ -}}
 # encryption 要被添加在最开始的位置
 
 encryption = "age"
 [merge]
     command = "nvim"
-    args = ["-d", "{{ .Destination }}", "{{ .Source }}", "{{ .Target }}"]
+    args = ["-d", "{{"{{"}} .Destination {{"}}"}}", "{{"{{"}} .Source {{"}}"}}", "{{"{{"}} .Target {{"}}"}}"]
 [diff]
     command = "nvim"
-    args = ["-d", "{{ .Destination }}", "{{ .Target }}"]
+    args = ["-d", "{{"{{"}} .Destination {{"}}"}}", "{{"{{"}} .Target {{"}}"}}"]
 [data]
     name = "uzvg"
     email = "1497911983@qq.com"
