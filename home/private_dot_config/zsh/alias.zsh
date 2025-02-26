@@ -35,6 +35,8 @@ alias envrc="_chezmoi_edit '$ZDOTDIR/env.zsh'"
 alias funcs="_chezmoi_edit '$ZDOTDIR/functions.zsh'"
 # edit fontconfig
 alias ftrc="$EDITOR $HOME/.config/fontconfig/conf.d/04-prefer-fonts-for-each-class.conf"
+# aliyunpan-go config
+alias alyrc="$_chezmoi_edit $ALIYUNPAN_CONFIG_DIR/aliyunpan_config.json"
 
 #================= dotfiles management ================= #
 # alias dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
@@ -165,9 +167,6 @@ alias gdu="gdu -i $HOME/Games -i $HOME/ExtendDisk"
 # alias ssstart="sudo sslocal -c /etc/shadowsocks/config.json -d start"
 # alias ssstop="sudo sslocal -c /etc/shadowsocks/config.json -d stop"
 #
-# aliyunpan-go config
-alias alypg="aliyunpan-go"
-alias alypcfg="$EDITOR $ALIYUNPAN_CONFIG_DIR/aliyunpan_config.json"
 
 # chezmoi alias
 
