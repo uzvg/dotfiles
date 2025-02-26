@@ -1,5 +1,8 @@
 # ================= Linux system environment ================= #
-export PATH=$PATH:$HOME/.local/bin:$HOME/.cargo/bin:$HOME/go/bin
+export PATH=$PATH:$HOME/.local/bin:$HOME/.cargo/bin:$HOME/go/bin:$HOME/.lmstudio/bin
+# Added by LM Studio CLI (lms)
+# export PATH="$PATH:/home/uzvg/.lmstudio/bin"
+
 export ZDOTDIR=$HOME/.config/zsh
 # export fpath=($ZSH_CFG_DIR $fpath)
 
