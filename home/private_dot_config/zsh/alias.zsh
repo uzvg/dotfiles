@@ -37,6 +37,8 @@ alias funcs="_chezmoi_edit '$ZDOTDIR/functions.zsh'"
 alias ftrc="$EDITOR $HOME/.config/fontconfig/conf.d/04-prefer-fonts-for-each-class.conf"
 # aliyunpan-go config
 alias alyrc="$_chezmoi_edit $ALIYUNPAN_CONFIG_DIR/aliyunpan_config.json"
+# edit zimrc file
+alias zimrc="_chezmoi_edit $ZDOTDIR/.zimrc"
 
 #================= dotfiles management ================= #
 # alias dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
@@ -129,8 +131,6 @@ alias ra="yazi"
 # gnome-terminal 主题修改👉https://gogh-co.github.io/Gogh/
 # alias gogh= bash -c "$(curl -sLo- https://git.io/vQgMr)"
 
-# zimfw alias
-alias zimrc="chezmoi edit --apply $HOME/.zimrc"
 # starship config
 # alias ssrc="$EDITOR $HOME/.config/starship.toml"
 
