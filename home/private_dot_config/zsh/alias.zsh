@@ -26,13 +26,13 @@ alias macc="macchina -t Helium"
 
 #================= edit and/or reload config file ================= #
 # Edit and reload zshrc file
-alias zshrc="_rc_edit '$HOME/.zshrc'"
+alias zshrc="_chezmoi_edit '$ZDOTDIR/.zshrc'"
 # Edit and reload alias file
-alias alrc="_rc_edit '$HOME/.config/zsh/alias.zsh'"
+alias alrc="_chezmoi_edit '$ZDOTDIR/alias.zsh'"
 # Edit and reload env file
-alias envrc="_rc_edit '$HOME/.config/zsh/env.zsh'"
+alias envrc="_chezmoi_edit '$ZDOTDIR/env.zsh'"
 # Edit and reload funcs file
-alias funcs="_rc_edit '$HOME/.config/zsh/funcs.zsh'"
+alias funcs="_chezmoi_edit '$ZDOTDIR/functions.zsh'"
 # edit fontconfig
 alias ftrc="$EDITOR $HOME/.config/fontconfig/conf.d/04-prefer-fonts-for-each-class.conf"
 
@@ -173,8 +173,8 @@ alias alypcfg="$EDITOR $ALIYUNPAN_CONFIG_DIR/aliyunpan_config.json"
 # chezmoi alias
 
 # apply modifications after modifications
-alias edit="chezmoi edit --apply"
-alias czmcfg="chezmoi edit-config-template"
+# alias edit="chezmoi edit --apply"
+# alias czmcfg="chezmoi edit-config-template"
 
 # starship config
 # alias stcfg="$EDITOR $XDG_CONFIG_HOME/starship.toml"
