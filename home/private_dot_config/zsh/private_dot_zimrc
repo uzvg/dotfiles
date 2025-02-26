@@ -1,0 +1,39 @@
+# ==========================================Zimfw Customize Modules==========================================
+# zmodule $ZIM_HOME/modules/twmm
+# zmodule uzvg/zsh-ibus-rime-switcher
+# zmodule uzvg/aliases # Include in dotfiles
+
+# ==========================================Zimfw Official Modules==========================================
+# url👉https://github.com/zimfw/zimfw
+zmodule archive
+zmodule environment
+zmodule git
+# zmodule input
+zmodule termtitle
+zmodule pacman
+zmodule fzf
+# 🔗：https://github.com/zimfw/fzf
+# Sets ALT-C previews with ls. Also sets CTRL-T previews with bat if it's installed. Press CTRL-/ to toggle the preview.
+
+# ==========================================Zimfw Community Modules==========================================
+#
+zmodule jeffreytse/zsh-vi-mode
+zmodule hlissner/zsh-autopair
+zmodule kiesman99/zim-zoxide
+zmodule zsh-users/zsh-history-substring-search
+# 
+# ==========================================Zimfw Default Modules==========================================
+
+# 🔗: https://github.com/zimfw/zimfw?tab=readme-ov-file#create-zimrc
+zmodule git-info
+zmodule duration-info
+zmodule sorin
+# zmodule minimal
+# Require the prompt-pwd modeule to show the current working directory
+zmodule prompt-pwd
+zmodule zsh-users/zsh-completions --fpath src
+zmodule completion
+# Completion must be initialized after all modules that add completion definitions
+# And that's why it comes after zsh-users/zsh-completions
+zmodule zsh-users/zsh-autosuggestions
+zmodule zsh-users/zsh-syntax-highlighting
