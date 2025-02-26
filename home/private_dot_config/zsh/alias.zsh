@@ -115,7 +115,6 @@ alias twDoc="twLaunch $TIDDLYWIKI_DOCUMENT_PATH $TIDDLYWIKI_DOCUMENT_PORT"
 # ranger config
 # alias ra="ranger"
 alias ra="yazi"
-alias rgcfg="$EDITOR $XDG_CONFIG_HOME/ranger/rc.conf"
 
 # hugo shortcuts
 # alias hgs="hugo server -s $blogDir"
@@ -131,29 +130,29 @@ alias rgcfg="$EDITOR $XDG_CONFIG_HOME/ranger/rc.conf"
 # zimfw alias
 alias zimrc="chezmoi edit --apply $HOME/.zimrc"
 # starship config
-alias ssrc="$EDITOR $HOME/.config/starship.toml"
+# alias ssrc="$EDITOR $HOME/.config/starship.toml"
 
 # tmux config
-alias tmxcfg="$EDITOR $XDG_CONFIG_HOME/tmux/tmux.conf"
+# alias tmxcfg="$EDITOR $XDG_CONFIG_HOME/tmux/tmux.conf"
 
 # zellij config
-alias zjrc="$EDITOR $XDG_CONFIG_HOME/zellij/config.kdl"
+# alias zjrc="$EDITOR $XDG_CONFIG_HOME/zellij/config.kdl"
 
 # pip_search:the replacement of "pip search"
 # Need to install pip-search
 # alias pip="_pip"
 
 # Enlarge steam UI
-alias steam="steam -forcedesktopscaling=1.25"
+# alias steam="steam -forcedesktopscaling=1.25"
 
 # neofetch
 alias ff="fastfetch"
 
 # check nvidia status
-alias nvss="watch -n 2 -d nvidia-smi"
+# alias nvss="watch -n 2 -d nvidia-smi"
 
 # pacman command
-alias pacinfo="pacman -Si"
+# alias pacinfo="pacman -Si"
 
 # gdu for excluding Games disk
 alias gdu="gdu -i $HOME/Games -i $HOME/ExtendDisk"
