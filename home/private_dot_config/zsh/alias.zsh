@@ -93,15 +93,15 @@ alias ckemj="bat /usr/share/rime-data/opencc/emoji_word.txt"
 # docker shortcuts
 # alias dkstart="systemctl start docker.service"
 
-# 同步配置文件
-# alias dotfiles="lazygit -p $HOME/.local/share/chezmoi"
+# manage dotfiles
+alias dotfiles="lazygit -p $HOME/.local/share/chezmoi"
+# git bare repository to manage dotfiles
+#alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+#config config status.showUntrackedFiles no
 
 # systemctl
 alias sss="systemctl status"
 
-# git bare repository to manage dotfiles
-#alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
-#config config status.showUntrackedFiles no
 
 # tiddlywiki shortcuts
 alias tw="tiddlywiki"
