@@ -94,6 +94,15 @@ _rime_edit() {
   return 0
 }
 
+rimeicon() {
+  local config_file="$RIME_USER_PATH/uggx_fluency.custom.yaml"
+  _rime_edit "${config_file}"
+}
+
+rimewd() {
+  local config_file="$RIME_USER_PATH/custom_phrase.txt"
+  _rime_edit "${config_file}"
+}
 	fi
 }
 
