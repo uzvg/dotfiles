@@ -103,6 +103,47 @@ rimewd() {
   local config_file="$RIME_USER_PATH/custom_phrase.txt"
   _rime_edit "${config_file}"
 }
+
+# Copy file into the clipboard
+cpfile () {
+  local file="$1"
+  [[ -f "$file" ]] || {
+    _show_error "${file:t} is not a valid file"
+    return 1
+  }
+  case $XDG_SESSION_TYPE in
+    (wayland)
+      if (( ! ${+commands[wl-copy]} )); then {
+        _show_error "wl-copy command was not found"
+        _show_tip "Install the wl-clipboard to resolve this"
+        return 1
+      }
+      fi
+			wl-copy < "${file}" || {
+        _show_error "Failed to copy using wl-copy"
+        return 1
+      } 
+      ;;
+    (xorg)
+      if (( ! ${+commands[xclip]} )); then {
+        _show_error "xclip command was not found"
+        _show_tip "Install the xclip to resolve this"
+        return 1
+      }
+      fi
+      xclip -selection clipboard -in < "${file}" || {
+        _show_error "Failed to copy using xclip"
+        return 1
+      } 
+      ;;
+    (*)
+      _show_error "Unsupported display server: $XDG_SESSION_TYPE"
+      return 1
+      ;;
+  esac
+  _show_correct "File copied to clipboard successfully"
+}
+
 	fi
 }
 
