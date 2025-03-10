@@ -178,6 +178,6 @@ alias gdu="gdu -i $HOME/Games -i $HOME/ExtendDisk"
 # alias stcfg="$EDITOR $XDG_CONFIG_HOME/starship.toml"
 
 # Kill Tencent QQ
-alias fuckqq="killall qq"
-alias fuckvv="flatpak kill com.valvesoftware.Steam"
-alias fuckwechat="flatpak kill com.tencent.WeChat"
+alias fkqq="killall qq"
+alias fkvv="flatpak kill com.valvesoftware.Steam"
+alias fkwc="flatpak kill com.tencent.WeChat"
