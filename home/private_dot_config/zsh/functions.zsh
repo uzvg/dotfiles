@@ -8,11 +8,30 @@ function _show_warning() { print -u1 -P "%F{yellow}⚠%f %B%F{3}WARNING:%f%b ${(
 function _show_error() { print -u2 -P "%F{red}✗%f %B%F{1}ERROR:%f%b ${(j: :)@}" }
 
 # Edit config file with `chezmoi edit`
-function _chezmoi_edit() {
-  chezmoi edit --apply $1
-	if [ -N $1 ]; then
-	  exec zsh
-		_show_correct "$1 reloaded successfully!"
+_chezmoi_edit() {
+  local config_file="$1"
+  [[ -f "${config_file}" ]] || {
+    _show_error "${config_file} does not exist"
+    return 1
+  }
+
+  ${commands[chezmoi]} edit "${config_file}" --apply || {
+    _show_error "Failed to edit ${config_file:t} with chezmoi"
+    return 1
+  }
+
+  if [[ -N "${config_file}" ]]; then 
+    exec ${commands[zsh]}
+    # source "${config_file}" || {
+    #   _show_error "Failed to reload ${config_file:t}"
+    #   return 1
+    #  }
+    # _show_correct "${config_file:t} reloaded successfully"
+  else 
+    _show_tip "No changes detected in ${config_file:t}"
+  fi
+}
+
 	fi
 }
 
