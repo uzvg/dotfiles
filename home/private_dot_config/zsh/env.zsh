@@ -103,7 +103,7 @@ export _ZO_ECHO=0
 # export TIDDLYWIKI_PRACTICE_PORT=9090
 # #export TIDDLYWIKI_LOVEPOEM_PATH="$HOME/Documents/wikis/LovePoemForJiayu"
 # export TIDDLYWIKI_LOVEPOEM_PORT=9999
-# export TIDDLYWIKI_DOCUMENT_PATH="/usr/lib/node_modules/tiddlywiki/editions/tw5.com"
+export TIDDLYWIKI_DOCUMENT_PATH="/usr/lib/node_modules/tiddlywiki/editions/tw5.com"
 # export TIDDLYWIKI_DOCUMENT_PORT=9898
 # export TIDDLYWIKI_COLLECTION_PATH="$HOME/Documents/wikis/TiddlywikiCollections"
 # 
