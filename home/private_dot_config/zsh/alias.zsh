@@ -104,14 +104,14 @@ alias sss="systemctl status"
 
 
 # tiddlywiki shortcuts
-alias tw="tiddlywiki"
+# alias tw="tiddlywiki"
 # alias twProduct="twLaunch $TIDDLYWIKI_PRODUCT_PATH $TIDDLYWIKI_PRODUCT_PORT"
-alias twks="twLaunch $TIDDLYWIKI_WKS_PATH $TIDDLYWIKI_WKS_PORT"
+# alias twks="_tw_launch $TIDDLYWIKI_WKS_PATH $TIDDLYWIKI_WKS_PORT"
 # alias cfw="twLaunch $TIDDLYWIKI_COFFEE_PATH $TIDDLYWIKI_COFFEE_PORT"
 # alias lovePoem="twLaunch $TIDDLYWIKI_LOVEPOEM_PATH $TIDDLYWIKI_LOVEPOEM_PORT"
 # alias twTemp="twLaunch $HOME/Documents/wikis/tempWiki 9981"
 # alias twPrac="twLaunch $TIDDLYWIKI_PRACTICE_PATH $TIDDLYWIKI_PRACTICE_PORT"
-alias twDoc="twLaunch $TIDDLYWIKI_DOCUMENT_PATH $TIDDLYWIKI_DOCUMENT_PORT"
+alias twdoc="_tw_launch ${TIDDLYWIKI_DOCUMENT_PATH} 8080"
 # alias twShiraz="tiddlywiki --load $TIDDLYWIKI_COLLECTION_PSTH/tiddlywiki_shiraz.html --listen port=1980"
 # alias lovePoemDeploy="rsync -av --delete $TIDDLYWIKI_LOVEPOEM_PATH/output/index.html $RemoteUser:/www/wwwroot/jiangyuanandjiayu.love/"
 # alias wkspace="nohup tzk listen > /dev/null 2>&1 &"
@@ -119,6 +119,7 @@ alias twDoc="twLaunch $TIDDLYWIKI_DOCUMENT_PATH $TIDDLYWIKI_DOCUMENT_PORT"
 # ranger config
 # alias ra="ranger"
 alias ra="yazi"
+# alias rgcfg="$EDITOR $XDG_CONFIG_HOME/ranger/rc.conf"
 
 # hugo shortcuts
 # alias hgs="hugo server -s $blogDir"
@@ -156,7 +157,7 @@ alias ff="fastfetch"
 # pacman command
 # alias pacinfo="pacman -Si"
 
-# gdu for excluding Games disk
+# gdu but exclude Games disk
 alias gdu="gdu -i $HOME/Games -i $HOME/ExtendDisk"
 
 # grep
@@ -181,3 +182,7 @@ alias gdu="gdu -i $HOME/Games -i $HOME/ExtendDisk"
 alias fkqq="killall qq"
 alias fkvv="flatpak kill com.valvesoftware.Steam"
 alias fkwc="flatpak kill com.tencent.WeChat"
+
+# bottles path
+
+alias btshome="cd .var/app/com.usebottles.bottles/data/bottles/bottles/Quark-Drive/drive_c/users/steamuser"
