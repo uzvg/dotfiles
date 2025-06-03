@@ -4,7 +4,7 @@ export PATH=$PATH:$HOME/.local/bin:$HOME/.cargo/bin:$HOME/go/bin:$HOME/.lmstudio
 # export PATH="$PATH:/home/uzvg/.lmstudio/bin"
 
 export ZDOTDIR=$HOME/.config/zsh
-# export fpath=($ZSH_CFG_DIR $fpath)
+# export fpath=($ZDOTDIR $fpath)
 
 # ================= ibus input method environment ================= #
 # export INPUT_METHOD=wayland
