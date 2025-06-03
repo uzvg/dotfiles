@@ -127,7 +127,7 @@ export TIDDLYWIKI_WKS_PORT=9191
 # ZELLIJ_AUTO_EXIT='true'
 #
 # =============== Enable wayland on firefox ======================
-export MOZ_ENABLE_WAYLAND=1
+# export MOZ_ENABLE_WAYLAND=1
 
 #⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯Default Merge tool for pacdiff⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯#
 export DIFFPROG="/usr/bin/nvim"
