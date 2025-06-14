@@ -144,36 +144,6 @@ cpfile () {
   _show_correct "File copied to clipboard successfully"
 }
 
-#判断git仓库是否没有新的修改
-# function gsn (){
-# 	if [ -d $1 ]
-# 	then
-# 		if cd $1 && git status &> /dev/null	
-# 		then
-# 			
-# 			if [[ -n $(git status --porcelain) ]]
-# 			then
-# 				warning "The repository is dirty"
-# 				cd -
-# 				return 1
-# 			elif [[ -z $(git status --porcelain) ]]
-# 			then
-# 				correct "The repository is clean"
-# 				cd -
-# 				return 0
-# 			fi
-# 		else
-# 			error "$(realpath $1) 不是git仓库"
-# 			cd -
-# 			return 2
-# 		fi
-# 	else
-# 		error "$1不是目录"
-# 		cd -
-# 		return 3
-# 	fi
-# }
-
 # transform file code to UTF_8
 # windows下的纯文件在Linux下打开，有时会出现乱码的情况，需要先进行转码
 function text_utf8 {
@@ -183,35 +153,6 @@ function text_utf8 {
 		_show_error "TRANSFORM ERROR"
 	fi
 }
-
-# Apply dark scheme for correspondending applications
-# 很久之前写的用于给系统整体切换主题的脚本
-# function dark_mode {
-# 	sed -i '/\/light-256/s/light/dark/' ~/.taskrc
-# 	sed -i '/lightTheme/s/true/false/' ~/.config/lazygit/config.yml
-# 	sed -i 's/Adwaita-Dark/Adwaita/' ~/.config/qt5ct/qt5ct.conf
-# 	sed -i 's/Adwaita/Adwaita-Dark/' ~/.config/qt5ct/qt5ct.conf
-# 	sed -i '/background/s/light/dark/' ~/.config/nvim/init.vim
-# 	sed -i '/useDarkTheme/s/false/true/' ~/.config/qv2ray/Qv2ray.conf
-# 	sed -i '/CreatorTheme/s/light/dark/' ~/.config/QtProject/QtCreator.ini
-# 	sed -i '/gtk-application-prefer-dark-theme/s/0/1/' ~/.config/gtk-3.0/settings.ini
-# 	# gsettings set org.gnome.desktop.interface gtk-theme Adwaita-dark
-# 	gsettings set org.gnome.shell.extensions.user-theme name Adwaita-dark
-# }
-
-# Apply light scheme for correspondending applications
-# function light_mode {
-# 	sed -i '/\/dark-256/s/dark/light/' ~/.taskrc
-# 	sed -i '/lightTheme/s/false/true/' ~/.config/lazygit/config.yml
-# 	sed -i 's/Adwaita-Dark/Adwaita/' ~/.config/qt5ct/qt5ct.conf
-# 	sed -i '/background/s/dark/light/' ~/.config/nvim/init.vim
-# 	sed -i '/useDarkTheme/s/true/false/' ~/.config/qv2ray/Qv2ray.conf
-# 	sed -i '/Theme/s/dark/light/' ~/.config/QtProject/QtCreator.ini
-# 	sed -i '/Theme/s/dark/light/' ~/.config/QtProject/QtCreator.ini
-# 	sed -i '/gtk-application-prefer-dark-theme/s/1/0/' ~/.config/gtk-3.0/settings.ini
-# 	# gsettings set org.gnome.desktop.interface gtk-theme Adwaita
-# 	gsettings set org.gnome.shell.extensions.user-theme name Adwaita-light
-# }
 
 function rimeSync {
 	# rime 词库同步
@@ -252,41 +193,6 @@ function rimeSync {
 	fi
 }
 
-# function svwk {
-# 	local COMMIT_WORD="save logseq workspace on Archlinux"
-# 	if [ -d "$LOGSEQ_DIR" ]
-# 	then
-# 		warning "同步中...."
-# 		cd $LOGSEQ_DIR
-# 		git add -A &> /dev/null
-# 		git commit -a -m "$COMMIT_WORD"  &> /dev/null
-# 		git push &> /dev/null
-# 		cd -
-# 		correct "logseq工作空间同步成功"
-# 	else
-# 		error "logseq wokrspace目录不存在"
-# 	fi
-# }
-
-# function svdotfiles {
-# 	if gsn $DOTFILES_PATH > /dev/null
-# 	then
-# 		correct "配置文件已同步，无需操作"
-# 	else
-# 		local COMMIT_WORD="dotfiles auto backup on Archlinux"
-# 		if [ -d "$DOTFILES_PATH" ];then
-# 			cd $DOTFILES_PATH
-# 			git add -A > /dev/null
-# 			git commit -a -m "$COMMIT_WORD" > /dev/null
-# 			git push > /dev/null
-# 			correct "配置文件同步成功"
-# 			cd -
-# 		else
-# 			error "dotfiles sync dir do not exist"
-# 		fi
-# 	fi
-# }
-
 # 将文件传输到远程服务器用户的Documents文件夹下
 # function ttremote {
 # 	if [ -f $(realpath -s $1) ];then
@@ -309,51 +215,6 @@ function rimeSync {
 # 		error "远程登录出错"
 # 	fi
 # }
-
-# 博客部署
-# function blogDeploy {
-	
-	#case in 
-
-	# 部署到本地
-	#if [ $# -eq 0 ]
-	#then
-	#	warning "usage:"
-	#	echo "blogDeploy -t[--type] tiddlywiki/hugo"
-	#	echo "blogDeploy -p[--path] path of blogDir"
-	#else
-	#	case $1 in
-	#if [ -n $blogDir ]
-	#then
-	#	cd $blogDir
-	#	if [ -n $publishDir ]
-	#	then
-	#		hugo --destination $publishDir
-	#		rsync -av --delete $publishDir/ $RemoteUser:/etc/www/uzvg
-	#		echo "部署完成"
-	#	fi
-	#else
-	#	echo "博客build目录错误"
-	#fi
-  # }
-
-# GNOME-SHELL theme Css Generation
-# function gscg {
-# 	if [ -d $GNOME_SHELL_THEME_FOLDER ] && command -v sassc
-# 	then
-# 		cd $GNOME_SHELL_THEME_FOLDER
-# 		sassc gnome-shell-dark.scss > ~/.local/share/themes/adwaita-dark-shell-theme/gnome-shell/gnome-shell.css
-# 	else
-# 		echo "something wrong with your gnome shell theme config"
-# 	fi
-# }
-
-#function genBlog {
-#	local title=$(date +%Y-%m-%d-%H-%M)
-#	cd $blogDir
-#	hugo new post/$title.md
-#	$EDITOR $blogDir/content/post/$title.md
-#}
 
 function _tw_launch {
 	if [ -d $1 ] && [ -n $2 ]
@@ -412,41 +273,6 @@ function ktw {
 		IFS=$IFS_OLD
 	fi
 }
-
-# function blogDeploy {}
-
-# archive Dir ARCHIVE_DESTINATION_DIR mtime
-# 如果dir中的文件在mtime时间之内发生改变，就将其打包到归档目录
-# ARCHIVE_DESTINATION_DIR
-# function archive {
-# 	if [[ $USER == uzvg ]]
-# 	then
-# 		if [ -d $1 ]
-# 		then
-# 			if realpath $1 | grep -q $HOME
-# 			then
-# 				local source_name=$(basename $1)
-# 				if [ $(find $1 -mmin -$2 | wc -l) -ne 0 ] || [ ! -f $ARCHIVE_DESTINATION_DIR/$source_name.tar.xz ]
-# 				then
-# 					warning "文档打包中......"
-# 					local relative_dir=$(realpath $1 | sed 's!'$HOME'/!!g')
-# 					#echo $relative_dir
-# 					tar -X $ARCHIVE_EXCLUDE_FILE -C $HOME -cJPf $ARCHIVE_DESTINATION_DIR/$source_name.tar.xz $relative_dir
-# 					correct "$(basename $1)打包完毕"
-# 				else
-# 					correct "$(basename $1)目录$2分钟内无改动，无需归档"
-# 				fi
-# 				
-# 			else
-# 				error "$1非家目录中的文件，无法归档"
-# 			fi
-# 		else
-# 			error "源目录错误"
-# 		fi
-# 	else
-# 		error "不是主用户，无权限提交归档文件"
-# 	fi
-# }
 
 #上传图片到云服务器，同时将云服务器中的地址重复到剪贴板
 # step1: 判断图片是否存在并且是否是否真的是图片文件
