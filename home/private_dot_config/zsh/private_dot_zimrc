@@ -14,6 +14,7 @@ zmodule pacman
 zmodule fzf
 zmodule joke/zim-chezmoi
 # zmodule uzvg/ibus-rime-switcher
+zmodule uzvg/zim-atuin
 # 🔗：https://github.com/zimfw/fzf
 # Sets ALT-C previews with ls. Also sets CTRL-T previews with bat if it's installed. Press CTRL-/ to toggle the preview.
 
