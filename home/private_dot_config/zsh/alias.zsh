@@ -39,6 +39,8 @@ alias ftrc="$EDITOR $HOME/.config/fontconfig/conf.d/04-prefer-fonts-for-each-cla
 alias alyrc="$_chezmoi_edit $ALIYUNPAN_CONFIG_DIR/aliyunpan_config.json"
 # edit zimrc file
 alias zimrc="_chezmoi_edit $ZDOTDIR/.zimrc"
+# edit atuin file
+alias atrc="_chezmoi_edit $HOME/.config/atuin/config.toml"
 
 #================= dotfiles management ================= #
 # alias dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
