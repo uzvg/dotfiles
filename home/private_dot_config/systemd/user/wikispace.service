@@ -12,9 +12,9 @@ Type=simple
 # 设置工作目录（包含wiki内容的目录）
 WorkingDirectory=/home/uzvg/Documents/wikis/WikiSpace
 # 阻止服务获取新权限，满足安全要求
-NoNewPrivileges=yes
+# NoNewPrivileges=yes
 # 明确指定服务不使用任何补充组，绕过失败的组设置操作
-SupplementaryGroups=
+# SupplementaryGroups=
 ExecStart=/usr/bin/tiddlywiki --listen port="9191"
 # 确保进程在关闭时能接收停止信号
 KillMode=process
