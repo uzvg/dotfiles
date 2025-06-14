@@ -118,7 +118,7 @@ alias twdoc="_tw_launch ${TIDDLYWIKI_DOCUMENT_PATH} 8080"
 
 # ranger config
 # alias ra="ranger"
-alias ra="yazi"
+# alias ra="yazi"
 # alias rgcfg="$EDITOR $XDG_CONFIG_HOME/ranger/rc.conf"
 
 # hugo shortcuts
