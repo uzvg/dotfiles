@@ -11,7 +11,7 @@ zmodule git
 # zmodule input
 zmodule termtitle
 zmodule pacman
-zmodule fzf
+# zmodule fzf
 zmodule joke/zim-chezmoi
 # zmodule uzvg/ibus-rime-switcher
 zmodule uzvg/zim-atuin
@@ -23,7 +23,7 @@ zmodule uzvg/zim-atuin
 zmodule jeffreytse/zsh-vi-mode
 zmodule hlissner/zsh-autopair
 zmodule kiesman99/zim-zoxide
-zmodule zsh-users/zsh-history-substring-search
+# zmodule zsh-users/zsh-history-substring-search
 # 
 # ==========================================Zimfw Default Modules==========================================
 
