@@ -1,0 +1,32 @@
+[Unit]
+Description=TiddlyWiki Listener Service
+After=network.target
+# 确保在关机时能正常停止服务
+Documentation=https://tiddlywiki.com/
+
+[Service]
+Type=simple
+# 替换为您实际运行tiddlywiki的用户
+# User=uzvg
+# Group=uzvg
+# 设置工作目录（包含wiki内容的目录）
+WorkingDirectory=/home/uzvg/Documents/wikis/WikiSpace
+# 阻止服务获取新权限，满足安全要求
+NoNewPrivileges=yes
+# 明确指定服务不使用任何补充组，绕过失败的组设置操作
+SupplementaryGroups=
+ExecStart=/usr/bin/tiddlywiki --listen port="9191"
+# 确保进程在关闭时能接收停止信号
+KillMode=process
+# 设置优雅停止超时时间（根据需求调整）
+TimeoutStopSec=10
+# 系统关闭时发送SIGTERM信号
+KillSignal=SIGTERM
+# 确保服务退出后系统不会认为失败
+SuccessExitStatus=143
+Restart=on-failure
+RestartSec=10
+
+[Install]
+# WantedBy=multi-user.target
+WantedBy=default.target
