@@ -1,0 +1,7 @@
+[Unit]
+Description=Auto commit WikiSpace notes to Git
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/home/uzvg/.config/scripts/auto_commit.zsh
