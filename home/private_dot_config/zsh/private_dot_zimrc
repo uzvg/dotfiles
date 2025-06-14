@@ -12,6 +12,7 @@ zmodule git
 zmodule termtitle
 zmodule pacman
 zmodule fzf
+# zmodule uzvg/ibus-rime-switcher
 # 🔗：https://github.com/zimfw/fzf
 # Sets ALT-C previews with ls. Also sets CTRL-T previews with bat if it's installed. Press CTRL-/ to toggle the preview.
 
