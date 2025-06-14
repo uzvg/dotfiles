@@ -99,7 +99,7 @@ eval "$(register-python-argcomplete pipx)"
 if [ -n "${ZSH_DEBUGRC+1}" ]; then
     zprof
 fi
-# run follow command to measure zsh startup time.
+# run following commands to measure zsh startup time.
 # `time ZSH_DEBUGRC=1 zsh -i -c exit`
   # 最终的输出如下：
     # ZSH_DEBUGRC=1 zsh -i -c exit  0.04s user 0.02s system 100% cpu 0.066 total
