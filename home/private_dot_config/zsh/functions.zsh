@@ -335,8 +335,34 @@ function ra() {
 	rm -f -- "$tmp"
 }
 
-# 删除当前主机上的所有个人配置文件
+# 删除当前电脑上的所有个人配置文件
 function dotfiles_nuke() {
-  dotfiles=$(chezmoi managed -i files)
-  rm -f ${dotfiiles}
+  _show_tip "正在查找 chezmoi 管理的文件..."
+  local managed_files
+  managed_files=$(chezmoi managed -i files)
+
+  if [[ -z "$managed_files" ]]; then
+    _show_tip "没有发现 chezmoi 管理的文件。"
+    return 0
+  fi
+
+  _show_warning "以下文件将被删除："
+  print "$managed_files"
+  print
+  read "confirm?是否确认删除以上文件？(y/N): "
+  if [[ "$confirm" != "y" && "$confirm" != "Y" ]]; then
+    _show_error "操作已取消。"
+    return 1
+  fi
+
+  print "开始删除..."
+  while IFS= read -r file; do
+    if [[ -e "$file" || -L "$file" ]]; then
+      rm -f -- "$file" && _show_correct "已删除 $file" || _show_error "删除失败 $file"
+    else
+      _show_tip "跳过 $file（不存在）"
+    fi
+  done <<< "$managed_files"
+
+  _show_correct "Nuke Done!"
 }
