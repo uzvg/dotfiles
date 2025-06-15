@@ -334,3 +334,9 @@ function ra() {
 	[ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
 	rm -f -- "$tmp"
 }
+
+# 删除当前主机上的所有个人配置文件
+function dotfiles_nuke() {
+  dotfiles=$(chezmoi managed -i files)
+  rm -f ${dotfiiles}
+}
