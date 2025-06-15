@@ -24,3 +24,12 @@ export XMODIFIERS=@im=ibus
 # export SDL_IM_MODULE=fcitx
 # export GLFW_IM_MODULE=ibus
 # export RIME_USER_PATH="$HOME/.local/share/fcitx5/rime"
+
+{{ if eq .chezmoi.osRelease.name "Ubuntu" }}
+#-------------------------------------
+# Disable compinit calling again waring
+# 👉 If you use Ubuntu and installed Zsh with apt, then add the following line to your ~/.zshenv file:
+# 🔗 https://github.com/zimfw/zimfw/wiki/Troubleshooting#completion-is-not-working
+export skip_global_compinit=1
+#-------------------------------------
+{{ end -}}
