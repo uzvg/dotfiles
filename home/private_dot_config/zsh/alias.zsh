@@ -53,7 +53,7 @@ alias czmcd="chezmoi cd"
 alias czmd="chezmoi managed -i dirs"
 alias czmf="chezmoi managed -i files"
 alias czma="chezmoi apply"
-alias czme="chezmoi edit"
+alias czme="chezmoi edit --apply"
 alias czmst="chezmoi status"
 # alias czma="chezmoi add --follow"
 
