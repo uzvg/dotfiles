@@ -225,7 +225,7 @@ export_tiddlers() {
     print_info "导出需要发布的 tiddlers..."
     
     # 系统tiddler <tiddler-filter>
-    local system_tiddler_filter_expression='[all[tiddlers]is[system]]'
+    local system_tiddler_filter_expression='[all[tiddlers]is[system]!prefix[$:/plugins/]]'
     # 系统tiddler <filename-filter>
     local system_filename_filter_expression='[removeprefix[$:/]addprefix[tiddlers/_System/]]'
 
