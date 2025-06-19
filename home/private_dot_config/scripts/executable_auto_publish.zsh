@@ -126,7 +126,7 @@ wikispace_set_field() {
     
     print_info "设置字段: filter='$filter', field='$fieldname', template='$templatetitle'"
     
-    tiddlywiki $PUBLIC_WIKISPACE_PATH --setfield $filter $fieldname $templatetitle $rendertype || {
+    tiddlywiki $PUBLIC_WIKISPACE_PATH --setfield $filter $fieldname $templatetitle $rendertype >/dev/null || {
         print_error "设置字段失败"
         return 1
     }
@@ -234,11 +234,11 @@ export_tiddlers() {
     # 非系统tiddler <filename-filter>
     local non_system_filename_filter_expression='[addprefix[tiddlers/]]'
     
-    tiddlywiki $WIKISPACE_PATH --output $PUBLIC_WIKISPACE_PATH --save $system_tiddler_filter_expression $system_filename_filter_expression || {
+    tiddlywiki $WIKISPACE_PATH --output $PUBLIC_WIKISPACE_PATH --save $system_tiddler_filter_expression $system_filename_filter_expression >/dev/null || {
         print_error "系统 tiddlers 导出失败"
         return 1
     }
-    tiddlywiki $WIKISPACE_PATH --output $PUBLIC_WIKISPACE_PATH --save $non_system_tiddler_filter_expression $non_system_filename_filter_expression || {
+    tiddlywiki $WIKISPACE_PATH --output $PUBLIC_WIKISPACE_PATH --save $non_system_tiddler_filter_expression $non_system_filename_filter_expression >/dev/null || {
         print_error "非系统 tiddlers 导出失败"
         return 1
     }
@@ -376,7 +376,7 @@ configure_special_fields() {
 build_output_file() {
     print_info "构建输出文件 $OUTPUT_FILE..."
     
-    tiddlywiki --render  '.' $OUTPUT_FILE 'text/plain' '$:/plugins/tiddlywiki/tiddlyweb/save/offline' || {
+    tiddlywiki --render  '.' $OUTPUT_FILE 'text/plain' '$:/plugins/tiddlywiki/tiddlyweb/save/offline' >/dev/null || {
         print_error "构建输出文件失败"
         return 1
     }
