@@ -343,10 +343,10 @@ scan_and_remove_sensitive_files() {
     for file in $sensitive_files; do
         if [[ -f $file ]]; then
             rm -f "$file" && {
-                print_info "  已删除: $file"
-                ((deleted_count++))
+                print_info "已删除: $file"
+                (( ++deleted_count ))
             } || {
-                print_error "  删除失败: $file"
+                print_error "删除失败: $file"
             }
         fi
     done
