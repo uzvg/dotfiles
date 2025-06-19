@@ -20,19 +20,13 @@ setopt NULL_GLOB         # 通配符无匹配时返回空列表而非错误
 # ================================================================
 typeset -r WIKISPACE_PATH="${HOME}/Documents/wikis/WikiSpace"
 typeset -r PUBLIC_WIKISPACE_PATH="${HOME}/Documents/wikis/WikiSpace/output/public"
+typeset -r SENSITIVE_WORDS_PATH="${HOME}/.config/zsh/wikispace_sensitive_words.zsh"
 typeset -r OUTPUT_FILE="index.html"
 typeset -r COMMIT_MESSAGE="latest version only"
 
 # 必需的命令列表
 # tiddlywiki git fd ripgrep
 typeset -ra REQUIRED_COMMANDS=(tiddlywiki git fd rg)
-
-# 敏感词汇列表 - 请根据实际需要修改
-# 虽然我们通过 non_system_tiddler_filter_expression 的初步筛选，已经筛选了绝大多数 private tiddler
-# 但人终究会犯错，该数组中的敏感词汇会被使用ripgrep 命令行工具，重新扫描，包括敏感词汇的tiddlers会被删除
-typeset -ra SENSITIVE_WORDS=(
-    "珈瑜"
-)
 
 # ================================================================
 # 颜色输出函数（使用 zsh 的 print）
@@ -256,8 +250,21 @@ export_tiddlers() {
 # 敏感词汇检测和清理函数（使用 ripgrep）
 # ================================================================
 scan_and_remove_sensitive_files() {
-    print_info "开始扫描敏感词汇..."
     
+    # 如果保存敏感词汇的文件存在，或者为空，则跳过该步骤
+    if [[ ! -s $SENSITIVE_WORDS_PATH ]]; then
+        print_info "$SENSITIVE_WORDS_PATH 文件不存在，跳过敏感词汇检查"
+        return 0
+    else
+        # 读取敏感词汇数组变量
+        source $SENSITIVE_WORDS_PATH  
+        if [[ -z $SENSITIVE_WORDS ]]; then 
+            print_info "'SENSITIVE_WORDS'数组敏感词汇为空，跳过敏感词汇检查"
+            return 0
+        fi
+        print_success "敏感词汇读取成功"
+        print_info "开始扫描敏感词汇..."
+    fi
     # 检查 ripgrep 是否可用
     if ! (( ${+commands[rg]} )); then
         print_error "ripgrep (rg) 命令不可用，无法进行敏感词汇检测"
