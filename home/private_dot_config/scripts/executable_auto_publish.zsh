@@ -289,17 +289,27 @@ scan_and_remove_sensitive_files() {
     # 排除 .git 目录和 tiddlywiki.info 文件
     # 使用 || true，确保即使没有搜索到任何文件，程序也能继续执行
     local rg_output
-    rg_output=$(rg -l -s -U \
+    rg_output=$(rg -l -s -U --no-messages\
         --glob '!.git/**' \
         --glob '!tiddlers/_System/**' \
         --glob '!tiddlywiki.info' \
-        "${rg_patterns[@]}" \
-        . 2>/dev/null) || true
+        "${rg_patterns[@]}" .) || true
     
     # 将输出转换为数组
     if [[ -n $rg_output ]]; then
         # 使用 zsh 的参数扩展将换行分隔的字符串转换为数组
-        sensitive_files=(${(f)rg_output})
+        sensitive_files=(${(fu)rg_output})
+        # 调试：显示原始输出和数组内容
+        print_info "调试 - 原始rg输出行数: $(echo "$rg_output" | wc -l)"
+        print_info "调试 - 数组元素个数: ${#sensitive_files}"
+    
+        # 检查是否有重复
+        local unique_count=$(printf '%s\n' "${sensitive_files[@]}" | sort -u | wc -l)
+        print_info "调试 - 去重后元素个数: $unique_count"
+        
+        if (( ${#sensitive_files} != unique_count )); then
+            print_warning "检测到重复文件路径！"
+        fi
     fi
     
     # 检查是否发现敏感文件
@@ -316,9 +326,9 @@ scan_and_remove_sensitive_files() {
         
         # 显示该文件中匹配的敏感词汇（用于调试）
         local matched_words
-        matched_words=$(rg -i -o \
+        matched_words=$(rg -i -o --no-messages \
             "${rg_patterns[@]}" \
-            "$file" 2>/dev/null | sort -u) || true
+            "$file" | sort -u) || true
         
         if [[ -n $matched_words ]]; then
             local -a words_array=(${(f)matched_words})
