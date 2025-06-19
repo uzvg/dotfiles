@@ -1,5 +1,5 @@
 [Unit]
-Description=Auto commit WikiSpace notes to Git
+Description=Auto commit WikiSpace notes to Github
 After=network.target
 
 [Service]
