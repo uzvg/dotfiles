@@ -376,6 +376,8 @@ configure_special_fields() {
     wikispace_set_field '[[$:/status/UserName]]' 'text' '$:/uzvg/FieldsValueTemplates/uzvg' || return 1
     # 从 Page Control 栏删除文件状态按钮
     wikispace_set_field '[[$:/core/ui/Buttons/save-wiki]]' 'tags' '<PLACEHOLDER>' || return 1
+    # 设置默认tiddler为Home & Reading
+    wikispace_set_field '[[$:/DefaultTiddlers]]' 'text' '$:/uzvg/FieldsValueTemplates/DefaultTiddlers' || return 1
     
     print_success "特殊字段配置完成"
 }
