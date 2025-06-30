@@ -3,8 +3,8 @@ local wezterm = require("wezterm")
 return {
 	initial_rows = 30,
 	initial_cols = 130,
-	-- color_scheme = "Catppuccin Mocha",
-	color_scheme = "GitHub Dark",
+	color_scheme = "Catppuccin Mocha",
+	-- color_scheme = "GitHub Dark",
 	-- color_scheme = "Everblush",
 	-- color_scheme = "Everforest Dark Hard",
 	font = wezterm.font_with_fallback({
