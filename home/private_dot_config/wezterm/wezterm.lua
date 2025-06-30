@@ -40,6 +40,6 @@ return {
 	-- Window frame
 	window_frame = {
 		font = require("wezterm").font("CNN Sans Regular"),
-		font_size = 13,
+		font_size = 12,
 	},
 }
