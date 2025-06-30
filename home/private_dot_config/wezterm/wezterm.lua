@@ -8,8 +8,9 @@ return {
 	-- color_scheme = "Everblush",
 	-- color_scheme = "Everforest Dark Hard",
 	font = wezterm.font_with_fallback({
-		"BlexMono Nerd Font Propo Medium",
-		"Noto Sans CJK SC",
+		{ family = "BlexMono Nerd Font Propo Medium", weight = "Medium" },
+		{ family = "Noto Sans CJK SC", weight = "Medium" },
+		{ family = "Noto Color Emoji", weight = "Medium" },
 	}),
 	font_size = 13, -- 字体大小
 	line_height = 1.1, -- 行高，改善行间紧凑问题
