@@ -1,29 +1,37 @@
-# ==========================================Zimfw Customize Modules==========================================
+# ==========================================
+# Zimfw Customize Modules
+# ==========================================
 # zmodule $ZIM_HOME/modules/twmm
 # zmodule uzvg/zsh-ibus-rime-switcher
-# zmodule uzvg/aliases # Include in dotfiles
+zmodule uzvg/ibus-rime-switcher
+# zmodule uzvg/zim-atuin
 
-# ==========================================Zimfw Official Modules==========================================
-# url👉https://github.com/zimfw/zimfw
+# ==========================================
+# Zimfw Official Modules
+# ==========================================
+# 🔗 https://github.com/zimfw/zimfw
 zmodule archive
 zmodule environment
 zmodule git
-# zmodule input
 zmodule termtitle
 zmodule pacman
-# zmodule fzf
-zmodule joke/zim-chezmoi
-# zmodule uzvg/ibus-rime-switcher
-zmodule uzvg/zim-atuin
+# zmodule joke/zim-chezmoi
+# zmodule input
+
+# ===============================================
+# zim-fzf
+# ===============================================
 # 🔗：https://github.com/zimfw/fzf
+# zmodule fzf
 # Sets ALT-C previews with ls. Also sets CTRL-T previews with bat if it's installed. Press CTRL-/ to toggle the preview.
 
-# ==========================================Zimfw Community Modules==========================================
-#
+# ==========================================
+# Zimfw Community Modules
+# ==========================================
 zmodule jeffreytse/zsh-vi-mode
 zmodule hlissner/zsh-autopair
 zmodule kiesman99/zim-zoxide
-# zmodule zsh-users/zsh-history-substring-search
+zmodule zsh-users/zsh-history-substring-search
 # 
 # ==========================================Zimfw Default Modules==========================================
 
@@ -40,3 +48,4 @@ zmodule completion
 # And that's why it comes after zsh-users/zsh-completions
 zmodule zsh-users/zsh-autosuggestions
 zmodule zsh-users/zsh-syntax-highlighting
+zmodule zsh-users/zsh-history-substring-search
