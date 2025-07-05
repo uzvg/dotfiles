@@ -8,6 +8,7 @@ alias c='bat'
 alias t="btop"
 alias e="$EDITOR"
 alias vim="$EDITOR"
+alias hx="helix"
 alias se="sudoedit"
 alias q='exit'
 alias Q='exit'
@@ -41,6 +42,8 @@ alias alyrc="$_chezmoi_edit $ALIYUNPAN_CONFIG_DIR/aliyunpan_config.json"
 alias zimrc="_chezmoi_edit $ZDOTDIR/.zimrc"
 # edit atuin file
 alias atrc="_chezmoi_edit $HOME/.config/atuin/config.toml"
+# edit wezterm config file
+alias wtrc="_chezmoi_edit $HOME/.config/wezterm/wezterm.lua"
 
 #================= dotfiles management ================= #
 # alias dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
