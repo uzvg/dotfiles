@@ -1,4 +1,5 @@
 local wezterm = require("wezterm")
+-- local gpus = wezterm.gui.enumerate_gpus()
 
 return {
 	initial_rows = 30,
@@ -43,4 +44,7 @@ return {
 		font = require("wezterm").font("CNN Sans Regular"),
 		font_size = 12,
 	},
+	-- set default webgpu_preferred_adapter
+	-- webgpu_preferred_adapter = gpus[1],
+	-- front_end = "WebGpu",
 }
