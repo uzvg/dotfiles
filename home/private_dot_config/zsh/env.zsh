@@ -51,9 +51,9 @@ export _ZO_ECHO=0
 #--------------------------------------------
 # Tiddlywiki Path and port environment value
 #--------------------------------------------
-export TIDDLYWIKI_DOCUMENT_PATH="/usr/lib/node_modules/tiddlywiki/editions/tw5.com"
-export TIDDLYWIKI_WKS_PATH="$HOME/Documents/wikis/WikiSpace"
-export TIDDLYWIKI_WKS_PORT=9191
+# export TIDDLYWIKI_DOCUMENT_PATH="/usr/lib/node_modules/tiddlywiki/editions/tw5.com"
+# export TIDDLYWIKI_WKS_PATH="$HOME/Documents/wikis/WikiSpace"
+# export TIDDLYWIKI_WKS_PORT=9191
 
 #--------------------------------------------
 # anki confirm compatibility with Qt6
@@ -77,20 +77,6 @@ export TIDDLYWIKI_WKS_PORT=9191
 # Default Merge tool for pacdiff
 #--------------------------------------------
 export DIFFPROG="/usr/bin/nvim"
-
-#--------------------------------------------
-# Nvidia Related Environment Variable
-#--------------------------------------------
-#export VDPAU_DRIVER="nvidia"
-#export DRI_PRIME=1
-#export __NV_PRIME_RENDER_OFFLOAD=1
-#export __GLX_VENDOR_LIBRARY_NAME=nvidia
-#export LIBVA_DRIVER_NAME="vdpau"
-#export VDPAU_DRIVER="nvidia"
-#export __NV_PRIME_RENDER_OFFLOAD=1
-#export __GLX_VENDOR_LIBRARY_NAME=nvidia
-#export DRI_PRIME=pci-0000_01_00_0
-#export __VK_LAYER_NV_optimus=NVIDIA_only
 
 #--------------------------------------------
 # 用于zim-atuin中的函数清理机制
