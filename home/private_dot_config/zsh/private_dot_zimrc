@@ -3,7 +3,7 @@
 # ==========================================
 # zmodule $ZIM_HOME/modules/twmm
 # zmodule uzvg/zsh-ibus-rime-switcher
-zmodule uzvg/ibus-rime-switcher
+# zmodule uzvg/ibus-rime-switcher
 # zmodule uzvg/zim-atuin
 
 # ==========================================
