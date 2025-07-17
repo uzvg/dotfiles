@@ -365,9 +365,6 @@ scan_and_remove_sensitive_files() {
 configure_special_fields() {
     print_info "配置特殊 tiddler 字段..."
     
-    # 清空 Recent 侧边栏的文本和标签
-    wikispace_set_field '[[$:/core/ui/SideBar/Recent]]' 'text' '<PLACEHOLDER>' || return 1
-    wikispace_set_field '[[$:/core/ui/SideBar/Recent]]' 'tags' '<PLACEHOLDER>'|| return 1
     # 在浏览器中浏览时不会 trigger the dirty state
     wikispace_set_field '[[$:/config/SaverFilter]]' 'text' '<PLACEHOLDER>' || return 1
     # 打开tab的同时，更新地址栏地址
@@ -379,6 +376,24 @@ configure_special_fields() {
     # 设置默认tiddler为Home & Reading
     wikispace_set_field '[[$:/DefaultTiddlers]]' 'text' '$:/uzvg/FieldsValueTemplates/DefaultTiddlers' || return 1
     
+    # Disable Recent Tab In SideBar
+    # wikispace_set_field '[[$:/core/ui/SideBar/Recent]]' 'text' '<PLACEHOLDER>' || return 1
+    # 关闭More SideBar中的非必要Tab
+    wikispace_set_field '[[$:/core/ui/SideBar/Recent]]' 'tags' '<PLACEHOLDER>'|| return 1
+    wikispace_set_field '[[$:/core/ui/MoreSideBar/Recent]]' 'tags' '<PLACEHOLDER>' || return 1
+    wikispace_set_field '[[$:/core/ui/MoreSideBar/All]]' 'tags' '<PLACEHOLDER>' || return 1
+    wikispace_set_field '[[$:/core/ui/MoreSideBar/Missing]]' 'tags' '<PLACEHOLDER>' || return 1
+    wikispace_set_field '[[$:/core/ui/MoreSideBar/Types]]' 'tags' '<PLACEHOLDER>' || return 1
+    wikispace_set_field '[[$:/core/ui/MoreSideBar/Orphans]]' 'tags' '<PLACEHOLDER>' || return 1
+    # 关闭 tools SideBar
+    wikispace_set_field '[[$:/core/ui/SideBar/Tools]]' 'tags' '<PLACEHOLDER>' || return 1
+    # 关闭 Settings 按钮
+    wikispace_set_field '[[$:/core/ui/Buttons/control-panel]]' 'tags' '<PLACEHOLDER>' || return 1
+    # 关闭 new-Journal 按钮
+    wikispace_set_field '[[$:/core/ui/Buttons/new-journal]]' 'tags' '<PLACEHOLDER>' || return 1
+    # 关闭 new-markdown 按钮
+    wikispace_set_field '[[$:/plugins/tiddlywiki/markdown/new-markdown-button]]' 'tags' '<PLACEHOLDER>' || return 1
+
     print_success "特殊字段配置完成"
 }
 
