@@ -1,0 +1,20 @@
+[Unit]
+Description=Auto publish WikiSpace notes to Github
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/home/uzvg/.config/scripts/auto_publish.zsh
+
+# --------------------
+# 其他可用配置：
+# 日志配置
+# StandardOutput=journal
+# StandardError=journal
+
+# 失败重试
+# Restart=on-failure
+# RestartSec=1h
+
+# [Install]
+# WantedBy=multi-user.target

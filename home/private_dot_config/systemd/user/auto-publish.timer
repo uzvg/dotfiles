@@ -1,0 +1,19 @@
+[Unit]
+Description=Wikispace auto publish Timer (24 hours)
+
+[Timer]
+# 首次启动后等待24小时执行第一次
+OnBootSec=1h
+# 每次执行后隔24小时再次执行
+OnUnitActiveSec=24h
+# 允许最大延迟（防止错过执行）
+AccuracySec=1h
+# 补偿错过的执行, 如果机器在某个时间点没开机，它也会在下次开机后补一次运行
+Persistent=true
+
+# 其他可用设置：
+# OnCalendar=daily  # 每天午夜执行
+# RandomizedDelaySec=1h # 随机延迟0-1小时
+
+[Install]
+WantedBy=timers.target
