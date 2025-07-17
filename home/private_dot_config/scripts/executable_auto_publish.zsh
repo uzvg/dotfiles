@@ -230,7 +230,7 @@ export_tiddlers() {
     local system_filename_filter_expression='[removeprefix[$:/]addprefix[tiddlers/_System/]]'
 
     # 非系统tiddler <tiddler-filter>
-    local non_system_tiddler_filter_expression='[all[tiddlers]!is[system]!tag[Journal]!tag[密码(Passwords)]!visibility[Private]!prefix[$:/state/]!prefix[$:/temp/]!prefix[$:/plugins]]'
+    local non_system_tiddler_filter_expression='[all[tiddlers]!is[system]!is[draft]!tag[Journal]!tag[FleetingNotes]!tag[密码(Passwords)]!visibility[Private]!prefix[$:/state/]!prefix[$:/temp/]!prefix[$:/plugins]]'
     # 非系统tiddler <filename-filter>
     local non_system_filename_filter_expression='[addprefix[tiddlers/]]'
     
