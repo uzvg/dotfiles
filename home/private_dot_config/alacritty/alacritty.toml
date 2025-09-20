@@ -1,0 +1,36 @@
+[window]
+title = "Alacritty"
+dynamic_title = true
+decorations = "Full"
+dimensions = { columns = 130, lines = 30 }
+padding = { x = 0, y = 0 }
+dynamic_padding = true
+opacity = 0.98
+blur = true
+resize_increments = true
+startup_mode = "Windowed"
+class = { general = "Alacritty", instance = "Alacritty" }
+
+[scrolling]
+history = 10000
+multiplier = 3
+
+[font]
+size = 11.8
+offset = { x = 0, y = 2 }
+
+
+[colors]
+# draw_bold_text_with_bright_colors = true
+transparent_background_colors = true
+
+[env]
+TERM = "alacritty"
+
+[general]
+live_config_reload = true
+# import = ["/home/uzvg/.config/alacritty/themes/themes/aura.toml"]
+# import = ["/home/uzvg/.config/alacritty/themes/themes/dracula.toml"]
+# import = ["/home/uzvg/.config/alacritty/themes/themes/citylights.toml"]
+# import = ["~/.config/alacritty/themes/themes/ayu_mirage.toml"]
+import = ["~/.config/alacritty/themes/themes/citylights.toml"]
