@@ -70,7 +70,7 @@ alias czmst="chezmoi status"
 # alias jsrc="$EDITOR $XDG_CONFIG_HOME/joshuto/joshuto.toml"
 
 # alacritty config
-# alias alrc="$EDITOR $XDG_CONFIG_HOME/alacritty/alacritty.toml"
+alias atrc="$EDITOR $XDG_CONFIG_HOME/alacritty/alacritty.toml"
 
 # kitty config 
 # alias ktcfg="$EDITOR $XDG_CONFIG_HOME/kitty/kitty.conf"
