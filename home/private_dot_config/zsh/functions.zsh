@@ -163,22 +163,22 @@ function rimeSync {
 		fcitx ):
 			fcitx5-remote -e
 			cd $RIME_USER_PATH
-			warning "词库合并中......"
+			_show_warning "词库合并中......"
 			rime_dict_manager -s &> /dev/null
 			fcitx5-remote -o
 			cd -;;
 		ibus ):
 			ibus exit
 			cd $RIME_USER_PATH
-			warning "词库合并中......"
+			_show_warning "词库合并中......"
 			rime_dict_manager -s &> /dev/null
 			ibus start
 			cd -;;
 		* ):
-			error "词库合并：输入法配置错误";;
+			_show_error "词库合并：输入法配置错误";;
 		esac
 
-		correct "词库合并成功,开始同步......"
+		_show_correct "词库合并成功,开始同步......"
 		if [ -d "$RIME_SYNC_PATH" ];then
 			local COMMIT_WORD="rime sync on Archlinux at $(date +%Y/%m/%d-%H:%M)"
 			cd $RIME_SYNC_PATH
@@ -186,9 +186,9 @@ function rimeSync {
 			git commit -a -m "$COMMIT_WORD" > /dev/null
 			git push &> /dev/null
 			cd -
-			correct "词库同步成功"
+			_show_correct "词库同步成功"
 		else
-			error "rime 同步仓库路径错误"
+			_show_error "rime 同步仓库路径错误"
 		fi
 	fi
 }
