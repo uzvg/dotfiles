@@ -1,7 +1,7 @@
 [window]
 title = "Alacritty"
 dynamic_title = true
-decorations = "Full"
+decorations = "None"
 dimensions = { columns = 130, lines = 30 }
 padding = { x = 0, y = 0 }
 dynamic_padding = true
@@ -11,17 +11,16 @@ resize_increments = true
 startup_mode = "Windowed"
 class = { general = "Alacritty", instance = "Alacritty" }
 
-[scrolling]
-history = 10000
-multiplier = 3
+# [scrolling]
+# history = 10000
+# multiplier = 3
 
 [font]
-size = 11.8
-offset = { x = 0, y = 2 }
-
+size = 11.6
+offset = { x = 0, y =0 }
 
 [colors]
-# draw_bold_text_with_bright_colors = true
+draw_bold_text_with_bright_colors = true
 transparent_background_colors = true
 
 [env]
@@ -29,8 +28,24 @@ TERM = "alacritty"
 
 [general]
 live_config_reload = true
+# Install alacritty-theme
+# git clone https://github.com/alacritty/alacritty-theme ~/.config/alacritty/themes
 # import = ["/home/uzvg/.config/alacritty/themes/themes/aura.toml"]
 # import = ["/home/uzvg/.config/alacritty/themes/themes/dracula.toml"]
 # import = ["/home/uzvg/.config/alacritty/themes/themes/citylights.toml"]
 # import = ["~/.config/alacritty/themes/themes/ayu_mirage.toml"]
-import = ["~/.config/alacritty/themes/themes/citylights.toml"]
+# import = ["~/.config/alacritty/themes/themes/gruvbox_material_hard_dark.toml"]
+# import = ["~/.config/alacritty/themes/themes/citylights.toml"]
+import = ["~/.config/alacritty/themes/themes/autumn.toml"]
+
+# [selection]
+# save_to_clipboard = true
+
+[terminal]
+
+[terminal.shell]
+program = "zellij"
+
+# 禁用所有的alacritty快捷键，防止跟zellij的快捷键冲突
+[keyboard]
+bindings = []
