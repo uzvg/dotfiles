@@ -225,12 +225,12 @@ export_tiddlers() {
     print_info "导出需要发布的 tiddlers..."
     
     # 系统tiddler <tiddler-filter>
-    local system_tiddler_filter_expression='[all[tiddlers]is[system]!is[draft]!prefix[$:/plugins/]] [all[tiddlers]prefix[$:/plugins/tiddlywiki/markdown]]'
+    local system_tiddler_filter_expression='[all[tiddlers]is[system]!is[draft]!prefix[$:/plugins/]!prefix[$:/Storage/]] [all[tiddlers]prefix[$:/plugins/tiddlywiki/markdown]]'
     # 系统tiddler <filename-filter>
     local system_filename_filter_expression='[removeprefix[$:/]addprefix[tiddlers/_System/]]'
 
     # 非系统tiddler <tiddler-filter>
-    local non_system_tiddler_filter_expression='[all[tiddlers]!is[system]!is[draft]!tag[Journal]!tag[FleetingNotes]!tag[密码(Passwords)]!visibility[Private]!prefix[$:/state/]!prefix[$:/temp/]!prefix[$:/plugins]]'
+    local non_system_tiddler_filter_expression='[all[tiddlers]!is[system]!is[draft]!tag[Journal]!tag[FleetingNotes]!tag[密码(Passwords)]!tag[Goal(目标)]!visibility[Private]!prefix[$:/state/]!prefix[$:/temp/]!prefix[$:/plugins]]'
     # 非系统tiddler <filename-filter>
     local non_system_filename_filter_expression='[addprefix[tiddlers/]]'
     
