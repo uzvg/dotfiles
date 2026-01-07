@@ -1,0 +1,16 @@
+# yazi-default.toml👉 https://github.com/sxyazi/yazi/blob/shipped/yazi-config/preset/yazi-default.toml
+# yazi config doc 👉 https://yazi-rs.github.io/docs/configuration/overview/
+
+[mgr]
+ratio = [ 2, 3, 4 ]
+
+[opener]
+play = [
+	{ run = "gio open %s1", desc = "Play", for = "linux" }
+]
+open = [
+	{ run = "gio open %s1", desc = "Open", for = "linux" }
+]
+reveal = [
+	{ run = "gio open %d1", desc = "Reveal", for = "linux" }
+]

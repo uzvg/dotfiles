@@ -1,0 +1,14 @@
+# 快捷键设置的相关文档在：https://yazi-rs.github.io/docs/configuration/keymap
+[mgr]
+
+# 使用gw跳转到wikis Folder
+prepend_keymap = [
+	{ on = [ "g", "w" ],  run = "cd ~/Documents/wikis/WikiSpace",  desc = "Go Wikis Folder" },
+	{ on = [ "g", "p" ],  run = "cd ~/Pictures",  desc = "Go Projects Folder" },
+	{ on = [ "g", "m" ],  run = "cd ~/Music",  desc = "Go Music Folder" }
+]
+
+# 按？显示帮助
+append_keymap = [
+	{ on = "?",           run = "help",                   desc = "Open help" }
+]
