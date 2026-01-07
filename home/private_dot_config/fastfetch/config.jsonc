@@ -1,0 +1,34 @@
+{
+  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+  "modules": [
+    "title",
+    "separator",
+    "os",
+    "kernel",
+    "uptime",
+    "shell",
+    "display",
+    "de",
+    "wm",
+    "wmtheme",
+    "theme",
+    "icons",
+    "font",
+    "cursor",
+    "terminal",
+    "terminalfont",
+    "break",
+    "colors"
+  ]
+}
+
+// 取消显示如下信息：
+//     "packages",
+//     "cpu",
+//     "gpu",
+//     "memory",
+//     "swap",
+//     "disk",
+//     "battery",
+//     "poweradapter",
+//     "locale",
