@@ -1,0 +1,41 @@
+// 默认的配置文件比较难读，可去以下地址读相关文档
+// https://github.com/zellij-org/zellij/blob/main/zellij-utils/assets/config/default.kdl
+keybinds {
+    shared_except "locked" {
+        bind "Alt t" { NewTab; }
+        bind "Alt x" { CloseFocus; }
+    }
+}
+
+// simplified_ui true
+default_shell "zsh"
+// pane_frames true
+session_serialization false
+
+// theme config
+// theme "catppuccin-macchiato"
+// theme "tokyo-night"
+// theme "gruvbox-dark"
+theme "gruber-darker"
+// theme "everforest-dark"
+
+// Default: "default"
+default_layout "compact" 
+
+// Default: normal
+// default_mode "locked"
+
+mouse_mode true
+copy_command "wl-copy"                    // wayland
+scrollback_editor "/usr/bin/nvim"
+support_kitty_keyboard_protocol false
+
+// show_release_notes false
+show_startup_tips false
+
+ui {
+    pane_frames {
+        rounded_corners true
+        hide_session_name true
+    }
+}
