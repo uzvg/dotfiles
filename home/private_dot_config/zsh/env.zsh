@@ -87,3 +87,6 @@ export DIFFPROG="/usr/bin/nvim"
 # tips: 可以使用typeset -f |grep <辅助函数> 来验证
 #--------------------------------------------
 export ZIM_PLUGIN_CLEANUP=1
+#--------------------------------------------
+# mpd host socket configuration
+export MPD_HOST="$XDG_RUNTIME_DIR/mpd/socket"
