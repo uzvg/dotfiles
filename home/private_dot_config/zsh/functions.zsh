@@ -240,3 +240,58 @@ function dotfiles_nuke() {
 
   _show_correct "Nuke Done!"
 }
+
+wkspace() {
+  emulate -L zsh
+
+  local wiki_dir="/home/uzvg/Documents/wikis/WikiSpace"
+  local dev_branch="develop"
+  local main_branch="main"
+  local git=${commands[git]}
+  local lazygit=${commands[lazygit]}
+
+  # stop auto-commit timer
+  systemctl --user stop auto-commit.timer || true
+  # stop wikispace service
+  systemctl --user stop wikispace.service || true
+
+  # change to wiki_dir
+  pushd "$wiki_dir" || {
+    _show_error "$wiki_dir is not exist."
+    return 1
+  }
+
+  {
+    # check branch develop if exist
+    # if $git show-ref --verify --quiet "refs/heads/$dev_branch"; then
+    #   $git switch "$dev_branch"
+    # else
+    #   _show_tip "Creating branch develop..."
+    #   $git switch -c "$dev_branch" "$main_branch" || {
+    #     _show_error "Creating $dev_branch branch failed."
+    #     return 1
+    #   }
+    #   $git switch "$dev_branch"
+    # fi
+    #
+    $lazygit || {
+      _show_error "lazygit failed($?), services intentionally left stopped"
+      return 1
+    }
+  } always {
+    $git switch $main_branch
+    popd
+  }
+
+  # start wikispace service
+  systemctl --user start wikispace.service || {
+    _show_error "Failed to start wikispace service"
+    return 1
+  }
+
+  # start auto-commit timer
+  systemctl --user start auto-commit.timer || {
+    _show_error "Failed to start auto-commit service"
+    return 1
+  }
+}
