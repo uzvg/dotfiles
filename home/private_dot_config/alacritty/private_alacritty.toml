@@ -2,7 +2,7 @@
 title = "Alacritty"
 dynamic_title = true
 decorations = "None"
-dimensions = { columns = 130, lines = 30 }
+dimensions = { columns = 135, lines = 35 }
 padding = { x = 0, y = 0 }
 dynamic_padding = true
 opacity = 0.98
@@ -30,13 +30,8 @@ TERM = "alacritty"
 live_config_reload = true
 # Install alacritty-theme
 # git clone https://github.com/alacritty/alacritty-theme ~/.config/alacritty/themes
-# import = ["/home/uzvg/.config/alacritty/themes/themes/aura.toml"]
-# import = ["/home/uzvg/.config/alacritty/themes/themes/dracula.toml"]
-# import = ["/home/uzvg/.config/alacritty/themes/themes/citylights.toml"]
-# import = ["~/.config/alacritty/themes/themes/ayu_mirage.toml"]
-# import = ["~/.config/alacritty/themes/themes/gruvbox_material_hard_dark.toml"]
-# import = ["~/.config/alacritty/themes/themes/citylights.toml"]
-import = ["~/.config/alacritty/themes/themes/autumn.toml"]
+# import = ["~/.config/alacritty/themes/themes/gruvbox_dark.toml"]
+import = ["~/.config/alacritty/themes/themes/gruvbox_material_hard_dark.toml"]
 
 # [selection]
 # save_to_clipboard = true
