@@ -1,9 +1,11 @@
 #!/usr/bin/env zsh
 
+# 脚本来自于官方示例：https://www.chezmoi.io/user-guide/frequently-asked-questions/encryption/
+
 if [[ ! -f "${HOME}/.config/chezmoi/key.txt" ]]; then
     mkdir -p "${HOME}/.config/chezmoi"
     chezmoi age decrypt \
         --output "${HOME}/.config/chezmoi/key.txt" \
-        --passphrase "{{ .ageKeyDir }}/key.txt.age"
+        --passphrase "${AGE_KEY_DIR}/key.txt.age"
     chmod 600 "${HOME}/.config/chezmoi/key.txt"
 fi
