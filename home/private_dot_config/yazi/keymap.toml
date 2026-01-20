@@ -6,6 +6,7 @@ prepend_keymap = [
 	{ on = [ "g", "w" ],  run = "cd ~/Documents/wikis/WikiSpace",  desc = "Go Wikis Folder" },
 	{ on = [ "g", "p" ],  run = "cd ~/Pictures",  desc = "Go Projects Folder" },
 	{ on = [ "g", "m" ],  run = "cd ~/Music",  desc = "Go Music Folder" }
+	{ on = [ "g", "k" ],  run = "cd ~/Documents",  desc = "Go Documents Folder" }
 ]
 
 # 按？显示帮助
