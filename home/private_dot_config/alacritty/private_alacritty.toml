@@ -30,8 +30,8 @@ TERM = "alacritty"
 live_config_reload = true
 # Install alacritty-theme
 # git clone https://github.com/alacritty/alacritty-theme ~/.config/alacritty/themes
-# import = ["~/.config/alacritty/themes/themes/gruvbox_dark.toml"]
 import = ["~/.config/alacritty/themes/themes/gruvbox_material_hard_dark.toml"]
+# import = ["~/.config/alacritty/themes/themes/gruvbox_dark.toml"]
 
 # [selection]
 # save_to_clipboard = true
