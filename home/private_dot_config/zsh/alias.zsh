@@ -42,7 +42,7 @@ alias envrc="_chezmoi_edit '$ZDOTDIR/env.zsh'"
 # Edit and reload funcs file
 alias funrc="_chezmoi_edit '$ZDOTDIR/functions.zsh'"
 # edit fontconfig
-alias ftrc="_chezmoi_edit $HOME/.config/fontconfig/conf.d/04-prefer-fonts-for-each-class.conf"
+alias ftrc="_chezmoi_edit $XDG_CONFIG_HOME/fontconfig/conf.d/40-family-prefer.conf"
 # aliyunpan-go config
 # alias alyrc="$_chezmoi_edit $ALIYUNPAN_CONFIG_DIR/aliyunpan_config.json"
 # edit zimrc file
