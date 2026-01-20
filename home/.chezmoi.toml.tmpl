@@ -5,16 +5,28 @@
 # encryption 要被添加在最开始的位置
 
 encryption = "age"
+
 [merge]
     command = "nvim"
-    args = ["-d", "{{"{{"}} .Destination {{"}}"}}", "{{"{{"}} .Source {{"}}"}}", "{{"{{"}} .Target {{"}}"}}"]
+    args = [ "-d",
+            {{ printf "%q" "{{ .Destination }}" }},
+            {{ printf "%q" "{{ .Source }}" }},
+            {{ printf "%q" "{{ .Target }}" }}, ]
+
 [diff]
     command = "nvim"
     args = ["-d", "{{"{{"}} .Destination {{"}}"}}", "{{"{{"}} .Target {{"}}"}}"]
+    exclude = ["scripts"]
+
+# [status]
+#    exclude = ["scripts"]
+
 [data]
     name = "uzvg"
     email = "1497911983@qq.com"
-    ageKeyDir = "{{ .chezmoi.config.sourceDir }}/secrets/keys"
+
+[scriptEnv]
+    AGE_KEY_DIR = "{{ .chezmoi.config.sourceDir }}/secrets/keys"
 
 [age]
     identity = "~/.config/chezmoi/key.txt"
