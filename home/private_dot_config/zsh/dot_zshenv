@@ -1,0 +1,32 @@
+# ================= Linux system environment ================= #
+export PATH=$PATH:$HOME/.local/bin:$HOME/.cargo/bin
+# Added by LM Studio CLI (lms)
+# export PATH="$PATH:/home/uzvg/.lmstudio/bin"
+
+# export fpath=($ZDOTDIR $fpath)
+
+# ================= ibus input method environment ================= #
+# export INPUT_METHOD=wayland
+export INPUT_METHOD=ibus
+export GTK_IM_MODULE=ibus
+export GLFW_IM_MODULE=ibus
+export QT_IM_MODULE=ibus
+export XMODIFIERS=@im=ibus
+# export RIME_USER_PATH="$HOME/.config/ibus/rime";;
+
+# ================= fcitx input method environment ================= #
+# https://fcitx-im.org/wiki/Using_Fcitx_5_on_Wayland
+# export INPUT_METHOD=fcitx
+# export GTK_IM_MODULE=fcitx
+# export QT_IM_MODULE=fcitx
+# export XMODIFIERS=@im=fcitx
+# export SDL_IM_MODULE=fcitx
+# export GLFW_IM_MODULE=ibus
+# export RIME_USER_PATH="$HOME/.local/share/fcitx5/rime"
+
+# ================= xdg-based environment value ================= #
+# 🔗 https://wiki.archlinux.org/title/XDG_Base_Directory#User_directories
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_STATE_HOME="$HOME/.local/state"
