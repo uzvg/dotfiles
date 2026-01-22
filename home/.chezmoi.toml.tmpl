@@ -2,6 +2,7 @@
 # Example chezmoi.toml file 👉 https://github.com/twpayne/dotfiles/blob/master/home/.chezmoi.toml.tmpl
 
 {{- /* 在go模板中，可以用{{"{{"}}来转义{{ */ -}}
+{{- printf "%q" "{{ .Target }}" }}, ] -}}
 # encryption 要被添加在最开始的位置
 
 encryption = "age"
@@ -10,8 +11,7 @@ encryption = "age"
     command = "nvim"
     args = [ "-d",
             {{ printf "%q" "{{ .Destination }}" }},
-            {{ printf "%q" "{{ .Source }}" }},
-            {{ printf "%q" "{{ .Target }}" }}, ]
+            {{ printf "%q" "{{ .Source }}" }} ]
 
 [diff]
     command = "nvim"
