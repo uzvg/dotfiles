@@ -5,7 +5,7 @@
 # ===============================================
 # 🔗：https://gist.github.com/elalemanyo/cb3395af64ac23df2e0c3ded8bd63b2f
 # 如果ZSH_DEBUGRC变量存在且不为空，则加载zprof模块：
-if [ -n "${ZSH_DEBUGRC}" ]; then
+if [[ -n "${ZSH_DEBUGRC}" ]]; then
     zmodload zsh/zprof
 fi
 
@@ -18,8 +18,6 @@ source $ZDOTDIR/alias.zsh
 # ==============================================
 # Module Configurations
 # ==============================================
-# Remove older command from the history if a duplicate is to be added.
-setopt HIST_IGNORE_ALL_DUPS
 
 # 使用zsh-auto-pair插件时，删除键不能自动删除匹配的分隔符，原因是zsh-vim-mode的lazy-loading 机制
   # 🔗：https://github.com/hlissner/zsh-autopair/issues/33#issuecomment-1476706761
@@ -43,7 +41,6 @@ zstyle ':zim:input' double-dot-expand yes
 # See https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters.md
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets line)
 
-
 # completion
 # 将加速补全产生的.zcompdump文件，保存到.cache文件夹中，而非家目录中
 zstyle ':completion::complete:*' cache-path ${XDG_CACHE_HOME}/zsh/zcompcache
@@ -62,17 +59,11 @@ ZVM_VI_INSERT_ESCAPE_BINDKEY=jk
 ZIM_HOME=${ZDOTDIR:-${HOME}}/.zim
 # Download zimfw plugin manager if missing.
 if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
-  if (( ${+commands[curl]} )); then
     curl -fsSL --create-dirs -o ${ZIM_HOME}/zimfw.zsh \
         https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
-  else
-    mkdir -p ${ZIM_HOME} && wget -nv -O ${ZIM_HOME}/zimfw.zsh \
-        https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
-  fi
 fi
 
 # Install missing modules, and update ${ZIM_HOME}/init.zsh if missing or outdated.
-# init.zsh是根据.zimrc文件生成的，如果.zimrc发生变化，就更新init.zsh
 if [[ ! ${ZIM_HOME}/init.zsh -nt ${ZDOTDIR:-${HOME}}/.zimrc ]]; then
   source ${ZIM_HOME}/zimfw.zsh init -q
 fi
@@ -91,14 +82,6 @@ for key ('j') bindkey -M vicmd ${key} history-substring-search-down
 unset key
 
 # ===============================================
-# pipx auto-completion (Using uv replace)
-# ===============================================
-# enable completion for pipx:
-# {{ if eq .chezmoi.hostname "ArchLinux" -}}
-# eval "$(register-python-argcomplete pipx)"
-# {{ end -}}
-
-# ===============================================
 # zellij configuration
 # ===============================================
 # 如果启动的终端是Alacritty，就自动自动启动zellij
@@ -108,16 +91,16 @@ unset key
 # fi
 
 # ===============================================
-# Debug zsh startup time footer
+# Debug zsh startup time
 # ===============================================
 # 执行以下命令来统计交互式Shell启动的时间：
 # `time ZSH_DEBUGRC=1 zsh -i -c exit`
-  # 最终的输出如下：
-    # ZSH_DEBUGRC=1 zsh -i -c exit  0.04s user 0.02s system 100% cpu 0.066 total
-      # 0.04s user: 这表示在用户模式下，Zsh 执行该命令花费了 0.04 秒。用户模式是指 CPU 执行用户代码的时间。
-      # 0.02s system: 这表示在内核模式下，Zsh 执行该命令花费了 0.02 秒。系统模式是指 CPU 执行系统调用的时间。
-      # 100% cpu: 这表示在执行该命令时，CPU 的使用率达到了 100%。这通常意味着在执行命令的过程中，CPU 的资源被完全利用。
-      # 0.066 total: 这表示从开始到结束的总时间为 0.066 秒。这是 Zsh 启动并执行 exit 命令所花费的总时间。
+#   最终的输出如下：
+#     ZSH_DEBUGRC=1 zsh -i -c exit  0.04s user 0.02s system 100% cpu 0.066 total
+#       0.04s user: 这表示在用户模式下，Zsh 执行该命令花费了 0.04 秒。用户模式是指 CPU 执行用户代码的时间。
+#       0.02s system: 这表示在内核模式下，Zsh 执行该命令花费了 0.02 秒。系统模式是指 CPU 执行系统调用的时间。
+#       100% cpu: 这表示在执行该命令时，CPU 的使用率达到了 100%。这通常意味着在执行命令的过程中，CPU 的资源被完全利用。
+#       0.066 total: 这表示从开始到结束的总时间为 0.066 秒。这是 Zsh 启动并执行 exit 命令所花费的总时间。
 if [ -n "${ZSH_DEBUGRC+1}" ]; then
     zprof
 fi
