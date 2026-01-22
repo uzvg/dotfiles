@@ -1,3 +1,4 @@
+# vim: ft=zsh
 # ================= Linux system environment ================= #
 export PATH=$PATH:$HOME/.local/bin:$HOME/.cargo/bin
 # Added by LM Studio CLI (lms)
