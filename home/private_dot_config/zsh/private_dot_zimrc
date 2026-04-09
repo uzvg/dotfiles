@@ -5,6 +5,7 @@
 # zmodule uzvg/zsh-ibus-rime-switcher
 # zmodule uzvg/ibus-rime-switcher
 # zmodule uzvg/zim-atuin
+zmodule $ZDOTDIR/plugins
 
 # ==========================================
 # Zimfw Official Modules
