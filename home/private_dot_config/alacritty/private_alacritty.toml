@@ -5,7 +5,7 @@ decorations = "None"
 dimensions = { columns = 135, lines = 35 }
 padding = { x = 0, y = 0 }
 dynamic_padding = true
-opacity = 0.98
+opacity = 0.96
 blur = true
 resize_increments = true
 startup_mode = "Windowed"
@@ -30,8 +30,9 @@ TERM = "alacritty"
 live_config_reload = true
 # Install alacritty-theme
 # git clone https://github.com/alacritty/alacritty-theme ~/.config/alacritty/themes
-import = ["~/.config/alacritty/themes/themes/gruvbox_material_hard_dark.toml"]
+# import = ["~/.config/alacritty/themes/themes/gruvbox_material_hard_dark.toml"]
 # import = ["~/.config/alacritty/themes/themes/gruvbox_dark.toml"]
+import = ["~/.config/alacritty/themes/themes/dracula.toml"]
 
 # [selection]
 # save_to_clipboard = true
@@ -44,3 +45,8 @@ program = "zellij"
 # 禁用所有的alacritty快捷键，防止跟zellij的快捷键冲突
 [keyboard]
 bindings = []
+
+
+[cursor]
+style = { shape = "Underline", blinking = "On" }
+unfocused_hollow = true
