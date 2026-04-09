@@ -9,13 +9,17 @@ Type=simple
 # 替换为您实际运行tiddlywiki的用户
 # User=uzvg
 # Group=uzvg
+
+# 设置tiddlywiki的插件目录环境变量
+Environment="TIDDLYWIKI_PLUGIN_PATH=%h/.local/share/tiddlywiki/plugins"
+
 # 设置工作目录（包含wiki内容的目录）
 WorkingDirectory=/home/uzvg/Documents/wikis/WikiSpace
 # 阻止服务获取新权限，满足安全要求
 # NoNewPrivileges=yes
 # 明确指定服务不使用任何补充组，绕过失败的组设置操作
 # SupplementaryGroups=
-ExecStart=/usr/bin/tiddlywiki --listen port="9191"
+ExecStart=/usr/bin/tiddlywiki --listen port="9191" anon-username="uzvg" root-tiddler=$:/core/save/lazy-images
 # 确保进程在关闭时能接收停止信号
 KillMode=process
 # 设置优雅停止超时时间（根据需求调整）

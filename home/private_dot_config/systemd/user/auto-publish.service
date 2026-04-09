@@ -4,6 +4,7 @@ After=network.target
 
 [Service]
 Type=oneshot
+WorkingDirectory=/home/uzvg/.config/scripts
 ExecStart=/home/uzvg/.config/scripts/auto_publish.zsh
 
 # --------------------
