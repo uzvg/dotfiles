@@ -29,7 +29,7 @@ zmodule pacman
 # ==========================================
 # Zimfw Community Modules
 # ==========================================
-zmodule jeffreytse/zsh-vi-mode
+# zmodule jeffreytse/zsh-vi-mode
 zmodule hlissner/zsh-autopair
 zmodule kiesman99/zim-zoxide
 zmodule zsh-users/zsh-history-substring-search
