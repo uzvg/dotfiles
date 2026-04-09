@@ -3,9 +3,10 @@
 #⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯SeparatorPlaceHolder⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯#
 setopt clobber
 #
-export RIME_USER_PATH="$HOME/.config/ibus/rime"
 # editor
 export EDITOR='nvim'
+export RIME_USER_PATH="$HOME/.config/ibus/rime"
+export RIME_SYNC_PATH="$HOME/Documents/Repos/rime"
 
 #----------------------------------------------
 # Qt 应用程序放大
@@ -17,19 +18,16 @@ export EDITOR='nvim'
 
 #----------------------------------------------
 # aliyunpan-go 配置文件目录
-export ALIYUNPAN_CONFIG_DIR="$HOME/.config/aliyunpan/config"
+# export ALIYUNPAN_CONFIG_DIR="$HOME/.config/aliyunpan/config"
 #----------------------------------------------
 
 # Git仓库文件夹路径
-export GIT_REPO_DIR="$HOME/Documents/gitRepos"
+# export GIT_REPO_DIR="$HOME/Documents/gitRepos"
 
 #--------------------------------------------
 # 需要备份的相关数据
 #--------------------------------------------
 #export LOGSEQ_DIR="$HOME/Documents/WorkSpace"
-#export RIME_SYNC_PATH="$HOME/Documents/Repos/rime"
-#export DOTFILES_PATH="$XDG_DATA_HOME/chezmoi"
-
 
 #--------------------------------------------
 # ranger config
@@ -54,13 +52,7 @@ export _ZO_ECHO=0
 # export TIDDLYWIKI_DOCUMENT_PATH="/usr/lib/node_modules/tiddlywiki/editions/tw5.com"
 # export TIDDLYWIKI_WKS_PATH="$HOME/Documents/wikis/WikiSpace"
 # export TIDDLYWIKI_WKS_PORT=9191
-
-#--------------------------------------------
-# anki confirm compatibility with Qt6
-#--------------------------------------------
-# export DISABLE_QT5_COMPAT=1
-# export SYNC_USER1="$mail:$password"
-# export GTK_THEME="Adwaita"
+export TIDDLYWIKI_PLUGIN_PATH="$XDG_DATA_HOME/tiddlywiki/plugins" 
 
 #--------------------------------------------
 # zellij environment
@@ -87,6 +79,23 @@ export DIFFPROG="/usr/bin/nvim"
 # tips: 可以使用typeset -f |grep <辅助函数> 来验证
 #--------------------------------------------
 export ZIM_PLUGIN_CLEANUP=1
+
 #--------------------------------------------
 # mpd host socket configuration
 export MPD_HOST="$XDG_RUNTIME_DIR/mpd/socket"
+
+#--------------------------------------------
+# zsh-vi-mode configuration
+
+# Copy to the system clipboard when stroke yy, yw and so on
+ZVM_SYSTEM_CLIPBOARD_ENABLED=true
+
+#--------------------------------------------
+# 启用sccache 提升rust编译速度
+export RUSTC_WRAPPER=sccache
+
+#--------------------------------------------
+# 在终端中启动系统代理
+export http_proxy="http://127.0.0.1:3067"
+export https_proxy="http://127.0.0.1:3067"
+export all_proxy="socks5://127.0.0.1:3067"
