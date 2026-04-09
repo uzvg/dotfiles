@@ -225,22 +225,56 @@ export_tiddlers() {
     print_info "导出需要发布的 tiddlers..."
     
     # 系统tiddler <tiddler-filter>
-    local system_tiddler_filter_expression='[all[tiddlers]is[system]!is[draft]!prefix[$:/plugins/]!prefix[$:/Storage/]] [all[tiddlers]prefix[$:/plugins/tiddlywiki/markdown]]'
+    local system_tiddler_filter_expression='[all[tiddlers]is[system]!is[draft]!prefix[$:/plugins/]!prefix[$:/Storage/]!prefix[$:/state/]]
+         [all[tiddlers]prefix[$:/plugins/tiddlywiki/markdown]]
+         [all[tiddlers]prefix[$:/plugins/uzvg/]]'
+    
+    # 需要排除的 system tiddlers：
+        # [all[tiddlers]prefix[$:/state/]]
+        # [all[tiddlers]prefix[$:/temp/]]
+        # [all[tiddlers]prefix[$:/$:/plugins/]]
+        # [all[tiddlers]is[draft]]
+    
+    #  需要排除的普通tiddlers：
+        # [all[tiddlers]tag[Journal]]
+        # [all[tiddlers]visibility[Private]]
+        # [all[tiddlers]tag[FleetingNotes]]
+        # [all[tiddlers]tag[密码(Passwords)]]
+        # [all[tiddlers]tag[Goal(目标)]]
+    
+    #  需要额外增加的tiddlers:
+        # [all[tiddlers]prefix[$:/plugins/uzvg/]]
+
+    local -r wikispace_export_filter='
+        [all[tiddlers]!prefix[$:/state/]!prefix[$:/temp/]!is[draft]!prefix[$:/plugins/]]
+        +[!tag[Journal]!visibility[Private]!tag[FleetingNotes]!tag[密码(Passwords)]!tag[Goal(目标)]]
+        [all[tiddlers]prefix[$:/plugins/uzvg/]]
+        [[$:/plugins/tiddlywiki/markdown]]'
+    
+    local -r wikispace_rename_filter='
+        [prefix[$:/config/PageControlButtons/Visibility/]removeprefix[$:/config/PageControlButtons/Visibility/$:/]addprefix[tiddlers/_System/Visibility/]]
+        [is[system]removeprefix[$:/]addprefix[tiddlers/_System/]]
+        [!is[system]addprefix[tiddlers/]]'
+
     # 系统tiddler <filename-filter>
-    local system_filename_filter_expression='[removeprefix[$:/]addprefix[tiddlers/_System/]]'
+    # local system_filename_filter_expression='[removeprefix[$:/]addprefix[tiddlers/_System/]]'
 
     # 非系统tiddler <tiddler-filter>
-    local non_system_tiddler_filter_expression='[all[tiddlers]!is[system]!is[draft]!tag[Journal]!tag[FleetingNotes]!tag[密码(Passwords)]!tag[Goal(目标)]!visibility[Private]!prefix[$:/state/]!prefix[$:/temp/]!prefix[$:/plugins]]'
+    # local non_system_tiddler_filter_expression='[all[tiddlers]!is[system]!is[draft]!tag[Journal]!tag[FleetingNotes]!tag[密码(Passwords)]!tag[Goal(目标)]!visibility[Private]!prefix[$:/state/]!prefix[$:/temp/]!prefix[$:/plugins]]'
     # 非系统tiddler <filename-filter>
-    local non_system_filename_filter_expression='[addprefix[tiddlers/]]'
+    # local non_system_filename_filter_expression='[addprefix[tiddlers/]]'
     
-    tiddlywiki $WIKISPACE_PATH --output $PUBLIC_WIKISPACE_PATH --save $system_tiddler_filter_expression $system_filename_filter_expression >/dev/null || {
-        print_error "系统 tiddlers 导出失败"
-        return 1
-    }
-    tiddlywiki $WIKISPACE_PATH --output $PUBLIC_WIKISPACE_PATH --save $non_system_tiddler_filter_expression $non_system_filename_filter_expression >/dev/null || {
-        print_error "非系统 tiddlers 导出失败"
-        return 1
+    # tiddlywiki $WIKISPACE_PATH --output $PUBLIC_WIKISPACE_PATH --save $system_tiddler_filter_expression $system_filename_filter_expression >/dev/null || {
+        # print_error "系统 tiddlers 导出失败"
+        # return 1
+    # }
+    # tiddlywiki $WIKISPACE_PATH --output $PUBLIC_WIKISPACE_PATH --save $non_system_tiddler_filter_expression $non_system_filename_filter_expression >/dev/null || {
+        # print_error "非系统 tiddlers 导出失败"
+        # return 1
+    # }
+
+    tiddlywiki $WIKISPACE_PATH --output $PUBLIC_WIKISPACE_PATH --save $wikispace_export_filter $wikispace_rename_filter >/dev/null || {
+        print_error "wikispace tiddlers导出失败"
     }
     
     print_success "Tiddlers 导出完成"
@@ -364,35 +398,64 @@ scan_and_remove_sensitive_files() {
 # ================================================================
 configure_special_fields() {
     print_info "配置特殊 tiddler 字段..."
-    
+    local -r null_value_template='$:/uzvg/FieldsValueTemplates/value_null'
+    local -r show_value_template='$:/uzvg/FieldsValueTemplates/value_show'
+    local -r hide_value_template='$:/uzvg/FieldsValueTemplates/value_hide'
+    local -r yes_value_template='$:/uzvg/FieldsValueTemplates/value_yes'
+    local -r no_value_template='$:/uzvg/FieldsValueTemplates/value_no'
+    local -r uzvg_value_template='$:/uzvg/FieldsValueTemplates/value_uzvg'
+    local -r default_tiddlers_template='$:/uzvg/FieldsValueTemplates/value_Home_Reading'
+    local -r classic_value_template='$:/uzvg/FieldsValueTemplates/value_classic'
+
     # 在浏览器中浏览时不会 trigger the dirty state
-    wikispace_set_field '[[$:/config/SaverFilter]]' 'text' '<PLACEHOLDER>' || return 1
+    wikispace_set_field '[[$:/config/SaverFilter]]' 'text' $null_value_template || return 1
+
     # 打开tab的同时，更新地址栏地址
-    wikispace_set_field '[[$:/config/Navigation/UpdateHistory]]' 'text' '$:/uzvg/FieldsValueTemplates/yes' || return 1
+    wikispace_set_field '[[$:/config/Navigation/UpdateHistory]]' 'text' $yes_value_template || return 1
+    
     # 自动添加modifier为uzvg 
-    wikispace_set_field '[[$:/status/UserName]]' 'text' '$:/uzvg/FieldsValueTemplates/uzvg' || return 1
-    # 从 Page Control 栏删除文件状态按钮
-    wikispace_set_field '[[$:/core/ui/Buttons/save-wiki]]' 'tags' '<PLACEHOLDER>' || return 1
+    wikispace_set_field '[[$:/status/UserName]]' 'text' $uzvg_value_template || return 1
+
     # 设置默认tiddler为Home & Reading
-    wikispace_set_field '[[$:/DefaultTiddlers]]' 'text' '$:/uzvg/FieldsValueTemplates/DefaultTiddlers' || return 1
+    wikispace_set_field '$:/DefaultTiddlers' 'text' $default_tiddlers_template || return 1
+
+    # 从 Page Control 栏删除文件状态按钮
+    wikispace_set_field '[[$:/core/ui/Buttons/save-wiki]]' 'tags' $null_value_template || return 1
     
     # Disable Recent Tab In SideBar
-    # wikispace_set_field '[[$:/core/ui/SideBar/Recent]]' 'text' '<PLACEHOLDER>' || return 1
+    wikispace_set_field '[[$:/core/ui/SideBar/Recent]]' 'text' '<PLACEHOLDER>' || return 1
+
     # 关闭More SideBar中的非必要Tab
-    wikispace_set_field '[[$:/core/ui/SideBar/Recent]]' 'tags' '<PLACEHOLDER>'|| return 1
-    wikispace_set_field '[[$:/core/ui/MoreSideBar/Recent]]' 'tags' '<PLACEHOLDER>' || return 1
-    wikispace_set_field '[[$:/core/ui/MoreSideBar/All]]' 'tags' '<PLACEHOLDER>' || return 1
-    wikispace_set_field '[[$:/core/ui/MoreSideBar/Missing]]' 'tags' '<PLACEHOLDER>' || return 1
-    wikispace_set_field '[[$:/core/ui/MoreSideBar/Types]]' 'tags' '<PLACEHOLDER>' || return 1
-    wikispace_set_field '[[$:/core/ui/MoreSideBar/Orphans]]' 'tags' '<PLACEHOLDER>' || return 1
+    wikispace_set_field '[[$:/core/ui/SideBar/Recent]]' 'tags' $null_value_template || return 1
+    wikispace_set_field '[[$:/core/ui/MoreSideBar/Recent]]' 'tags' $null_value_template || return 1
+    wikispace_set_field '[[$:/core/ui/MoreSideBar/All]]' 'tags' $null_value_template || return 1
+    wikispace_set_field '[[$:/core/ui/MoreSideBar/Missing]]' 'tags' $null_value_template || return 1
+    wikispace_set_field '[[$:/core/ui/MoreSideBar/Types]]' 'tags' $null_value_template || return 1
+    wikispace_set_field '[[$:/core/ui/MoreSideBar/Orphans]]' 'tags' $null_value_template || return 1
+
     # 关闭 tools SideBar
-    wikispace_set_field '[[$:/core/ui/SideBar/Tools]]' 'tags' '<PLACEHOLDER>' || return 1
+    wikispace_set_field '[[$:/core/ui/SideBar/Tools]]' 'tags' $null_value_template || return 1
+
     # 关闭 Settings 按钮
-    wikispace_set_field '[[$:/core/ui/Buttons/control-panel]]' 'tags' '<PLACEHOLDER>' || return 1
+    wikispace_set_field '[[$:/core/ui/Buttons/control-panel]]' 'tags' $null_value_template || return 1
+
     # 关闭 new-Journal 按钮
-    wikispace_set_field '[[$:/core/ui/Buttons/new-journal]]' 'tags' '<PLACEHOLDER>' || return 1
+    wikispace_set_field '[[$:/core/ui/Buttons/new-journal]]' 'tags' $null_value_template || return 1
+
     # 关闭 new-markdown 按钮
-    wikispace_set_field '[[$:/plugins/tiddlywiki/markdown/new-markdown-button]]' 'tags' '<PLACEHOLDER>' || return 1
+    wikispace_set_field '[[$:/plugins/tiddlywiki/markdown/new-markdown-button]]' 'tags' $null_value_template || return 1
+
+    # 使用默认的home button
+    wikispace_set_field '$:/config/PageControlButtons/Visibility/$:/core/ui/Buttons/home' 'text' $show_value_template || return 1
+    wikispace_set_field '$:/config/PageControlButtons/Visibility/$:/uzvg/Buttons/Home' 'text' $hide_value_template || return 1
+    # wikispace_set_field '$:/uzvg/Buttons/Home' 'tags' $null_value_template || return 1
+
+    # 导出external image
+    wikispace_set_field '[all[tiddlers]is[image]!type[image/svg+xml]]' '_canonical_uri' '$:/uzvg/renderTemplates/get-image-url' || return 1
+    wikispace_set_field '[all[tiddlers]is[image]!type[image/svg+xml]]' 'text' $null_value_template || return 1
+    
+    # 设置 story view为classic
+    wikispace_set_field '$:/view' 'text' $classic_value_template || return 1
 
     print_success "特殊字段配置完成"
 }
@@ -416,6 +479,15 @@ build_output_file() {
     fi
     
     print_success "输出文件构建完成: $OUTPUT_FILE"
+}
+
+# ================================================================
+# 同步图片
+# ================================================================
+
+sync_wikispace_images() {
+  print_info "开始同步图片到图床..."
+  zsh -c ./sync_wikispace_image.zsh
 }
 
 # ================================================================
@@ -458,6 +530,9 @@ main() {
     check_dependencies
     validate_paths
     
+    # 同步图片
+    sync_wikispace_images
+
     # 执行主要构建流程
     build_public_wikispace
     
