@@ -38,7 +38,7 @@ alias alrc="chezmoi_edit '$ZDOTDIR/alias.zsh'"
 # Edit and reload env file
 alias envrc="chezmoi_edit '$ZDOTDIR/env.zsh'"
 # Edit and reload funcs file
-alias funrc="chezmoi_edit '$ZDOTDIR/functions.zsh'"
+# alias funrc="chezmoi_edit '$ZDOTDIR/functions.zsh'"
 # edit fontconfig
 alias ftrc="chezmoi_edit $XDG_CONFIG_HOME/fontconfig/conf.d/40-family-prefer.conf"
 # edit zimrc file
@@ -77,7 +77,7 @@ alias czmst="chezmoi status"
 alias altrc="chezmoi_edit $XDG_CONFIG_HOME/alacritty/alacritty.toml"
 
 # kitty config 
-# alias ktyrc="$EDITOR $XDG_CONFIG_HOME/kitty/kitty.conf"
+alias ktyrc="chezmoi_edit $XDG_CONFIG_HOME/kitty/kitty.conf"
 
 # hyprland config
 # alias hyprcfg="$EDITOR $HOME/.config/hypr/hyprland.conf"
@@ -94,6 +94,10 @@ alias altrc="chezmoi_edit $XDG_CONFIG_HOME/alacritty/alacritty.toml"
 alias ckemj="bat /usr/share/rime-data/opencc/emoji_word.txt"
 alias rimeicon="rime_edit '$RIME_USER_PATH/uggx_fluency.custom.yaml'"
 alias rimewd="rime_edit '$RIME_USER_PATH/custom_phrase.txt'"
+# alias get-ascii-mode="gdbus call --session \
+#   --dest com.github.rime.ibus.Rime \
+#   --object-path /com/github/rime/ibus/Rime \
+#   --method com.github.rime.ibus.Rime.AsciiMode.GetAsciiMode"
 
 # CloudServer
 # alias rmsv="ssh -i $HOME/.ssh/id_rsa -l $CloudUser $CloudServer"
@@ -110,6 +114,8 @@ alias uzpd="lazygit -p '$ZDOTDIR/plugins'"
 # systemctl
 alias sss="systemctl status"
 alias wkstatus="systemctl status wikispace --user"
+alias wkstart="systemctl start wikispace --user"
+alias wkstop="systemctl stop wikispace --user"
 alias wkrestart="systemctl restart wikispace --user"
 
 # clean journalctl file
@@ -158,4 +164,7 @@ alias btshome="cd .var/app/com.usebottles.bottles/data/bottles/bottles/Quark-Dri
 # alias sudo="sudo-rs"
 
 # Sync system time
-# alias timesync="systemctl restart systemd-timesyncd.service"
+alias timesync="systemctl restart systemd-timesyncd.service"
+
+# sync wallpapers
+alias wpsync="rclone sync $HOME/Pictures/Wallpapers OneDrive:Wallpapers --progress"
