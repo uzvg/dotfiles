@@ -60,8 +60,9 @@ alias czmr="chezmoi re-add"
 alias czmcd="chezmoi cd"
 alias czmd="chezmoi managed -i dirs"
 alias czmf="chezmoi managed -i files"
-alias czma="chezmoi apply"
-alias czme="chezmoi edit --apply"
+# alias czma="chezmoi apply"
+# alias czme="chezmoi edit --apply"
+alias ce="chezmoi_edit"
 alias czmst="chezmoi status"
 
 # eww widget shortcuts
@@ -168,3 +169,14 @@ alias timesync="systemctl restart systemd-timesyncd.service"
 
 # sync wallpapers
 alias wpsync="rclone sync $HOME/Pictures/Wallpapers OneDrive:Wallpapers --progress"
+
+# daed 管理快捷命令
+alias ddstart='systemctl start dae.service'
+alias ddstop='systemctl stop dae.service'
+# alias ddrestart='systemctl restart dae.service'
+alias ddrld='systemctl reload dae.service'
+alias ddst='systemctl status dae.service'
+# 查看实时日志 (显示最后50行并持续滚动)
+# alias ddlog='journalctl -u dae.service -f -n 50'
+alias ddlg='journalctl -u dae.service -f -o cat'
+alias daerc="chezmoi_edit $XDG_CONFIG_HOME/dae/config.dae"
