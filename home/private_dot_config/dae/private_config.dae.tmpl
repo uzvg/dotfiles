@@ -35,19 +35,10 @@ dns {
 
     # DNS 查询规则
     routing {
-        # 根据 DNS 查询，决定使用哪个 DNS 上游，按由上到下的顺序匹配
-        # 在 request 阶段，只决定这个 DNS 查询发给哪个 upstream，解决去哪查的问题。
         request {
-            # 防穿透操作，防止浏览器使用 HTTP/3 / DoH(DNS over http) / ECH绕过代理
-            # 如果希望对dns完全控制的话，可以 reject
-            # 拦截 👉 更可控
-            # 不拦截 👉 速度更快
-            qtype(https) -> reject
-            qtype(svcb) -> reject
+            qtype(https, svcb) -> reject
             qname(geosite:category-ads-all) -> reject
-            # 国内域名使用阿里云
             qname(geosite:cn) -> alidns
-            # fallback 即默认兜底 DNS
             fallback: googledns
         }
 
@@ -127,6 +118,7 @@ group {
 # https://github.com/daeuniverse/dae/blob/main/docs/zh/configuration/routing.md
 routing {
     pname('NetworkManager','systemd-resolved','dnsmasq') -> must_direct
+
     # DNS 地址或域名，强制直连
     # dip(8.8.8.8) -> must_direct
     # dip(1.1.1.1) -> must_direct
