@@ -99,11 +99,9 @@ routing {
     pname('NetworkManager','systemd-resolved','dnsmasq') -> must_direct
 
     # DNS 地址或域名，强制直连
-    # dip(8.8.8.8) -> must_direct
-    # dip(1.1.1.1) -> must_direct
-    # domain(dns.alidns.com) -> must_direct
-    # domain(dns.google) -> must_direct
-    # domain(cloudflare-dns.com) -> must_direct
+    dip(223.5.5.5) && dport(53) -> must_direct
+    dip(8.8.8.8) && dport(53) -> japan
+    dip(1.1.1.1) && dport(53) -> japan
 
     # 广告域名，拒绝
     # domain(geosite:category-ads-all) -> block
