@@ -40,33 +40,14 @@ dns {
             fallback: googledns
         }
 
-        # 响应路由：解决“信不信”
-        # 校验从 request 解析回来的结果
-        # Response的决策模型是：
-            # 顺序优先 + 首个命中即决策
-            # 对于每一条规则：
-            # 如果 match 成功 → 执行 action
-            # 一旦 action 是：
-            # accept → 直接结束 response 判定
-            # cfdns / alidns / upstream(xxx) → 触发重查流程
-        # response {
-            # geoip:private 内网ip
-            # geoip:cn 国内ip
-
-            # ===== 1. 国内域名 → 国内IP，直接信 =====
-            # qname(geosite:cn) && ip(geoip:cn) -> accept
-            # ===== 2. 国内域名，但解析到私网IP（异常但可能合法，比如内网劫持）=====
-            # qname(geosite:cn) && ip(geoip:private) -> accept
-            # ===== 3. 非CN的任意域名 → 私网IP（高危污染）=====
-            # ip(geoip:private) -> googledns
-            # ===== 4. 非CN的任意域名 → CN IP（潜在污染）=====
-            # ip(geoip:cn) -> googledns
-            # ===== 5. fallback =====
-            # fallback: accept
-            # qname(geosite:cn) -> alidns
-            # fallback 即默认兜底 DNS
-            # fallback: googledns
-        # }
+        response {
+            # Trusted upstream. Always accept its result.
+            upstream(googledns) -> accept
+            # Possibly polluted, re-lookup using googledns.
+            ip(geoip:private) && !qname(geosite:cn) -> googledns
+            # fallback is also called default.
+            fallback: accept
+        }
     }
 }
 
