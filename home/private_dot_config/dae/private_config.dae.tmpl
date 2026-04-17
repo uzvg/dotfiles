@@ -34,7 +34,7 @@ dns {
     # DNS 查询规则
     routing {
         request {
-            qtype(https, svcb) -> reject
+            # qtype(https, svcb) -> reject
             qname(geosite:category-ads-all) -> reject
             qname(geosite:cn) -> alidns
             fallback: googledns
