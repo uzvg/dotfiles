@@ -2,8 +2,11 @@
 
 # 脚本来自于官方示例：https://www.chezmoi.io/user-guide/frequently-asked-questions/encryption/#how-do-i-configure-chezmoi-to-encrypt-files-but-only-request-a-passphrase-the-first-time-chezmoi-init-is-run
 
-if [ ! -f "${HOME}/.config/chezmoi/key.txt" ]; then
-    mkdir -p "${HOME}/.config/chezmoi"
-    chezmoi age decrypt --output "${HOME}/.config/chezmoi/key.txt" --passphrase "{{ .chezmoi.sourceDir }}/secrets/keys/key.txt.age"
-    chmod 600 "${HOME}/.config/chezmoi/key.txt"
+typeset -r decrypt_key="$HOME/.config/chezmoi/key.txt"
+typeset -r encrypt_key="{{ .chezmoi.sourceDir }}/secrets/keys/key.txt.age"
+
+if [[ ! -f ${decrypt_key} ]]; then
+    mkdir -p ${decrypt_key:h}
+    chezmoi age decrypt --output ${decrypt_key} --passphrase ${encrypt_key}
+    chmod 600 ${decrypt_key}
 fi
