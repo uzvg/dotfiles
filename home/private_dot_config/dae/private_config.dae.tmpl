@@ -25,10 +25,16 @@ dns {
     ipversion_prefer: 4
     upstream {
         # 阿里云 DNS，用于国内域名查询
-        alidns: 'udp://223.5.5.5:53'
+        # alidns: 'udp://223.5.5.5:53'
+        alidns: 'https://dns.alidns.com/dns-query'
+
+        # CloudFlare DNS
         # cfdns: 'tcp+udp://1.1.1.1:53'
-        # cfdns: 'udp://1.1.1.1:53'
-        googledns: 'tcp+udp://8.8.8.8:53'
+        cfdns: 'https://cloudflare-dns.com/dns-query'
+
+        # google DNS
+        # googledns: 'tcp+udp://8.8.8.8:53'
+        # googledns: 'https://dns.google/dns-query'
     }
 
     # DNS 查询规则
@@ -37,14 +43,14 @@ dns {
             # qtype(https, svcb) -> reject
             qname(geosite:category-ads-all) -> reject
             qname(geosite:cn) -> alidns
-            fallback: googledns
+            fallback: cfdns
         }
 
         response {
             # Trusted upstream. Always accept its result.
-            upstream(googledns) -> accept
-            # Possibly polluted, re-lookup using googledns.
-            ip(geoip:private) && !qname(geosite:cn) -> googledns
+            upstream(cfdns) -> accept
+            # Possibly polluted, re-lookup using cfdns.
+            ip(geoip:private) && !qname(geosite:cn) -> cfdns
             # fallback is also called default.
             fallback: accept
         }
@@ -85,28 +91,30 @@ routing {
     # DNS 地址或域名，强制直连
     dip(224.0.0.0/3, 'ff00::/8') -> must_direct
     dip(geoip:private) -> direct
+    dip(8.8.8.8) && dport(53) -> proxy
+    dip(1.1.1.1) && dport(53) -> proxy
     dip(223.5.5.5) && dport(53) -> must_direct
 
     # 目标 IP 多播、广播地址，直连
     dip(geoip:cn) -> direct
     domain(geosite:cn) -> direct
-    domain(suffix: kukuw.com, suffix: uzvg.site) -> direct
+    domain(suffix: kukuw.com) -> direct
 
-    dip(8.8.8.8) && dport(53) -> proxy
-    dip(1.1.1.1) && dport(53) -> proxy
+    # 域名规则：
+    # domain(suffix: v2raya.org) -> my_group # 相当于 domain(v2raya.org) -> my_group 
+    # domain(full: dns.google) -> my_group
+    # domain(keyword: facebook) -> my_group
+    # domain(regex: '\.goo.*\.com$') -> my_group
+    # domain(geosite:category-ads) -> block
+    # domain(geosite:cn)->direct
 
-
-    # AI 域名，AI 分组代理
-    domain(geosite:google) -> proxy
-    domain(geosite:openai) -> proxy
-    domain(geosite:anthropic) -> proxy
-    domain(geosite:github) -> proxy
-    domain(geosite:archlinux, geosite:flatpak) -> proxy
-    domain(full: code.visualstudio.com) -> proxy
-    domain(full: wallhaven.cc) -> proxy
-    domain(full: unsplash.com) -> proxy
-    domain(geosite:docker) -> proxy
-    domain(mongodb.com) -> proxy
+    domain(geosite: github, geosite: google, geosite: github, geosite: anthropic) -> proxy
+    domain(geosite:archlinux, geosite:flatpak, geosite: docker) -> proxy
+    domain(suffix: visualstudio.com) -> proxy
+    domain(suffix: youtube.com) -> proxy
+    domain(suffix: wallhaven.cc) -> proxy
+    domain(suffix: unsplash.com) -> proxy
+    domain(suffix: mongodb.com) -> proxy
     domain(geosite:geolocation-!cn) -> proxy
     # 未命中上面的规则的走 proxy 代理
     fallback: proxy
