@@ -173,7 +173,7 @@ alias wpsync="rclone sync $HOME/Pictures/Wallpapers OneDrive:Wallpapers --progre
 # daed 管理快捷命令
 alias ddstart='systemctl start dae.service'
 alias ddstop='systemctl stop dae.service'
-# alias ddrestart='systemctl restart dae.service'
+alias ddrestart='systemctl restart dae.service'
 alias ddrld='systemctl reload dae.service'
 alias ddst='systemctl status dae.service'
 # 查看实时日志 (显示最后50行并持续滚动)
