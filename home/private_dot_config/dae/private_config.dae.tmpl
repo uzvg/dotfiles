@@ -59,35 +59,19 @@ subscription {
 
 # 节点分组
 group {
-    japan {
+    proxy {
         filter: subtag(new_google_v2) && name(keyword: '日本')
-        # filter: subtag(xingjiabi) && name(keyword: '日本')
-        # Select the node with min moving average of latencies from the group for every connection.
-        # policy: min_moving_avg
-        policy: min_avg10
-    }
+        filter: subtag(xingjiabi) && name(keyword: '日本')
 
-    korea {
-        filter: subtag(new_google_v2) && name(keyword: '韩国')
+        # filter: subtag(new_google_v2) && name(keyword: '韩国')
         # filter: subtag(xingjiabi) && name(keyword: '韩国')
-        # Select the node with min moving average of latencies from the group for every connection.
-        # policy: min_moving_avg
-        policy: min_avg10
-        check_tolerance: 200ms
-    }
 
-    america {
-        filter: subtag(new_google_v2) && name(keyword: '美国')
+        # filter: subtag(new_google_v2) && name(keyword: '美国')
         # filter: subtag(xingjiabi) && name(keyword: '美国')
-        # Select the node with min moving average of latencies from the group for every connection.
-        policy: min_moving_avg
-        # policy: min_avg10
-    }
 
-    signapore {
-        filter: subtag(new_google_v2) && name(keyword: '新加坡')
+        # filter: subtag(new_google_v2) && name(keyword: '新加坡')
         # filter: subtag(xingjiabi) && name(keyword: '新加坡')
-        # Select the node with min moving average of latencies from the group for every connection.
+
         policy: min_moving_avg
         # policy: min_avg10
     }
@@ -99,28 +83,31 @@ routing {
     pname('NetworkManager','systemd-resolved','dnsmasq') -> must_direct
 
     # DNS 地址或域名，强制直连
+    dip(224.0.0.0/3, 'ff00::/8') -> must_direct
+    dip(geoip:private) -> direct
     dip(223.5.5.5) && dport(53) -> must_direct
-    dip(8.8.8.8) && dport(53) -> japan
-    dip(1.1.1.1) && dport(53) -> japan
 
     # 目标 IP 多播、广播地址，直连
-    dip(224.0.0.0/3, 'ff00::/8') -> must_direct
     dip(geoip:cn) -> direct
-    dip(geoip:private) -> direct
     domain(geosite:cn) -> direct
-    domain(dazi.kukuw.com) -> direct
+    domain(suffix: kukuw.com, suffix: uzvg.site) -> direct
+
+    dip(8.8.8.8) && dport(53) -> proxy
+    dip(1.1.1.1) && dport(53) -> proxy
+
 
     # AI 域名，AI 分组代理
-    # domain(geosite:google) -> proxy
-    # domain(geosite:openai) -> proxy
-    # domain(geosite:anthropic) -> proxy
-    # domain(geosite:github) -> proxy
-    # domain(geosite:archlinux) -> proxy
-    # domain(full: code.visualstudio.com) -> proxy
-    # domain(full: wallhaven.cc) -> proxy
-    # domain(full: unsplash.com) -> proxy
-    # domain(geosite:docker) -> proxy
-    # domain(geosite:geolocation-!cn) -> proxy
+    domain(geosite:google) -> proxy
+    domain(geosite:openai) -> proxy
+    domain(geosite:anthropic) -> proxy
+    domain(geosite:github) -> proxy
+    domain(geosite:archlinux, geosite:flatpak) -> proxy
+    domain(full: code.visualstudio.com) -> proxy
+    domain(full: wallhaven.cc) -> proxy
+    domain(full: unsplash.com) -> proxy
+    domain(geosite:docker) -> proxy
+    domain(mongodb.com) -> proxy
+    domain(geosite:geolocation-!cn) -> proxy
     # 未命中上面的规则的走 proxy 代理
-    fallback: japan
+    fallback: proxy
 }
