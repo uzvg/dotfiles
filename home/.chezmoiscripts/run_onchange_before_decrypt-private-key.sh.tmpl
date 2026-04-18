@@ -1,11 +1,9 @@
 #!/usr/bin/env zsh
 
-# 脚本来自于官方示例：https://www.chezmoi.io/user-guide/frequently-asked-questions/encryption/
+# 脚本来自于官方示例：https://www.chezmoi.io/user-guide/frequently-asked-questions/encryption/#how-do-i-configure-chezmoi-to-encrypt-files-but-only-request-a-passphrase-the-first-time-chezmoi-init-is-run
 
-if [[ ! -f "${HOME}/.config/chezmoi/key.txt" ]]; then
+if [ ! -f "${HOME}/.config/chezmoi/key.txt" ]; then
     mkdir -p "${HOME}/.config/chezmoi"
-    chezmoi age decrypt \
-        --output "${HOME}/.config/chezmoi/key.txt" \
-        --passphrase "${AGE_KEY_DIR}/key.txt.age"
+    chezmoi age decrypt --output "${HOME}/.config/chezmoi/key.txt" --passphrase "{{ .chezmoi.sourceDir }}/secrets/keys/key.txt.age"
     chmod 600 "${HOME}/.config/chezmoi/key.txt"
 fi

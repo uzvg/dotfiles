@@ -27,14 +27,14 @@ dns {
     ipversion_prefer: 4
     upstream {
         # 阿里云 DNS，用于国内域名查询
-        # alidns: 'udp://223.5.5.5:53'
+        alidns: 'udp://223.5.5.5:53'
         # alidns: 'https://dns.alidns.com/dns-query'
-        alidns: 'h3://dns.alidns.com:443/dns-query'
+        # alidns: 'h3://dns.alidns.com:443/dns-query'
 
         # CloudFlare DNS
-        # cfdns: 'tcp+udp://1.1.1.1:53'
+        cfdns: 'udp://1.1.1.1:53'
         # cfdns: 'https://cloudflare-dns.com/dns-query'
-        cfdns: 'h3://cloudflare-dns.com:443/dns-query'
+        # cfdns: 'h3://cloudflare-dns.com:443/dns-query'
 
         # google DNS
         # googledns: 'tcp+udp://8.8.8.8:53'
@@ -64,15 +64,16 @@ dns {
 
 # 订阅地址
 subscription {
-    xingjiabi: '{{ include (joinPath .chezmoi.config.sourceDir "secrets/keys/xingjiabi_sub.txt.age") | decrypt | trim }}'
-    new_google_v2: '{{ include (joinPath .chezmoi.config.sourceDir "secrets/keys/new_google_v2_sub.txt.age") | decrypt | trim }}'
+    ktm001: '{{ include (joinPath .chezmoi.sourceDir "secrets/keys/ktm001.txt.age") | decrypt | trim }}'
+    # xingjiabi: '{{ include (joinPath .chezmoi.sourceDir "secrets/keys/xingjiabi.txt.age") | decrypt | trim }}'
+    # new_google_v2: '{{ include (joinPath .chezmoi.sourceDir "secrets/keys/new_google_v2.txt.age") | decrypt | trim }}'
 }
 
 # 节点分组
 group {
     proxy {
-        filter: subtag(new_google_v2) && name(keyword: '日本')
-        filter: subtag(xingjiabi) && name(keyword: '日本')
+        # filter: subtag(new_google_v2) && name(keyword: '日本')
+        # filter: subtag(xingjiabi) && name(keyword: '日本')
 
         # filter: subtag(new_google_v2) && name(keyword: '韩国')
         # filter: subtag(xingjiabi) && name(keyword: '韩国')
@@ -80,8 +81,9 @@ group {
         # filter: subtag(new_google_v2) && name(keyword: '美国')
         # filter: subtag(xingjiabi) && name(keyword: '美国')
 
-        # filter: subtag(new_google_v2) && name(keyword: '新加坡')
-        # filter: subtag(xingjiabi) && name(keyword: '新加坡')
+        filter: subtag(ktm001) && name(keyword: '日本')
+        # filter: subtag(ktm001) && name(keyword: 'USA')
+        # filter: subtag(ktm001) && name(keyword: '新加坡')
 
         policy: min_moving_avg
         # policy: min_avg10
@@ -96,9 +98,9 @@ routing {
     # DNS 地址或域名，强制直连
     # dip(8.8.8.8) && dport(53) -> proxy
     # dip(223.5.5.5) && dport(53) -> must_direct
-    dip(1.1.1.1) && dport(53) -> block
-    domain(full: cloudflare-dns.com) && dport(443) -> proxy
-    domain(full: dns.alidns.com) && dport(443) -> direct
+    # dip(1.1.1.1) && dport(53) -> block
+    # domain(full: cloudflare-dns.com) && dport(443) -> proxy
+    # domain(full: dns.alidns.com) && dport(443) -> direct
     dip(224.0.0.0/3, 'ff00::/8') -> must_direct
     dip(geoip:private) -> direct
  
@@ -122,6 +124,7 @@ routing {
     domain(suffix: wallhaven.cc) -> proxy
     domain(suffix: unsplash.com) -> proxy
     domain(suffix: github.com) -> proxy
+    domain(suffix: uzvg.site) -> proxy
     domain(suffix: mongodb.com) -> proxy
     domain(geosite:geolocation-!cn) -> proxy
     # 未命中上面的规则的走 proxy 代理
