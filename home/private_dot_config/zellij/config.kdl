@@ -13,7 +13,7 @@ default_shell "zsh"
 session_serialization false
 
 themes {
-    dracula1 {
+    dracula-customized {
         ribbon_unselected {
             base 248 248 242
             background 68 71 90
@@ -133,7 +133,7 @@ themes {
 // theme "tokyo-night"
 // theme "gruvbox-dark"
 // theme "gruber-darker"
-theme "dracula1"
+theme "dracula-customized"
 // theme "everforest-dark"
 
 // Default: "default"
