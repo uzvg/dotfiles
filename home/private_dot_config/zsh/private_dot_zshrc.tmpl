@@ -24,6 +24,9 @@ zstyle ':completion::complete:*' cache-path "${XDG_CACHE_HOME:-$HOME/.cache}/zsh
 zstyle ':zim:input' double-dot-expand yes
 # ZVM 兼容性钩子
 function zvm_after_init() {
+  # ZVM_CURSOR_STYLE_ENABLED=false
+  # 使insert光标保持原有的terminal的默认
+  ZVM_INSERT_MODE_CURSOR=$ZVM_CURSOR_USER_DEFAULT
   autopair-init
 }
 # zsh-history-substring-search
