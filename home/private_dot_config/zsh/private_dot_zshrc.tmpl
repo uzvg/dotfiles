@@ -1,57 +1,37 @@
 #!usr/bin/env zsh
 
-# ===============================================
-# Debug zsh startup time header
-# ===============================================
-# 🔗：https://gist.github.com/elalemanyo/cb3395af64ac23df2e0c3ded8bd63b2f
-# 如果ZSH_DEBUGRC变量存在且不为空，则加载zprof模块：
+# ==============================================
+# 性能分析开启
+# 🔗 https://gist.github.com/elalemanyo/cb3395af64ac23df2e0c3ded8bd63b2f
+# ==============================================
 if [[ -n "${ZSH_DEBUGRC}" ]]; then
-    zmodload zsh/zprof
+  zmodload zsh/zprof
 fi
 
-#===============================================
-# Source Configurations
-# ===============================================#
+# ==============================================
+# 基础路径与环境变量
+# ==============================================
 source $ZDOTDIR/env.zsh
 source $ZDOTDIR/alias.zsh
 
 # ==============================================
-# Module Configurations
+# Module Preflight Configurations
+# 必须在 source init.zsh 之前
 # ==============================================
-
-# 使用zsh-auto-pair插件时，删除键不能自动删除匹配的分隔符，原因是zsh-vim-mode的lazy-loading 机制
-  # 🔗：https://github.com/hlissner/zsh-autopair/issues/33#issuecomment-1476706761
-ZVM_INIT_MODE=sourcing
-ZVM_LAZY_KEYBINDINGS=false
-# zvm_after_init_commands=(autopair-init)
-# Remove path separator from WORDCHARS.
-WORDCHARS=${WORDCHARS//[\/]}
-#
-# ==============================================
-# zmodule input
-# ==============================================
-# Append `../` to your input for each `.` you type after an initial `..`
+# 重定向补全文件
+zstyle ':completion::complete:*' cache-path "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompcache"
+# Zimfw 模块特定设置
 zstyle ':zim:input' double-dot-expand yes
-
-# zsh-autosuggestions
-# Disable automatic widget re-binding on each precmd. This can be set when zsh-users/zsh-autosuggestions is the last module in your ~/.zimrc.
-# ZSH_AUTOSUGGEST_MANUAL_REBIND=1
-
-# zsh-syntax-highlighting
-# See https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters.md
-ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets line)
-
-# completion
-# 将加速补全产生的.zcompdump文件，保存到.cache文件夹中，而非家目录中
-zstyle ':completion::complete:*' cache-path ${XDG_CACHE_HOME}/zsh/zcompcache
-
-# ===============================================
-# zsh-vi-mode
-# ===============================================
-# 🔗: https://github.com/jeffreytse/zsh-vi-mode
-ZVM_VI_SURROUND_BINDKEY=s-prefix
-# Only changing the escape key to `jk` in insert mode, we still keep using the default keybindings `^[` in other modes
-ZVM_VI_INSERT_ESCAPE_BINDKEY=jk
+# ZVM 兼容性钩子
+function zvm_after_init() {
+  autopair-init
+}
+# zsh-history-substring-search
+function zvm_after_lazy_keybindings() {
+  # 历史搜索键位绑定
+  bindkey -M vicmd 'k' history-substring-search-up
+  bindkey -M vicmd 'j' history-substring-search-down
+}
 
 # ===============================================
 # Zimfw Initialize
@@ -59,8 +39,8 @@ ZVM_VI_INSERT_ESCAPE_BINDKEY=jk
 ZIM_HOME=${ZDOTDIR:-${HOME}}/.zim
 # Download zimfw plugin manager if missing.
 if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
-    curl -fsSL --create-dirs -o ${ZIM_HOME}/zimfw.zsh \
-        https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
+  curl -fsSL --create-dirs -o ${ZIM_HOME}/zimfw.zsh \
+    https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
 fi
 
 # Install missing modules, and update ${ZIM_HOME}/init.zsh if missing or outdated.
@@ -71,61 +51,12 @@ fi
 source ${ZIM_HOME}/init.zsh
 
 # ===============================================
-# zsh-history-substring-search
-# ===============================================
-zmodload -F zsh/terminfo +p:terminfo
-# Bind ^[[A/^[[B manually so up/down works both before and after zle-line-init
-# for key ('^[[A' '^P' ${terminfo[kcuu1]}) bindkey ${key} history-substring-search-up
-# for key ('^[[B' '^N' ${terminfo[kcud1]}) bindkey ${key} history-substring-search-down
-for key ('k') bindkey -M vicmd ${key} history-substring-search-up
-for key ('j') bindkey -M vicmd ${key} history-substring-search-down
-unset key
-
-# ===============================================
-# zellij configuration
-# ===============================================
-# 如果启动的终端是Alacritty，就自动自动启动zellij
-# if [[ "$TERM" == "alacritty" ]]
-# then
-# 	eval "$(zellij setup --generate-auto-start zsh)"
-# fi
-
-# ===============================================
-# Debug zsh startup time
-# ===============================================
+# 性能分析输出
 # 执行以下命令来统计交互式Shell启动的时间：
-# `time ZSH_DEBUGRC=1 zsh -i -c exit`
-#   最终的输出如下：
-#     ZSH_DEBUGRC=1 zsh -i -c exit  0.04s user 0.02s system 100% cpu 0.066 total
-#       0.04s user: 这表示在用户模式下，Zsh 执行该命令花费了 0.04 秒。用户模式是指 CPU 执行用户代码的时间。
-#       0.02s system: 这表示在内核模式下，Zsh 执行该命令花费了 0.02 秒。系统模式是指 CPU 执行系统调用的时间。
-#       100% cpu: 这表示在执行该命令时，CPU 的使用率达到了 100%。这通常意味着在执行命令的过程中，CPU 的资源被完全利用。
-#       0.066 total: 这表示从开始到结束的总时间为 0.066 秒。这是 Zsh 启动并执行 exit 命令所花费的总时间。
+#   `time ZSH_DEBUGRC=1 zsh -i -c exit`
+# ===============================================
 if [ -n "${ZSH_DEBUGRC+1}" ]; then
-    zprof
+  zprof
 fi
-
-# ===============================================
-# zsh-vi-mode自动切换输入法
-# 🔗 https://github.com/jeffreytse/zsh-vi-mode?tab=readme-ov-file#vi-mode-indicator
-# ===============================================
-# 在选择vim-mode模式前（比如在insert,visual模式中）需要执行的操作
-# function zvm_before_select_vi_mode() {
-#   # 在退出insert模式之前：
-#   if [[ $ZVM_MODE == $ZVM_MODE_INSERT ]]; then
-#     # 保存当前输入法的状态
-#     get_origin_input_status
-#     # 然后切换到指定的vim mode
-#     switch_to_vim_mode
-#   fi
-# }
-# 
-# # 进入insert模式后：
-# function zvm_after_select_vi_mode() {
-#   if [[ $ZVM_MODE == $ZVM_MODE_INSERT ]]; then
-#     # 切换到之前的输入法状态
-#     switch_to_origin_mode
-#   fi
-# }
 
 # vim: ft=zsh
