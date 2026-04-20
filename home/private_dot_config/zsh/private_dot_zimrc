@@ -1,52 +1,48 @@
-# ==========================================
-# Zimfw Customize Modules
-# ==========================================
-# zmodule $ZIM_HOME/modules/twmm
-# zmodule uzvg/zsh-ibus-rime-switcher
-# zmodule uzvg/ibus-rime-switcher
-# zmodule uzvg/zim-atuin
-zmodule $ZDOTDIR/plugins
-
-# ==========================================
-# Zimfw Official Modules
-# ==========================================
-# 🔗 https://github.com/zimfw/zimfw
-zmodule archive
+# ===============================================
+# 基础环境与输入
+# ===============================================
 zmodule environment
+zmodule input
+zmodule /usr/share/zsh/plugins/zsh-vi-mode # 尽早接管键位
+
+# ===============================================
+# 官方功能模块
+# ===============================================
+zmodule archive
 zmodule git
+zmodule fzf
 zmodule termtitle
 zmodule pacman
-# zmodule joke/zim-chezmoi
-# zmodule input
 
 # ===============================================
-# zim-fzf
+# 第三方工具集成
 # ===============================================
-# 🔗：https://github.com/zimfw/fzf
-# zmodule fzf
-# Sets ALT-C previews with ls. Also sets CTRL-T previews with bat if it's installed. Press CTRL-/ to toggle the preview.
-
-# ==========================================
-# Zimfw Community Modules
-# ==========================================
-# zmodule jeffreytse/zsh-vi-mode
 zmodule hlissner/zsh-autopair
 zmodule kiesman99/zim-zoxide
-zmodule zsh-users/zsh-history-substring-search
-# 
-# ==========================================Zimfw Default Modules==========================================
+zmodule $ZDOTDIR/plugins
 
-# 🔗: https://github.com/zimfw/zimfw?tab=readme-ov-file#create-zimrc
+# ===============================================
+# 主题相关 (在提示符渲染前准备好 info)
+# ===============================================
 zmodule git-info
 zmodule duration-info
-zmodule sorin
-# zmodule minimal
-# Require the prompt-pwd modeule to show the current working directory
 zmodule prompt-pwd
-zmodule zsh-users/zsh-completions --fpath src
+zmodule asciiship
+
+# ===============================================
+# 补全系统 (承上启下)
+# ===============================================
 zmodule completion
-# Completion must be initialized after all modules that add completion definitions
-# And that's why it comes after zsh-users/zsh-completions
-zmodule zsh-users/zsh-autosuggestions
-zmodule zsh-users/zsh-syntax-highlighting
-zmodule zsh-users/zsh-history-substring-search
+# zmodule /usr/share/zsh/plugins/zsh-autocomplete
+zmodule Aloxaf/fzf-tab
+
+# ===============================================
+# UI 与 交互增强 (必须在补全之后，高亮之前)
+# ===============================================
+zmodule /usr/share/zsh/plugins/zsh-autosuggestions
+zmodule /usr/share/zsh/plugins/zsh-history-substring-search
+
+# ===============================================
+# 最终视觉渲染 (绝对最后)
+# ===============================================
+zmodule /usr/share/zsh/plugins/zsh-syntax-highlighting
