@@ -54,6 +54,12 @@ source ${ZIM_HOME}/init.zsh
 # 性能分析输出
 # 执行以下命令来统计交互式Shell启动的时间：
 #   `time ZSH_DEBUGRC=1 zsh -i -c exit`
+# 输出解析：
+#   ZSH_DEBUGRC=1 zsh -i -c exit 0.04s user 0.02s system 100% cpu 0.066 total
+#   0.04s user: 这表示在用户模式下，Zsh 执行该命令花费了 0.04 秒。用户模式是指 CPU 执行用户代码的时间。
+#   0.02s system: 这表示在内核模式下，Zsh 执行该命令花费了 0.02 秒。系统模式是指 CPU 执行系统调用的时间。
+#   100% cpu: 这表示在执行该命令时，CPU 的使用率达到了 100%。这通常意味着在执行命令的过程中，CPU 的资源被完全利用。
+#   0.066 total: 这表示从开始到结束的总时间为 0.066 秒。这是 Zsh 启动并执行 exit 命令所花费的总时间。
 # ===============================================
 if [ -n "${ZSH_DEBUGRC+1}" ]; then
   zprof
