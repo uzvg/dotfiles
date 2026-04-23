@@ -3,13 +3,13 @@
 # ===============================================
 zmodule environment
 zmodule input
-zmodule /usr/share/zsh/plugins/zsh-vi-mode # 尽早接管键位
+zmodule jeffreytse/zsh-vi-mode # 尽早接管键位
 
 # ===============================================
 # 官方功能模块
 # ===============================================
 zmodule archive
-zmodule git
+# zmodule git
 zmodule fzf
 zmodule termtitle
 zmodule pacman
@@ -33,16 +33,15 @@ zmodule asciiship
 # 补全系统 (承上启下)
 # ===============================================
 zmodule completion
-# zmodule /usr/share/zsh/plugins/zsh-autocomplete
 zmodule Aloxaf/fzf-tab
 
 # ===============================================
 # UI 与 交互增强 (必须在补全之后，高亮之前)
 # ===============================================
-zmodule /usr/share/zsh/plugins/zsh-autosuggestions
-zmodule /usr/share/zsh/plugins/zsh-history-substring-search
+zmodule zsh-users/zsh-autosuggestions
+zmodule zsh-users/zsh-history-substring-search
 
 # ===============================================
 # 最终视觉渲染 (绝对最后)
 # ===============================================
-zmodule /usr/share/zsh/plugins/zsh-syntax-highlighting
+zmodule zsh-users/zsh-syntax-highlighting
