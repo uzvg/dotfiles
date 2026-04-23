@@ -93,8 +93,12 @@ ZVM_SYSTEM_CLIPBOARD_ENABLED=true
 export RUSTC_WRAPPER=sccache
 
 # ==============================================
-# 在终端中启动系统代理
+# 在终端中启动系统代理2080/3067
 # ==============================================
-# export http_proxy="http://127.0.0.1:3067"
-# export https_proxy="http://127.0.0.1:3067"
-# export all_proxy="socks5://127.0.0.1:3067"
+# export http_proxy="http://127.0.0.1:2080"
+# export https_proxy="http://127.0.0.1:2080"
+# export all_proxy="socks5://127.0.0.1:2080"
+
+export http_proxy="http://127.0.0.1:3067"
+export https_proxy="http://127.0.0.1:3067"
+export all_proxy="socks5://127.0.0.1:3067"
