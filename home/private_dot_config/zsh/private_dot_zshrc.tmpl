@@ -27,6 +27,7 @@ function zvm_after_init() {
   # ZVM_CURSOR_STYLE_ENABLED=false
   # 使insert光标保持原有的terminal的默认
   ZVM_INSERT_MODE_CURSOR=$ZVM_CURSOR_USER_DEFAULT
+  # 进入vi mode后，注册autopair，避免被vi mode接管
   autopair-init
 }
 # zsh-history-substring-search
@@ -50,6 +51,7 @@ fi
 if [[ ! ${ZIM_HOME}/init.zsh -nt ${ZDOTDIR:-${HOME}}/.zimrc ]]; then
   source ${ZIM_HOME}/zimfw.zsh init -q
 fi
+
 # Initialize modules.
 source ${ZIM_HOME}/init.zsh
 
@@ -58,11 +60,11 @@ source ${ZIM_HOME}/init.zsh
 # 执行以下命令来统计交互式Shell启动的时间：
 #   `time ZSH_DEBUGRC=1 zsh -i -c exit`
 # 输出解析：
-#   ZSH_DEBUGRC=1 zsh -i -c exit 0.04s user 0.02s system 100% cpu 0.066 total
-#   0.04s user: 这表示在用户模式下，Zsh 执行该命令花费了 0.04 秒。用户模式是指 CPU 执行用户代码的时间。
+#   ZSH_DEBUGRC=1 zsh -i -c exit  0.02s user 0.02s system 102% cpu 0.037 total
+#   0.04s user: 这表示在用户模式下，Zsh 执行该命令花费了 0.02 秒。用户模式是指 CPU 执行用户代码的时间。
 #   0.02s system: 这表示在内核模式下，Zsh 执行该命令花费了 0.02 秒。系统模式是指 CPU 执行系统调用的时间。
 #   100% cpu: 这表示在执行该命令时，CPU 的使用率达到了 100%。这通常意味着在执行命令的过程中，CPU 的资源被完全利用。
-#   0.066 total: 这表示从开始到结束的总时间为 0.066 秒。这是 Zsh 启动并执行 exit 命令所花费的总时间。
+#   0.066 total: 这表示从开始到结束的总时间为 0.037 秒。这是 Zsh 启动并执行 exit 命令所花费的总时间。
 # ===============================================
 if [ -n "${ZSH_DEBUGRC+1}" ]; then
   zprof
