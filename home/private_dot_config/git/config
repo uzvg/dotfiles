@@ -1,6 +1,6 @@
 [user]
-	name = {{ .name|quote }}
-	email =  {{ .email|quote }}
+	name = "uzvg"
+	email =  "1497911983@qq.com"
 [core]
 	editor = nvim
 [init]
