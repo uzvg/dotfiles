@@ -5,8 +5,9 @@
 # 全局配置
 global {
     # Log level: error, warn, info, debug, trace.
-    log_level: info
-    # log_level: debug
+    # log_level: info
+    log_level: debug
+    # log_level: trace
     # 代理流量的 LAN 接口
     # lan_interface: wlan0
     
@@ -16,6 +17,7 @@ global {
 
     # 代理模式：ip/domain/domain+/domain++
     dial_mode: domain
+    # allow_insecure: true
 }
 
 # DNS 配置
@@ -32,7 +34,7 @@ dns {
         # alidns: 'h3://dns.alidns.com:443/dns-query'
 
         # CloudFlare DNS
-        cfdns: 'udp://1.1.1.1:53'
+        cfdns: 'tcp+udp://1.1.1.1:53'
         # cfdns: 'https://cloudflare-dns.com/dns-query'
         # cfdns: 'h3://cloudflare-dns.com:443/dns-query'
 
@@ -64,7 +66,8 @@ dns {
 
 # 订阅地址
 subscription {
-    ktm001: '{{ include (joinPath .chezmoi.sourceDir "secrets/keys/ktm001.txt.age") | decrypt | trim }}'
+    # mitce: '{{ include (joinPath .chezmoi.sourceDir "secrets/keys/mitce.txt.age") | decrypt | trim }}'
+    japan: '{{ include (joinPath .chezmoi.sourceDir "secrets/keys/japan.txt.age") | decrypt | trim }}'
     # xingjiabi: '{{ include (joinPath .chezmoi.sourceDir "secrets/keys/xingjiabi.txt.age") | decrypt | trim }}'
     # new_google_v2: '{{ include (joinPath .chezmoi.sourceDir "secrets/keys/new_google_v2.txt.age") | decrypt | trim }}'
 }
@@ -72,19 +75,11 @@ subscription {
 # 节点分组
 group {
     proxy {
+        # filter: subtag(mitce) && name(keyword: 'JP')
+        # filter: subtag(vpncc) && name(keyword: 'JP')
         # filter: subtag(new_google_v2) && name(keyword: '日本')
         # filter: subtag(xingjiabi) && name(keyword: '日本')
-
-        # filter: subtag(new_google_v2) && name(keyword: '韩国')
-        # filter: subtag(xingjiabi) && name(keyword: '韩国')
-
-        # filter: subtag(new_google_v2) && name(keyword: '美国')
-        # filter: subtag(xingjiabi) && name(keyword: '美国')
-
-        filter: subtag(ktm001) && name(keyword: '日本')
-        # filter: subtag(ktm001) && name(keyword: 'USA')
-        # filter: subtag(ktm001) && name(keyword: '新加坡')
-
+        filter: subtag(japan)
         policy: min_moving_avg
         # policy: min_avg10
     }
@@ -96,13 +91,11 @@ routing {
     pname('NetworkManager','systemd-resolved','dnsmasq') -> must_direct
 
     # DNS 地址或域名，强制直连
-    # dip(8.8.8.8) && dport(53) -> proxy
-    # dip(223.5.5.5) && dport(53) -> must_direct
-    # dip(1.1.1.1) && dport(53) -> block
-    # domain(full: cloudflare-dns.com) && dport(443) -> proxy
-    # domain(full: dns.alidns.com) && dport(443) -> direct
     dip(224.0.0.0/3, 'ff00::/8') -> must_direct
     dip(geoip:private) -> direct
+    dip(223.5.5.5) && dport(53) -> must_direct
+    # dip(1.1.1.1) && dport(53) -> proxy
+    # dip(8.8.8.8) && dport(53) -> proxy
  
     # 目标 IP 多播、广播地址，直连
     dip(geoip:cn) -> direct
@@ -120,11 +113,9 @@ routing {
     domain(geosite: google, geosite: github, geosite: anthropic) -> proxy
     domain(geosite:archlinux, geosite:flatpak, geosite: docker) -> proxy
     domain(suffix: visualstudio.com) -> proxy
-    domain(suffix: youtube.com) -> proxy
     domain(suffix: wallhaven.cc) -> proxy
     domain(suffix: unsplash.com) -> proxy
-    domain(suffix: github.com) -> proxy
-    domain(suffix: uzvg.site) -> proxy
+    # domain(suffix: uzvg.site) -> proxy
     domain(suffix: mongodb.com) -> proxy
     domain(geosite:geolocation-!cn) -> proxy
     # 未命中上面的规则的走 proxy 代理
