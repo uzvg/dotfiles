@@ -8,25 +8,25 @@ chezmoi_edit() {
   local config_file=${1:?missing config file}
 
   if [[ ! -f $config_file ]]; then
-    _show_error "$config_file does not exist"
+    _zlog error "$config_file does not exist"
     return 1
   fi
   
   $commands[chezmoi] status $config_file &> /dev/null || {
-    _show_error "$config_file was not managed by chezmoi"
-    _show_tip "You can add it with 'chezmoi add $config_file'"
+    _zlog error "$config_file was not managed by chezmoi"
+    _zlog info "You can add it with 'chezmoi add $config_file'"
     return 1
   }
 
   if ! $commands[chezmoi] edit --apply -- "$config_file"; then
-    _show_error "Failed to edit ${config_file:t} with chezmoi"
+    _zlog error "Failed to edit ${config_file:t} with chezmoi"
     return 1
   fi
 
   if [[ -N $config_file ]]; then
-    _show_tip "${config_file:t} changed, restarting shell"
+    _zlog info "${config_file:t} changed, restarting shell"
     exec $commands[zsh]
   else
-    _show_tip "No changes detected in ${config_file:t}"
+    _zlog info "No changes detected in ${config_file:t}"
   fi
 }

@@ -1,10 +1,10 @@
 # vim:et sts=2 sw=2 ft=zsh
 
 # Print functions
-# _show_correct
-# _show_tip
-# _show_warning
-# _show_error
+# _zlog success
+# _zlog info
+# _zlog warn
+# _zlog error
 
 emulate -L zsh
 # set -x
@@ -20,15 +20,15 @@ reference_text='{{ include (joinPath .chezmoi.config.sourceDir "secrets/keys/'"$
 
 # 参数检查
 if (( $# != 2 )); then
-  _show_error "参数错误。"
-  _show_tip "正确格式：czm_encryptier key_name key_text"
+  _zlog error "参数错误。"
+  _zlog info "正确格式：czm_encryptier key_name key_text"
   return 1
 fi
 
 
 # 文件已存在检查
 if [[ -f "$target_key_file" ]]; then
-  _show_error "$target_key_file 已经存在，请重新选择 key_name"
+  _zlog error "$target_key_file 已经存在，请重新选择 key_name"
   return 1
 fi
 
@@ -37,10 +37,10 @@ mkdir -p "$(dirname "$target_key_file")"
 
 # 加密
 if print -r -- "$key_text" | age --encrypt --armor -r "$public_key" -o "$target_key_file"; then
-  _show_correct "秘钥加密成功"
-  _show_tip "秘钥文件位置：$target_key_file"
-  wl-copy $reference_text && _show_tip "你可以使用如下字符引用：$reference_text"
+  _zlog success "秘钥加密成功"
+  _zlog info "秘钥文件位置：$target_key_file"
+  wl-copy $reference_text && _zlog info "你可以使用如下字符引用：$reference_text"
 else
-  _show_error "加密失败"
+  _zlog error "加密失败"
   return 1
 fi

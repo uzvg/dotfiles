@@ -20,14 +20,14 @@ move_files() {
     local target_dir="$2"
 
     if [[ ! -d "$target_dir" ]]; then
-        _show_tip "📁 创建目标文件夹: $target_dir"
+        _zlog info "📁 创建目标文件夹: $target_dir"
         mkdir -p "$target_dir"
     fi
 
     local files=(${(f)"$(fd $pattern -d 1 $DOWNLOAD_DIR)"})
 
     if [[ ${#files} -eq 0 ]]; then
-        _show_tip "⚠️ 未找到匹配 '$pattern' 的文件"
+        _zlog info "⚠️ 未找到匹配 '$pattern' 的文件"
         return 0
     fi
 
@@ -37,30 +37,30 @@ move_files() {
         # 如果目标文件不存在，则开始转移
         filename=$(basename $file)
         if [[ ! -f "$target_dir/$filename" ]]; then
-            _show_tip "📦 移动: $(basename "$file") ➡  $target_dir/"
+            _zlog info "📦 移动: $(basename "$file") ➡  $target_dir/"
             mv "$file" "$target_dir/"
             ((moved_count++))
         else
             read -q "? The $file already exists in target dir, Do you want to delete it from the $DOWNLOAD_DIR?"
             if (( $? == 0 )); then
               rm $file && {
-                _show_correct "$file was deleted!"
+                _zlog success "$file was deleted!"
               }
             fi
         fi
     done
 
     if (( $moved_count > 0 )); then
-      _show_correct "✅ 成功移动 $moved_count 个文件 (模式: $pattern)"
+      _zlog success "✅ 成功移动 $moved_count 个文件 (模式: $pattern)"
     else
-      _show_tip "✅ 没有文件被移动"
+      _zlog info "✅ 没有文件被移动"
     fi
 }
 
-_show_tip "🚀 开始整理..."
+_zlog info "🚀 开始整理..."
 move_files "^pexels.*jpg$" "$HOME/Pictures/Wallpapers/Pexels"
 move_files ".*unsplash.*jpg$" "$HOME/Pictures/Wallpapers/Unsplash"
 move_files "^wallhaven.*jpg$" "$HOME/Pictures/Wallpapers/Wallhaven"
 move_files ".*pdf$" "$HOME/Downloads/EBooks"
 move_files ".*epub$" "$HOME/Downloads/EBooks"
-_show_correct "🎉 完成！"
+_zlog success "🎉 完成！"

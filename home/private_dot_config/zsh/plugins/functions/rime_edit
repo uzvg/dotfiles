@@ -9,7 +9,7 @@ _rime_deploy() {
   local -r build_dir=${RIME_USER_PATH:?RIME_USER_PATH not set}/build
 
   if (( ! $+commands[rime_deployer] )); then
-    _show_error "rime_deployer not found in PATH"
+    _zlog error "rime_deployer not found in PATH"
     return 1
   fi
 
@@ -22,7 +22,7 @@ _rime_deploy() {
           "$build_dir" \
           >| "$log_file" 2>&1
       then
-        _show_error $'Deployment failed. Log details:\n%B%F{red}'"$log_file"$'%f%b'
+        _zlog error $'Deployment failed. Log details:\n%B%F{red}'"$log_file"$'%f%b'
         fcitx5-remote -o
         return 1
       fi
@@ -36,14 +36,14 @@ _rime_deploy() {
           "$build_dir" \
           >| "$log_file" 2>&1
       then
-        _show_error $'Deployment failed. Log details:\n%B%F{red}'"$log_file"$'%f%b'
+        _zlog error $'Deployment failed. Log details:\n%B%F{red}'"$log_file"$'%f%b'
         ibus-daemon -dr >/dev/null 2>&1
         return 1
       fi
       ibus-daemon -dr >/dev/null 2>&1
       ;;
     *)
-      _show_error "Unsupported input method framework: ${GTK_IM_MODULE:-unset}"
+      _zlog error "Unsupported input method framework: ${GTK_IM_MODULE:-unset}"
       return 1
       ;;
   esac
@@ -55,23 +55,23 @@ rime_edit() {
   local config_file=${1:?missing config file}
 
   if [[ ! -f $config_file ]]; then
-    _show_error "Configuration file not found: ${config_file:t}"
+    _zlog error "Configuration file not found: ${config_file:t}"
     return 1
   fi
 
   if ! ${EDITOR:?EDITOR not set} -- "$config_file"; then
-    _show_error "Failed to open editor for ${config_file:t}"
+    _zlog error "Failed to open editor for ${config_file:t}"
     return 1
   fi
 
   if [[ ! -N $config_file ]]; then
-    _show_tip "No changes detected in ${config_file:t}"
+    _zlog info "No changes detected in ${config_file:t}"
     return 0
   fi
 
-  _show_warning "Configuration changed, deploying Rime…"
+  _zlog warn "Configuration changed, deploying Rime…"
   _rime_deploy || return 1
-  _show_correct "Successfully deployed Rime configuration"
+  _zlog success "Successfully deployed Rime configuration"
 }
 
 rime_edit "$@"

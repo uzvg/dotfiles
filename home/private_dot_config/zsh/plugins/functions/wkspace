@@ -18,17 +18,17 @@ _check_dependencies() {
     done
     
     if (( ${#missing_deps} > 0 )); then
-        _show_error "缺少必需的依赖: ${(j: :)missing_deps}"
-        _show_tip "请安装缺失的依赖后重试"
+        _zlog error "缺少必需的依赖: ${(j: :)missing_deps}"
+        _zlog info "请安装缺失的依赖后重试"
         return 1
     fi
     
-    _show_correct "依赖检查通过"
+    _zlog success "依赖检查通过"
 }
 
 # --- 基础检查 --------------------------------------------------
 if [[ ! -d $wiki_dir ]]; then
-  _show_error "$wiki_dir is not exist."
+  _zlog error "$wiki_dir is not exist."
   return 1
 fi
 
@@ -44,13 +44,13 @@ systemctl --user stop wikispace.service 2> /dev/null || true
 # --- 主流程 ----------------------------------------------------
 # change to wiki_dir
 pushd "$wiki_dir" > /dev/null || {
-  _show_error "无法进入目录$wiki_dir"
+  _zlog error "无法进入目录$wiki_dir"
   return 1
 }
 
 {
   lazygit > /dev/null || {
-    _show_error "lazygit failed($?), services intentionally left stopped"
+    _zlog error "lazygit failed($?), services intentionally left stopped"
     return 1
   }
 } always {
@@ -60,15 +60,15 @@ pushd "$wiki_dir" > /dev/null || {
 
 # Restart wikispace service
 systemctl --user start wikispace.service || {
-  _show_error "Failed to start wikispace service"
+  _zlog error "Failed to start wikispace service"
   return 1
 }
 
 # Restart auto-commit timer
 systemctl --user start auto-commit.timer || {
-  _show_error "Failed to start auto-commit service"
+  _zlog error "Failed to start auto-commit service"
   return 1
 }
 
-_show_correct "wkspace workflow Done!"
+_zlog success "wkspace workflow Done!"
 unfunction _check_dependencies

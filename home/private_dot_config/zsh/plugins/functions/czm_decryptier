@@ -1,10 +1,10 @@
 # vim:et sts=2 sw=2 ft=zsh
 
 # Print functions
-# _show_correct
-# _show_tip
-# _show_warning
-# _show_error
+# _zlog success
+# _zlog info
+# _zlog warn
+# _zlog error
 
 emulate -L zsh
 # set -x
@@ -18,29 +18,29 @@ identity_file="$HOME/.config/chezmoi/key.txt"
 
 # 参数检查
 if (( $# != 1 )); then
-  _show_error "参数错误。"
-  _show_tip "正确格式：czm_decryptier key_name"
+  _zlog error "参数错误。"
+  _zlog info "正确格式：czm_decryptier key_name"
   return 1
 fi
 
 # 文件存在检查
 if [[ ! -f "$target_key_file" ]]; then
-  _show_error "秘钥文件不存在：$target_key_file"
+  _zlog error "秘钥文件不存在：$target_key_file"
   return 1
 fi
 
 # identity 文件检查
 if [[ ! -f "$identity_file" ]]; then
-  _show_error "identity 文件不存在：$identity_file"
-  _show_tip "请确认 age 私钥路径是否正确"
+  _zlog error "identity 文件不存在：$identity_file"
+  _zlog info "请确认 age 私钥路径是否正确"
   return 1
 fi
 
 # 解密
 if decrypted_text=$(age --decrypt -i "$identity_file" "$target_key_file"); then
-  _show_correct "解密成功"
-  _show_tip '"$decrypted_text"'
+  _zlog success "解密成功"
+  _zlog info '"$decrypted_text"'
 else
-  _show_error "解密失败"
+  _zlog error "解密失败"
   return 1
 fi

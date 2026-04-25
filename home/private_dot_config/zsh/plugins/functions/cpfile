@@ -1,9 +1,9 @@
 # vim:et sts=2 sw=2 ft=zsh
 
-# _show_correct
-# _show_tip
-# _show_warning
-# _show_error
+# _zlog success
+# _zlog info
+# _zlog warn
+# _zlog error
 
 # Copy file into the clipboard
 function cpfile () {
@@ -14,45 +14,45 @@ function cpfile () {
   (( # == 1 )) && {
     local file="$1"
   } || {
-    _show_error "Wrong parameters"
-    _show_tip "Usage: cpfile <filename>"
+    _zlog error "Wrong parameters"
+    _zlog info "Usage: cpfile <filename>"
     return 1
   } 
 
   [[ -f "$file" ]] || {
-    _show_error "${file:t} is not a valid file"
+    _zlog error "${file:t} is not a valid file"
     return 1
   }
 
   case $XDG_SESSION_TYPE in
     (wayland)
       if (( ! ${+commands[wl-copy]} )); then {
-        _show_error "wl-copy command was not found"
-        _show_tip "Install the wl-clipboard to resolve this"
+        _zlog error "wl-copy command was not found"
+        _zlog info "Install the wl-clipboard to resolve this"
         return 1
       }
       fi
 			wl-copy < "${file}" || {
-        _show_error "Failed to copy using wl-copy"
+        _zlog error "Failed to copy using wl-copy"
         return 1
       } 
       ;;
     (xorg)
       if (( ! ${+commands[xclip]} )); then {
-        _show_error "xclip command was not found"
-        _show_tip "Install the xclip to resolve this"
+        _zlog error "xclip command was not found"
+        _zlog info "Install the xclip to resolve this"
         return 1
       }
       fi
       xclip -selection clipboard -in < "${file}" || {
-        _show_error "Failed to copy using xclip"
+        _zlog error "Failed to copy using xclip"
         return 1
       } 
       ;;
     (*)
-      _show_error "Unsupported display server: $XDG_SESSION_TYPE"
+      _zlog error "Unsupported display server: $XDG_SESSION_TYPE"
       return 1
       ;;
   esac
-  _show_correct "File copied to clipboard successfully"
+  _zlog success "File copied to clipboard successfully"
 }
