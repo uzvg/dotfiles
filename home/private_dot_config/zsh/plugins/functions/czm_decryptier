@@ -1,13 +1,6 @@
 # vim:et sts=2 sw=2 ft=zsh
 
-# Print functions
-# _zlog success
-# _zlog info
-# _zlog warn
-# _zlog error
-
 emulate -L zsh
-# set -x
 setopt err_return no_unset pipe_fail
 
 typeset key_name target_key_file identity_file decrypted_text

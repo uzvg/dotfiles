@@ -16,7 +16,7 @@ key_name="$1"
 key_text="$2"
 target_key_file="$(chezmoi source-path)/secrets/keys/${key_name}.txt.age"
 public_key="age1tdeka5y0ykzutvst00sk30f0mrx8z45e42tv97h3xqnzn9us4v4qt7f87g"
-reference_text='{{ include (joinPath .chezmoi.config.sourceDir "secrets/keys/'"${key_name}"'.txt.age") | decrypt | trim }}'
+reference_text='{{ include (joinPath .chezmoi.sourceDir "secrets/keys/'"${key_name}"'.txt.age") | decrypt | trim }}'
 
 # 参数检查
 if (( $# != 2 )); then
