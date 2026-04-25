@@ -1,0 +1,5 @@
+patch:
+  schema_list:
+    - {schema: uggx}
+    - {schema: luna_pinyin_simp}
+    - {schema: uggx_fluency}
