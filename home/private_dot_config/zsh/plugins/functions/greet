@@ -1,0 +1,14 @@
+# vim:et sts=2 sw=2 ft=zsh
+
+# dep() {
+#   echo "Dependency function called."
+# }
+
+# MY_NAME="uzvg"
+
+# 同名函数调用依赖
+greet() {
+  print "ksh_autoload status: ${options[ksh_autoload]}"
+  dep
+  echo "Hello, $1!"
+}

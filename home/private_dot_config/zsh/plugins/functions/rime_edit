@@ -1,0 +1,77 @@
+# vim:et sts=2 sw=2 ft=zsh
+# Deploy Rime configuration and restart input method
+
+emulate -L zsh
+setopt err_return no_unset pipe_fail
+
+_rime_deploy() {
+  local -r log_file=/tmp/rime_deploy.log
+  local -r build_dir=${RIME_USER_PATH:?RIME_USER_PATH not set}/build
+
+  if (( ! $+commands[rime_deployer] )); then
+    _show_error "rime_deployer not found in PATH"
+    return 1
+  fi
+
+  case ${GTK_IM_MODULE:-} in
+    fcitx)
+      fcitx5-remote -e
+      if ! rime_deployer --build \
+          "$RIME_USER_PATH" \
+          /usr/share/rime-data \
+          "$build_dir" \
+          >| "$log_file" 2>&1
+      then
+        _show_error $'Deployment failed. Log details:\n%B%F{red}'"$log_file"$'%f%b'
+        fcitx5-remote -o
+        return 1
+      fi
+      fcitx5-remote -o
+      ;;
+    ibus)
+      ibus exit >/dev/null 2>&1
+      if ! rime_deployer --build \
+          "$RIME_USER_PATH" \
+          /usr/share/rime-data \
+          "$build_dir" \
+          >| "$log_file" 2>&1
+      then
+        _show_error $'Deployment failed. Log details:\n%B%F{red}'"$log_file"$'%f%b'
+        ibus-daemon -dr >/dev/null 2>&1
+        return 1
+      fi
+      ibus-daemon -dr >/dev/null 2>&1
+      ;;
+    *)
+      _show_error "Unsupported input method framework: ${GTK_IM_MODULE:-unset}"
+      return 1
+      ;;
+  esac
+}
+
+# Edit Rime config and deploy if changed
+# Usage: rime_edit <config_file>
+rime_edit() {
+  local config_file=${1:?missing config file}
+
+  if [[ ! -f $config_file ]]; then
+    _show_error "Configuration file not found: ${config_file:t}"
+    return 1
+  fi
+
+  if ! ${EDITOR:?EDITOR not set} -- "$config_file"; then
+    _show_error "Failed to open editor for ${config_file:t}"
+    return 1
+  fi
+
+  if [[ ! -N $config_file ]]; then
+    _show_tip "No changes detected in ${config_file:t}"
+    return 0
+  fi
+
+  _show_warning "Configuration changed, deploying Rime…"
+  _rime_deploy || return 1
+  _show_correct "Successfully deployed Rime configuration"
+}
+
+rime_edit "$@"

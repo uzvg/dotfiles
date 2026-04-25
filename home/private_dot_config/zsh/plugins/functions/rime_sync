@@ -1,0 +1,66 @@
+# vim:et sts=2 sw=2 ft=zsh
+
+function rime_sync {
+    if [[ -z $RIME_USER_PATH ]]; then
+      _show_error "RIME_USER_PATH 环境变量未设置"
+      return 1
+    fi
+
+    if [[ -z $RIME_SYNC_PATH ]]; then
+      _show_error "RIME_SYNC_PATH 环境变量未设置"
+      return 1
+    fi
+
+    if [[ ! -d "$RIME_USER_PATH" ]]; then
+        _show_error "RIME 用户目录不存在"
+        return 1
+    fi
+
+    case $GTK_IM_MODULE in
+        fcitx)
+            fcitx5-remote -e || _show_warning "fcitx5 未运行"
+            ;;
+        ibus)
+            ibus exit || _show_warning "ibus 未运行"
+            ;;
+        *)
+            _show_error "词库合并：输入法配置错误"
+            return 1
+            ;;
+    esac
+
+    pushd "$RIME_USER_PATH" > /dev/null || return 1
+    _show_warning "词库合并中......"
+    rime_dict_manager -s &> /dev/null
+
+    _show_tip "备份yaml文件......"
+    cp $RIME_USER_PATH/*.yaml $RIME_SYNC_PATH/Archlinux@Legion_R7000p/ && {
+      _show_correct "yaml文件备份完成"
+    } || {
+      _show_error "yaml文件备份失败"
+    }
+
+    popd > /dev/null
+
+    case $GTK_IM_MODULE in
+        fcitx) fcitx5-remote -o ;;
+        ibus)  ibus start ;;
+    esac
+
+    _show_correct "词库合并成功, 开始同步......"
+
+    if [[ ! -d "$RIME_SYNC_PATH" ]]; then
+        _show_error "rime 同步仓库路径错误"
+        return 1
+    fi
+
+    local -r COMMIT_WORD="rime sync on Archlinux at $(date +%Y/%m/%d-%H:%M)"
+
+    pushd "$RIME_SYNC_PATH"  > /dev/null || return 1
+    git add -A > /dev/null
+    git commit -m "$COMMIT_WORD" > /dev/null
+    git push &> /dev/null
+    popd > /dev/null
+
+    _show_correct "词库同步成功"
+}

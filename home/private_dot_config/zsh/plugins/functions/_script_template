@@ -1,0 +1,10 @@
+# vim:et sts=2 sw=2 ft=zsh
+
+# Print functions
+# _show_correct
+# _show_tip
+# _show_warning
+# _show_error
+
+emulate -L zsh
+setopt err_return no_unset pipe_fail

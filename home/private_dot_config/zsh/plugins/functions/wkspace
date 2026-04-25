@@ -1,0 +1,74 @@
+# vim:et sts=2 sw=2 ft=zsh
+
+emulate -L zsh
+setopt err_return no_unset pipe_fail
+
+typeset -r wiki_dir="$HOME/Documents/wikis/WikiSpace"
+typeset -r dev_branch="develop"
+typeset -r main_branch="main"
+typeset -ra REQUIRED_COMMANDS=(git fd lazygit tiddlywiki)
+
+_check_dependencies() {
+    local -a missing_deps=()
+    
+    for cmd in $REQUIRED_COMMANDS; do
+        if  (( ! ${+commands[$cmd]} )); then
+            missing_deps+=($cmd)
+        fi
+    done
+    
+    if (( ${#missing_deps} > 0 )); then
+        _show_error "缺少必需的依赖: ${(j: :)missing_deps}"
+        _show_tip "请安装缺失的依赖后重试"
+        return 1
+    fi
+    
+    _show_correct "依赖检查通过"
+}
+
+# --- 基础检查 --------------------------------------------------
+if [[ ! -d $wiki_dir ]]; then
+  _show_error "$wiki_dir is not exist."
+  return 1
+fi
+
+# 检查软件依赖
+_check_dependencies || return 1
+
+# --- 停止相关服务（允许失败） ---------------------------------
+# stop auto-commit timer
+systemctl --user stop auto-commit.timer 2> /dev/null || true
+# stop wikispace service
+systemctl --user stop wikispace.service 2> /dev/null || true
+
+# --- 主流程 ----------------------------------------------------
+# change to wiki_dir
+pushd "$wiki_dir" > /dev/null || {
+  _show_error "无法进入目录$wiki_dir"
+  return 1
+}
+
+{
+  lazygit > /dev/null || {
+    _show_error "lazygit failed($?), services intentionally left stopped"
+    return 1
+  }
+} always {
+  # git switch "$main_branch" > /dev/null 2>&1 || true
+  popd > /dev/null
+}
+
+# Restart wikispace service
+systemctl --user start wikispace.service || {
+  _show_error "Failed to start wikispace service"
+  return 1
+}
+
+# Restart auto-commit timer
+systemctl --user start auto-commit.timer || {
+  _show_error "Failed to start auto-commit service"
+  return 1
+}
+
+_show_correct "wkspace workflow Done!"
+unfunction _check_dependencies

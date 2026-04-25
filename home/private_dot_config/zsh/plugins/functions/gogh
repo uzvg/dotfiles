@@ -1,0 +1,13 @@
+# vim:et sts=2 sw=2 ft=bash
+
+gogh() {
+  emulate -L zsh
+  setopt err_return pipe_fail
+
+  if (( ! ${+commands[bash]} )); then
+    _show_error "gogh: bash not found"
+    return 1
+  fi
+
+  ${commands[bash]} -i -c "$(curl -fsSL https://git.io/vQgMr)"
+}

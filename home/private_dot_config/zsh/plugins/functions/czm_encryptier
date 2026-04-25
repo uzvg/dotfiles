@@ -1,0 +1,46 @@
+# vim:et sts=2 sw=2 ft=zsh
+
+# Print functions
+# _show_correct
+# _show_tip
+# _show_warning
+# _show_error
+
+emulate -L zsh
+# set -x
+setopt err_return no_unset pipe_fail
+
+typeset key_name key_text target_key_file public_key reference_text
+
+key_name="$1"
+key_text="$2"
+target_key_file="$(chezmoi source-path)/secrets/keys/${key_name}.txt.age"
+public_key="age1tdeka5y0ykzutvst00sk30f0mrx8z45e42tv97h3xqnzn9us4v4qt7f87g"
+reference_text='{{ include (joinPath .chezmoi.config.sourceDir "secrets/keys/'"${key_name}"'.txt.age") | decrypt | trim }}'
+
+# 参数检查
+if (( $# != 2 )); then
+  _show_error "参数错误。"
+  _show_tip "正确格式：czm_encryptier key_name key_text"
+  return 1
+fi
+
+
+# 文件已存在检查
+if [[ -f "$target_key_file" ]]; then
+  _show_error "$target_key_file 已经存在，请重新选择 key_name"
+  return 1
+fi
+
+# 确保目录存在
+mkdir -p "$(dirname "$target_key_file")"
+
+# 加密
+if print -r -- "$key_text" | age --encrypt --armor -r "$public_key" -o "$target_key_file"; then
+  _show_correct "秘钥加密成功"
+  _show_tip "秘钥文件位置：$target_key_file"
+  wl-copy $reference_text && _show_tip "你可以使用如下字符引用：$reference_text"
+else
+  _show_error "加密失败"
+  return 1
+fi

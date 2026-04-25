@@ -1,0 +1,29 @@
+#compdef greet
+
+# 一级子命令
+local -a subcommands
+subcommands=(
+  'start:Start the service'
+  'stop:Stop the service'
+  'status:Show status'
+  'config:Configuration commands'
+)
+
+# 根据当前参数位置决定补全什么
+if (( CURRENT == 2 )); then
+  _describe 'subcommand' subcommands
+  return
+fi
+
+# 二级子命令（仅对 config 生效）
+case $words[2] in
+  config)
+    local -a config_cmds
+    config_cmds=(
+      'get:Get config value'
+      'set:Set config value'
+      'reset:Reset config'
+    )
+    _describe 'config command' config_cmds
+    ;;
+esac
