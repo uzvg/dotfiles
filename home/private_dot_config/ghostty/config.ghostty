@@ -1,0 +1,13 @@
+font-family = "GeistMono NFM Medium"
+font-size = 12.5
+window-theme = ghostty
+window-height = 35
+window-width = 135
+background-opacity = 0.98
+background-blur = true
+gtk-titlebar = true
+gtk-titlebar-style = tabs
+gtk-wide-tabs = false
+config-file = ?auto/theme.ghostty
+cursor-style = underline
+cursor-style-blink = true
