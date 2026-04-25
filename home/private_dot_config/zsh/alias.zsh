@@ -78,7 +78,7 @@ alias czmst="chezmoi status"
 alias altrc="chezmoi_edit $XDG_CONFIG_HOME/alacritty/alacritty.toml"
 
 # kitty config 
-alias ktyrc="chezmoi_edit $XDG_CONFIG_HOME/kitty/kitty.conf"
+alias ktrc="chezmoi_edit $XDG_CONFIG_HOME/kitty/kitty.conf"
 
 # hyprland config
 # alias hyprcfg="$EDITOR $HOME/.config/hypr/hyprland.conf"
@@ -180,3 +180,7 @@ alias wpsync="rclone sync $HOME/Pictures/Wallpapers OneDrive:Wallpapers --progre
 # alias ddlog='journalctl -u dae.service -f -n 50'
 # alias ddlg='journalctl -u dae.service -f -o cat'
 # alias daerc="chezmoi_edit $XDG_CONFIG_HOME/dae/config.dae"
+#
+
+# edit ghostty config
+alias gstrc="chezmoi_edit $XDG_CONFIG_HOME/ghostty/config.ghostty"
