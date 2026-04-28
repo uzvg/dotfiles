@@ -17,7 +17,7 @@ _zlog() {
   local ts="$(date '+%H:%M:%S')"
 
   case "$level" in
-    info)    color=4; label="INFO"; icon="ℹ" ;;
+    info)    color=4; label="INFO"; icon="🛈" ;;
     success) color=2; label="OK";   icon="✓" ;;
     warn)    color=3; label="WARN"; icon="⚠" ;;
     error)   color=1; label="ERR";  icon="✗"; fd=2 ;;
