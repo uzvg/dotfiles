@@ -18,10 +18,10 @@ chezmoi_edit() {
     return 1
   }
 
-  if ! $commands[chezmoi] edit --apply -- "$config_file"; then
+  $commands[chezmoi] edit --apply -- "$config_file" || {
     _zlog error "Failed to edit ${config_file:t} with chezmoi"
     return 1
-  fi
+  }
 
   if [[ -N $config_file ]]; then
     _zlog info "${config_file:t} changed, restarting shell"
