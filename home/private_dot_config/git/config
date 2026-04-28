@@ -3,6 +3,7 @@
 	email =  "1497911983@qq.com"
 [core]
 	editor = nvim
+	hooksPath = /home/uzvg/.config/git/hooks
 [init]
 	defaultBranch = main
 [diff]
