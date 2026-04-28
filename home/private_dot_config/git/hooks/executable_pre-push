@@ -1,0 +1,21 @@
+#!/usr/bin/env zsh
+
+HOOKS_PATH="$(git config --global --get core.hooksPath)"
+HOOKS_LIB_PATH="$(git config --global --get core.hooksPath)/lib"
+
+main() {
+  if [[ -f ".git/hooks/pre-push" ]]; then
+    source .git/hooks/pre-push "$@"
+  # 如果是一个tiddlywiki工作目录，则执行如下操作
+  elif [[ -f .tiddlywiki ]]; then
+    source "$HOOKS_LIB_PATH/twks-init.zsh" || {
+      print -u2 -P "%F{red}%B❌WRONG:%b%f ${0:A:h}/lib/twks-init.zsh 文件 source 出错。"
+      return 1
+    }
+  else
+    exit 0
+  fi
+}
+
+main "$@"
+# vim: ft=zsh
