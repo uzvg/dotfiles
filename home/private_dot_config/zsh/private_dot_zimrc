@@ -3,7 +3,8 @@
 # ===============================================
 zmodule environment
 zmodule input
-zmodule jeffreytse/zsh-vi-mode # 尽早接管键位
+# 尽早接管键位,在zsh-autopair之前接管健位，避免覆盖zsh-autopair的定义
+zmodule jeffreytse/zsh-vi-mode
 
 # ===============================================
 # 官方功能模块
@@ -32,6 +33,9 @@ zmodule asciiship
 # ===============================================
 # 补全系统 (承上启下)
 # ===============================================
+# 加载第三方补全定义
+zmodule zsh-users/zsh-completions
+# 执行compinit，初始化补全系统
 zmodule completion
 zmodule Aloxaf/fzf-tab
 
