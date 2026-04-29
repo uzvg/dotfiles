@@ -104,4 +104,10 @@ export all_proxy="socks5://127.0.0.1:2080"
 # export all_proxy="socks5://127.0.0.1:3067"
 #
 
+# ==============================================
+# 指定superfile/yazi 的运行时暂存路径
+# ==============================================
+# export SPF_LAST_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/superfile/lastdir"
+export YAZI_LAST_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/yazi/lastdir"
+
 
