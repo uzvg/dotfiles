@@ -2,8 +2,16 @@
 # 👉 https://yazi-rs.github.io/docs/quick-start#shell-wrapper
 # Using this ra shell wrapper that provides the ability to change the current working directory when exiting Yazi.
 
-local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
-yazi "$@" --cwd-file="$tmp"
-IFS= read -r -d '' cwd < "$tmp"
-[ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
-rm -f -- "$tmp"
+# 使用 zsh 的匿名函数封装，避免变量污染全局环境
+yazi "$@" --cwd-file="$YAZI_LAST_DIR"
+local cwd=$(<"$YAZI_LAST_DIR")
+[[ -n "$cwd" && "$cwd" != "$PWD" ]] && builtin cd -- "$cwd"
+rm -f "$YAZI_LAST_DIR"
+
+# Replacing yazi with superfile
+# ${commands[spf]} "$@"
+#
+# [[ -f "$SPF_LAST_DIR" ]] && {
+#   source "$SPF_LAST_DIR"
+#   rm -f -- "$SPF_LAST_DIR"
+# }
