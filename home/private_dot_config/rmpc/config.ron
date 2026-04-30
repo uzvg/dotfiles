@@ -194,7 +194,7 @@
                                     )
                                 ),
                                 (
-                                    size: "100%",
+                                    size: "70%",
                                     borders: "LEFT | RIGHT | BOTTOM",
                                     border_symbols: Rounded,
                                     pane: Split(
@@ -212,7 +212,8 @@
                                     )
                                 ),
                                 (
-                                    size: "100%",
+                                    size: "30%",
+                                    border_symbols: Rounded,
                                     borders: "LEFT | RIGHT | TOP | BOTTOM",
                                     pane: Pane(Cava)
                                 ),
