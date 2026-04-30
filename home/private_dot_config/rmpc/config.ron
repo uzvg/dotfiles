@@ -211,6 +211,11 @@
                                         ]
                                     )
                                 ),
+                                (
+                                    size: "100%",
+                                    borders: "LEFT | RIGHT | TOP | BOTTOM",
+                                    pane: Pane(Cava)
+                                ),
                             ],
                         )
                     ),
