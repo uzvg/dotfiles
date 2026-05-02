@@ -7,11 +7,8 @@ Type=simple
 
 # 设置 TIDDLYWIKI_PLUGIN_PATH 环境变量
 Environment="TIDDLYWIKI_PLUGIN_PATH=%h/.local/share/tiddlywiki/plugins"
-
 WorkingDirectory=%h/Documents/wikis/WikiSpace
 ExecStart=%h/.local/share/bun/bin/tiddlywiki --listen port="9191" anon-username="uzvg" root-tiddler=$:/core/save/lazy-images
-
-ExecStop=kill -SIGTERM $MAINPID
 
 # process 模式会遗留子进程，mixed 更安全
 KillMode=mixed
