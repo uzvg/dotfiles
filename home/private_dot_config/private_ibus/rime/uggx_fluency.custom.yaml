@@ -19,8 +19,7 @@ patch:
     - punct_translator
     - table_translator
     - table_translator@custom_phrase
-    - lua_translator@*mint_date_time_translator # 时间、日期、星期、月份
-    #  - lua_translator@date_translator
+    - lua_translator@*date_time_translator
     - table_translator@phrase_encoder
     - script_translator@pinyin_simp
   punctuator/half_shape:
