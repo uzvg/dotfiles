@@ -24,6 +24,15 @@ local function make_hight_quality_candidate(inputText, startSeg, endSeg, text, c
 	return candidate
 end
 
+-- 辅助函数：获取英文日期的序数后缀（1st, 2nd, 3rd, 4th...）
+local function get_ordinal_suffix(day)
+  -- 特殊处理 11/12/13 结尾的日期
+  if day % 100 >= 11 and day % 100 <= 13 then
+      return "th"
+  end
+  local suffixes = {["1"]="st", ["2"]="nd", ["3"]="rd"}
+  return suffixes[tostring(day % 10)] or "th"
+end
 
 function mint_date_time_translator(input, seg)
 
@@ -107,6 +116,21 @@ function mint_date_time_translator(input, seg)
     if (input == "month") then
         yield(make_hight_quality_candidate("month", seg.start, seg._end, os.date("%B"), "全称"))
         yield(make_hight_quality_candidate("month", seg.start, seg._end, os.date("%b"), "缩写"))
+    end
+
+    -- 输入 journal，输出 Tiddlywiki / Obsidian 日记链接格式 [[2nd May 2026]]
+    if (input == "journal") then
+      local day = tonumber(os.date("%d"))
+      local month = os.date("%B")    -- 月份英文全称，如 May
+      local year = os.date("%Y")     -- 年份，如 2026
+      local suffix = get_ordinal_suffix(day)
+
+      -- 格式1: Tiddlywiki 默认
+      yield(make_hight_quality_candidate("journal", seg.start, seg._end, string.format("[[%d%s %s %s]]", day, suffix, month, year), "Tiddlywiki"))
+
+      -- 格式2: ISO 格式 [[2026-05-02]]
+      yield(make_hight_quality_candidate("journal", seg.start, seg._end, string.format("[[%s]]", os.date("%Y-%m-%d")), "ISO"))
+
     end
 end
 
