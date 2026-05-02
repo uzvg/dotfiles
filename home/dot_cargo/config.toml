@@ -1,0 +1,19 @@
+# 镜像加速（中国大陆）
+[source.crates-io]
+replace-with = "bytedance"
+
+[source.ustc]
+registry = "sparse+https://mirrors.ustc.edu.cn/crates.io-index/"
+
+[source.bytedance]
+registry = "sparse+https://rsproxy.cn/index/"
+
+# 编译器并行线程数
+[build]
+jobs = 8
+target-dir = "/tmp/cargo-target"  # 可改到更快磁盘
+
+# 默认 linker（加速链接）
+[target.x86_64-unknown-linux-gnu]
+linker = "clang"
+rustflags = ["-C", "link-arg=-fuse-ld=mold"]
