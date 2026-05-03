@@ -111,4 +111,10 @@ export all_proxy="socks5://127.0.0.1:2080"
 # export SPF_LAST_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/superfile/lastdir"
 export YAZI_LAST_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/yazi/lastdir"
 
-
+# ==============================================
+# bun npm manager configs
+# ==============================================
+# Installation path
+export BUN_INSTALL="$XDG_DATA_HOME/bun"
+# Add bun bin path into PATH
+export PATH="$BUN_INSTALL/bin:$PATH"
