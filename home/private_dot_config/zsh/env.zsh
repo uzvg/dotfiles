@@ -23,7 +23,7 @@ export RIME_SYNC_PATH="$HOME/Documents/Repos/rime"
 # ==============================================
 # aliyunpan-go 配置文件目录
 # ==============================================
-# export ALIYUNPAN_CONFIG_DIR="$HOME/.config/aliyunpan/config"
+export ALIYUNPAN_CONFIG_DIR="$HOME/.config/aliyunpan/config"
 
 # ==============================================
 # ranger config
