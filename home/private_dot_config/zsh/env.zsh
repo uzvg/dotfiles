@@ -44,9 +44,6 @@ export _ZO_ECHO=0
 # ==============================================
 # Tiddlywiki Environment Variables
 # ==============================================
-# export TIDDLYWIKI_DOCUMENT_PATH="/usr/lib/node_modules/tiddlywiki/editions/tw5.com"
-# export TIDDLYWIKI_WKS_PATH="$HOME/Documents/wikis/WikiSpace"
-# export TIDDLYWIKI_WKS_PORT=9191
 export TIDDLYWIKI_PLUGIN_PATH="$XDG_DATA_HOME/tiddlywiki/plugins" 
 
 # ==============================================
