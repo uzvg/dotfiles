@@ -85,9 +85,13 @@ export ZIM_PLUGIN_CLEANUP=1
 ZVM_SYSTEM_CLIPBOARD_ENABLED=true
 
 # ==============================================
-# 启用sccache 提升rust编译速度
+# 提升rust编译速度
 # ==============================================
+# 启用sccache 提升rust编译速度，Need install sccache before this
 export RUSTC_WRAPPER=sccache
+
+# 使用 mold 极速链接
+# export RUSTFLAGS="-C link-arg=-fuse-ld=mold"  # 若使用 mold
 
 # ==============================================
 # 在终端中启动系统代理2080/3067
