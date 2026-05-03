@@ -114,7 +114,7 @@ alias dotfiles="lazygit -p $XDG_DATA_HOME/chezmoi"
 # uzvg zsh plugins dir
 alias uzpd="lazygit -p '$ZDOTDIR/plugins'"
 
-# systemctl
+# systemctl control alias
 alias sss="systemctl status"
 alias wkstatus="systemctl status wikispace --user"
 alias wkstart="systemctl start wikispace --user"
