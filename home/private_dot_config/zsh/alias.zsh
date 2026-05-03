@@ -79,6 +79,8 @@ alias altrc="chezmoi_edit $XDG_CONFIG_HOME/alacritty/alacritty.toml"
 
 # kitty config 
 alias ktrc="chezmoi_edit $XDG_CONFIG_HOME/kitty/kitty.conf"
+alias ktmp="chezmoi_edit $XDG_CONFIG_HOME/kitty/keymaps.conf"
+alias ktbrc="chezmoi_edit $XDG_CONFIG_HOME/kitty/tab_bar.conf"
 
 # hyprland config
 # alias hyprcfg="$EDITOR $HOME/.config/hypr/hyprland.conf"
@@ -118,6 +120,7 @@ alias wkstatus="systemctl status wikispace --user"
 alias wkstart="systemctl start wikispace --user"
 alias wkstop="systemctl stop wikispace --user"
 alias wkrestart="systemctl restart wikispace --user"
+alias wklog="journalctl --user --unit wikispace -f"
 
 # clean journalctl file
 alias logclean="sudo journalctl --vacuum-size=200M"
@@ -184,3 +187,10 @@ alias wpsync="rclone sync $HOME/Pictures/Wallpapers OneDrive:Wallpapers --progre
 
 # edit ghostty config
 alias gstrc="chezmoi_edit $XDG_CONFIG_HOME/ghostty/config.ghostty"
+
+# yazi config
+alias rarc="chezmoi_edit $XDG_CONFIG_HOME/yazi/yazi.toml"
+
+# mpd config
+alias mpdrc="chezmoi_edit $XDG_CONFIG_HOME/mpd/mpd.conf"
+alias rrc="chezmoi_edit $XDG_CONFIG_HOME/rmpc/config.ron"
