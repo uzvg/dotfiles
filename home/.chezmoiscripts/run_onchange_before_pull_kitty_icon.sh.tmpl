@@ -1,0 +1,12 @@
+#!/usr/bin/env zsh
+
+typeset -r ICON_PATH="$HOME/.local/share/icons/kitty.svg"
+typeset -r REMOTE_URL="https://raw.githubusercontent.com/igrmk/twiskers/refs/heads/main/src/twiskers.svg"
+typeset -r OUTPUT_DIR=${ICON_PATH:h}
+typeset -r OUTPUT=${ICON_PATH:t}
+
+[[ ! -d $OUTPUT_DIR ]] && mkdir -p $OUTPUT_DIR
+
+(( ${+commands[curl]} )) && {
+  curl $REMOTE_URL -o $OUTPUT --output-dir $OUTPUT_DIR
+}
