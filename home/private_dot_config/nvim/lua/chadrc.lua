@@ -21,7 +21,7 @@ M.base46 = {
 --      }
 -- }
 
-vim.schedule(function()
-  require("custom.plugins.rime_ascii")
-
-end)return M
+-- vim.schedule(function()
+  -- require("custom.plugins.rime_ascii")
+-- end)
+return M
