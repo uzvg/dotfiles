@@ -1,18 +1,19 @@
 # More details are at https://superfile.dev/configure/superfile-config/
-# change your theme
-theme = 'dracula'
+# https://superfile.dev/list/theme-list
+theme = 'kaolin'
 # 
 # The editor files will be opened with. (Leave blank to use the EDITOR environment variable).
-editor = ''
+editor = 'nvim'
+
 # 
 # The editor directories will be opened with. (Leave blank to use the default editors).
 dir_editor = ''
 # 
 # Auto check for update
-auto_check_update = true
+auto_check_update = false
 # 
 # Cd on quit (For more details, please check out https://superfile.dev/configure/superfile-config/#cd_on_quit)
-cd_on_quit = false
+cd_on_quit = true
 # 
 # Whether to open file preview automatically every time superfile is opened.
 default_open_file_preview = true
@@ -27,7 +28,7 @@ show_panel_footer_info = true
 default_directory = '.'
 # 
 # Display file sizes using powers of 1000 (kB, MB, GB) instead of powers of 1024 (KiB, MiB, GiB).
-file_size_use_si = false
+file_size_use_si = true
 # 
 # Default sort type (0: Name, 1: Size, 2: Date Modified, 3: Type).
 default_sort_type = 0
