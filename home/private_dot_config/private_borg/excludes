@@ -1,0 +1,26 @@
+# 缓存与临时文件
+/home/*/.*cache*
+/home/*/.*tmp*
+/home/*/.local/share/Trash
+/home/*/.mozilla/*/cache*
+/home/*/.cache/*
+/home/*/.thumbnails/*
+
+# 开发/包管理缓存
+/home/*/.npm/_cacache
+/home/*/.gradle/caches
+/home/*/.cargo/registry
+/home/*/.rustup/toolchains
+/home/*/.local/share/flatpak/repo/tmp
+/home/*/.local/share/bun/*/node_modules
+/home/*/.local/share/bun/*/cache
+
+# flatpak 本地存储路径
+/home/*/.var
+
+# google-chrome 存储路径
+pp:/home/*/.config/google-chrome
+
+# 大型媒体/虚拟机（按需移除）
+/home/*/*.iso
+/home/*/*.qcow2
