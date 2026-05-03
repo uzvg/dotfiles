@@ -3,6 +3,10 @@
 
 [mgr]
 ratio = [ 2, 3, 4 ]
+linemode = "size"
+sort_dir_first = true
+show_symlink = true
+
 
 [opener]
 play = [
