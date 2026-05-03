@@ -27,7 +27,7 @@ export ALIYUNPAN_CONFIG_DIR="$HOME/.config/aliyunpan/config"
 
 # ==============================================
 # ranger config
-# DEPRACATED: Using yazi instead.
+# DEPRACATED: Replaced with yazi
 # ==============================================
 # 避免ranger重新加载配置文件
 # export RANGER_LOAD_DEFAULT_RC=false
@@ -87,7 +87,8 @@ ZVM_SYSTEM_CLIPBOARD_ENABLED=true
 # ==============================================
 # 提升rust编译速度
 # ==============================================
-# 启用sccache 提升rust编译速度，Need install sccache before this
+# 启用sccache 提升rust编译速度
+#   Need to install sccache in advance
 export RUSTC_WRAPPER=sccache
 
 # 使用 mold 极速链接
@@ -103,7 +104,6 @@ export all_proxy="socks5://127.0.0.1:2080"
 # export http_proxy="http://127.0.0.1:3067"
 # export https_proxy="http://127.0.0.1:3067"
 # export all_proxy="socks5://127.0.0.1:3067"
-#
 
 # ==============================================
 # 指定superfile/yazi 的运行时暂存路径
