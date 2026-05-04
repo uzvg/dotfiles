@@ -37,6 +37,7 @@ zmodule asciiship
 zmodule zsh-users/zsh-completions
 # 执行compinit，初始化补全系统
 zmodule completion
+# 在compinit 之后，在语法高亮之后
 zmodule Aloxaf/fzf-tab
 
 # ===============================================
