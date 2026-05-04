@@ -15,6 +15,9 @@
 /home/*/.local/share/bun/*/node_modules
 /home/*/.local/share/bun/*/cache
 
+# local GOPATH
+/home/*/.local/share/go
+
 # flatpak 本地存储路径
 /home/*/.var
 
