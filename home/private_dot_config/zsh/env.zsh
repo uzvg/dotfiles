@@ -118,3 +118,10 @@ export YAZI_LAST_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/yazi/lastdir"
 export BUN_INSTALL="$XDG_DATA_HOME/bun"
 # Add bun bin path into PATH
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+# ==============================================
+# GO
+# ==============================================
+export GOPATH="$XDG_DATA_HOME/go"
+export GOBIN="$HOME/.local/bin"
+export PATH="$GOBIN:$PATH"
