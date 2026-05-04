@@ -122,6 +122,11 @@ alias wkstop="systemctl stop wikispace --user"
 alias wkrestart="systemctl restart wikispace --user"
 alias wklog="journalctl --user --unit wikispace -f"
 
+# borg backup alias
+alias bgstatus="systemctl status borg-backup --user"
+alias bglog="journalctl --user --unit borg-backup -f"
+alias bgex="chezmoi_edit $XDG_CONFIG_HOME/borg/excludes"
+
 # clean journalctl file
 alias logclean="sudo journalctl --vacuum-size=200M"
 
@@ -194,3 +199,4 @@ alias rarc="chezmoi_edit $XDG_CONFIG_HOME/yazi/yazi.toml"
 # mpd config
 alias mpdrc="chezmoi_edit $XDG_CONFIG_HOME/mpd/mpd.conf"
 alias rrc="chezmoi_edit $XDG_CONFIG_HOME/rmpc/config.ron"
+
