@@ -1,4 +1,6 @@
-#================= Some Simple Aliases =================
+# ==============================================
+# General aliases
+# ==============================================
 alias ls='lsd'
 alias la='lsd -a'
 alias l='lsd -lha'
@@ -15,74 +17,94 @@ alias Q='exit'
 alias zdebug='time ZSH_DEBUGRC=1 zsh -i -c exit'
 alias df="duf"
 alias du="dust -X Games"
-alias fd="fd -H -E Games -E ExtendDisk"
+# alias fd="fd -H -E Games -E ExtendDisk"
 alias udd='update-desktop-database $XDG_DATA_HOME/applications/'
 alias gedit="gnome-text-editor"
 alias macc="macchina -t Helium"
+# gdu but exclude Games disk
+alias gdu="gdu -i $HOME/Games -i $HOME/ExtendDisk"
 
+
+# ==============================================
 # zellij alias
-alias zj="zellij"
-# open zjdoc
-zellij_doc_url="https://github.com/zellij-org/zellij/blob/main/zellij-utils/assets/config/default.kdl"
-alias zjdoc="gio open $zellij_doc_url" &> /dev/null
-# zellij config
-alias zjrc="chezmoi_edit $XDG_CONFIG_HOME/zellij/config.kdl"
+# ==============================================
+# alias zj="zellij"
+# zellij_doc_url="https://github.com/zellij-org/zellij/blob/main/zellij-utils/assets/config/default.kdl"
+# alias zjdoc="gio open $zellij_doc_url" &> /dev/null
+# alias zjrc="chezmoi_edit $XDG_CONFIG_HOME/zellij/config.kdl"
 
+# ==============================================
+# taskwarrior-tui alias
+# ==============================================
 # alias tt='taskwarrior-tui'
 
-#================= edit and/or reload config file ================= #
-# Edit and reload zshrc file
+# ==============================================
+# Edit and autoreload zsh-related config
+# ==============================================
 alias zshrc="chezmoi_edit '$ZDOTDIR/.zshrc'"
-# Edit and reload alias file
 alias alrc="chezmoi_edit '$ZDOTDIR/alias.zsh'"
-# Edit and reload env file
 alias envrc="chezmoi_edit '$ZDOTDIR/env.zsh'"
-# Edit and reload funcs file
-# alias funrc="chezmoi_edit '$ZDOTDIR/functions.zsh'"
-# edit fontconfig
-alias ftrc="chezmoi_edit $XDG_CONFIG_HOME/fontconfig/conf.d/40-family-prefer.conf"
-# edit zimrc file
 alias zimrc="chezmoi_edit $ZDOTDIR/.zimrc"
-# edit wezterm config file
+
+# ----------------------------------------------
+# other chezoi-edited config files
+# ----------------------------------------------
+# fontconfig
+alias ftrc="chezmoi_edit $XDG_CONFIG_HOME/fontconfig/conf.d/40-family-prefer.conf"
+
+# wezterm
 # alias wtrc="_chezmoi_edit $HOME/.config/wezterm/wezterm.lua"
-# edit chezmoi config
-alias czmrc="chezmoi edit-config-template"
-# use chezmoi init to make it work
 
-#=================Use git bare repository to manage dotfiles=================
-# alias dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
-# alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
-# config config status.showUntrackedFiles no
-
-#================= chezmoi shortcuts ================= #
-alias czm="chezmoi"
-alias czmr="chezmoi re-add"
-alias czmcd="chezmoi cd"
-alias czmd="chezmoi managed -i dirs"
-alias czmf="chezmoi managed -i files"
-# alias czma="chezmoi apply"
-# alias czme="chezmoi edit --apply"
-alias ce="chezmoi_edit"
-alias czmst="chezmoi status"
-
-# eww widget shortcuts
-# alias oew="eww open example"
-# alias cew="eww close-all"
-
-# joshuto
-# ranger-like file manager written in rust
-# alias js="joshuto"
-# alias jsrc="$EDITOR $XDG_CONFIG_HOME/joshuto/joshuto.toml"
-
-# alacritty config
+# alacritty
 alias altrc="chezmoi_edit $XDG_CONFIG_HOME/alacritty/alacritty.toml"
 
-# kitty config 
+# kitty
 alias ktrc="chezmoi_edit $XDG_CONFIG_HOME/kitty/kitty.conf"
 alias ktmp="chezmoi_edit $XDG_CONFIG_HOME/kitty/keymaps.conf"
 alias ktbrc="chezmoi_edit $XDG_CONFIG_HOME/kitty/tab_bar.conf"
 
+# ==============================================
+# git bare repository alias for managing dotfiles
+# (Replaced by chezmoi)
+# ==============================================
+# alias dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+# alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+# config config status.showUntrackedFiles no
+
+# ==============================================
+# chezmoi-related aliases
+# ==============================================
+alias czm="chezmoi"
+alias czmr="chezmoi re-add"
+alias czmcd="chezmoi cd"
+# list directories managed by chezmoi
+alias czmd="chezmoi managed -i dirs"
+# list files managed by chezmoi
+alias czmf="chezmoi managed -i files"
+alias ce="chezmoi_edit"
+alias czmst="chezmoi status"
+
+# edit chezmoi config
+#   use chezmoi init to make it work
+alias czmrc="chezmoi edit-config-template"
+
+# ==============================================
+# edit eww widget config alias
+# ==============================================
+# alias oew="eww open example"
+# alias cew="eww close-all"
+
+# ==============================================
+# joshuto, a ranger-like file manager written in rust
+# (Replaced by yazi)
+# ==============================================
+# alias js="joshuto"
+# alias jsrc="$EDITOR $XDG_CONFIG_HOME/joshuto/joshuto.toml"
+
+
+# ==============================================
 # hyprland config
+# ==============================================
 # alias hyprcfg="$EDITOR $HOME/.config/hypr/hyprland.conf"
 # alias hyprinit="$EDITOR $HOME/.config/hypr/hyprinit.conf"
 # alias hyprbind="$EDITOR $HOME/.config/hypr/hyprbinds.conf"
@@ -93,10 +115,16 @@ alias ktbrc="chezmoi_edit $XDG_CONFIG_HOME/kitty/tab_bar.conf"
 # alias wbarcfg="$EDITOR $XDG_CONFIG_HOME/waybar/config"
 # alias wbarstyle="$EDITOR $XDG_CONFIG_HOME/waybar/style.css"
 
-# rime input method
+# ==============================================
+# rime input method alias
+# ==============================================
+# check rime emoji icons
 alias ckemj="bat /usr/share/rime-data/opencc/emoji_word.txt"
+# customize rime icon
 alias rimeicon="rime_edit '$RIME_USER_PATH/uggx_fluency.custom.yaml'"
+# edit rime custom_phrse.txt and re-deploy rime automatically
 alias rimewd="rime_edit '$RIME_USER_PATH/custom_phrase.txt'"
+# get rime ascii mode (deprecated, but still useful)
 # alias get-ascii-mode="gdbus call --session \
 #   --dest com.github.rime.ibus.Rime \
 #   --object-path /com/github/rime/ibus/Rime \
@@ -123,9 +151,10 @@ alias wkrestart="systemctl restart wikispace --user"
 alias wklog="journalctl --user --unit wikispace -f"
 
 # borg backup alias
-alias bgstatus="systemctl status borg-backup --user"
-alias bglog="journalctl --user --unit borg-backup -f"
-alias bgex="chezmoi_edit $XDG_CONFIG_HOME/borg/excludes"
+alias borgst="systemctl status borg-backup --user"
+alias borgex="chezmoi_edit $XDG_CONFIG_HOME/borg/excludes"
+alias borgls="borg list /mnt/backup/uzvg@archlinux"
+alias borglg="journalctl --user --unit borg-backup -f"
 
 # clean journalctl file
 alias logclean="sudo journalctl --vacuum-size=200M"
@@ -149,9 +178,6 @@ alias ff="fastfetch"
 # check nvidia status
 # alias nvss="watch -n 2 -d nvidia-smi"
 
-# gdu but exclude Games disk
-alias gdu="gdu -i $HOME/Games -i $HOME/ExtendDisk"
-
 # shadowsocks
 # start shadowsocks service
 # alias ssstart="sudo sslocal -c /etc/shadowsocks/config.json -d start"
@@ -161,10 +187,12 @@ alias gdu="gdu -i $HOME/Games -i $HOME/ExtendDisk"
 # starship config
 # alias stcfg="$EDITOR $XDG_CONFIG_HOME/starship.toml"
 
-# Killing motherfucker QQ, wechat & steam background
-alias fkqq="killall qq"
-alias fkvv="flatpak kill com.valvesoftware.Steam"
-alias fkwc="flatpak kill com.tencent.WeChat"
+# ==============================================
+# Killing motherfucker QQ wechat & steam background jobs
+# ==============================================
+# alias fkqq="killall qq"
+# alias fkvv="flatpak kill com.valvesoftware.Steam"
+# alias fkwc="flatpak kill com.tencent.WeChat"
 
 # jump to bottles directory
 alias btshome="cd .var/app/com.usebottles.bottles/data/bottles/bottles/Quark-Drive/drive_c/users/steamuser"
@@ -191,7 +219,7 @@ alias wpsync="rclone sync $HOME/Pictures/Wallpapers OneDrive:Wallpapers --progre
 #
 
 # edit ghostty config
-alias gstrc="chezmoi_edit $XDG_CONFIG_HOME/ghostty/config.ghostty"
+# alias gstrc="chezmoi_edit $XDG_CONFIG_HOME/ghostty/config.ghostty"
 
 # yazi config
 alias rarc="chezmoi_edit $XDG_CONFIG_HOME/yazi/yazi.toml"
@@ -200,3 +228,5 @@ alias rarc="chezmoi_edit $XDG_CONFIG_HOME/yazi/yazi.toml"
 alias mpdrc="chezmoi_edit $XDG_CONFIG_HOME/mpd/mpd.conf"
 alias rrc="chezmoi_edit $XDG_CONFIG_HOME/rmpc/config.ron"
 
+# lyrics download tool
+alias lyrics-tool="ZonyLrcTools.Cli"
