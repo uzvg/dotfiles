@@ -24,6 +24,9 @@
 # google-chrome 存储路径
 pp:/home/*/.config/google-chrome
 
+# 忽略XDG_STATE_HOME
+/home/*.local/state/
+
 # 大型媒体/虚拟机（按需移除）
 /home/*/*.iso
 /home/*/*.qcow2
