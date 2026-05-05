@@ -47,6 +47,6 @@ zmodule zsh-users/zsh-autosuggestions
 zmodule zsh-users/zsh-history-substring-search
 
 # ===============================================
-# 最终视觉渲染 (绝对最后)
+# 最终视觉渲染 (最后)
 # ===============================================
 zmodule zsh-users/zsh-syntax-highlighting
