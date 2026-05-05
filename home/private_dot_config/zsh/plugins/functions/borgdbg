@@ -1,0 +1,30 @@
+# vim:et sts=2 sw=2 ft=zsh
+
+# Print functions
+# _zlog success
+# _zlog info
+# _zlog warn
+# _zlog error
+
+emulate -L zsh
+setopt err_return no_unset pipe_fail
+
+typeset -r exclude_rule_path="$HOME/.config/borg/excludes"
+typeset -r borg_repo="/mnt/backup/uzvg@archlinux"
+
+(( ${+commands[borg]} )) || {
+  _zlog error "borg command is not valid."
+  exit 1
+}
+
+${commands[borg]} create \
+  --dry-run \
+  --exclude-from "$exclude_rule_path" \
+  --exclude-caches \
+  --one-file-system \
+  ${borg_repo}::debug-{now} \
+  $HOME && {
+    _zlog success "borg backup successfully."
+  } || {
+    _zlog error "failed to backup."
+  }
