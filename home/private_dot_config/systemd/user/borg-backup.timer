@@ -1,0 +1,20 @@
+[Unit]
+Description=Daily Borg Backup Timer
+Requires=borg-backup.service
+
+[Timer]
+
+# 开机 15 分钟后开始第一次执行
+OnBootSec=15min
+
+# 每天晚上 23:00 执行
+OnCalendar=*-*-* 23:00:00
+
+# 如果关机错过了时间，开机后立即补办
+Persistent=true
+
+# 随机延迟最多 5 分钟，避免多台机器同时压盘
+RandomizedDelaySec=5min
+
+[Install]
+WantedBy=timers.target

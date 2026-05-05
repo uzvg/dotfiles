@@ -1,0 +1,39 @@
+[Unit]
+Description=Borg Backup User Service
+After=network.target
+; 仅在备份盘挂载后运行（按需调整 mount unit 名称）
+ConditionPathIsMountPoint=/mnt/backup
+
+After=network.target
+
+[Service]
+Type=oneshot
+# 引入环境变量
+EnvironmentFile=%h/.config/borg/env
+ExecStart=/usr/bin/borg create \
+  --stats \
+  --compression zstd,3 \
+  --exclude-from %h/.config/borg/excludes \
+  --exclude-caches \
+  --one-file-system \
+  ::home-{now} \
+  %h
+
+# 清理旧备份 (Prune)
+# 使用::会自动补全仓库，已在env文件中定义BORG_REPO
+ExecStart=/usr/bin/borg prune \
+  --list \
+  --show-rc \
+  --keep-daily 7 \
+  --keep-weekly 4 \
+  --keep-monthly 6 \
+  ::
+
+# 整理空间 (Compact)
+ExecStart=/usr/bin/borg compact ::
+
+# 失败时不要反复重试（避免损坏仓库）
+Restart=no
+
+[Install]
+WantedBy=default.target
