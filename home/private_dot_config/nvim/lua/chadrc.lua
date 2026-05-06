@@ -6,13 +6,12 @@
 local M = {}
 
 M.base46 = {
-	theme = "chadracula",
-  transparency = true,
+	theme = "onedark",
 
-	hl_override = {
-		Comment = { italic = true },
-		["@comment"] = { italic = true },
-	},
+	-- hl_override = {
+	-- 	Comment = { italic = true },
+	-- 	["@comment"] = { italic = true },
+	-- },
 }
 
 -- M.nvdash = { load_on_startup = true }
@@ -22,7 +21,4 @@ M.base46 = {
 --      }
 -- }
 
--- vim.schedule(function()
-  -- require("custom.plugins.rime_ascii")
--- end)
 return M
