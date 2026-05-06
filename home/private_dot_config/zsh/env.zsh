@@ -120,7 +120,7 @@ export BUN_INSTALL="$XDG_DATA_HOME/bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
 # ==============================================
-# GO
+# GO Environment Variables
 # ==============================================
 export GOPATH="$XDG_DATA_HOME/go"
 export GOBIN="$HOME/.local/bin"
