@@ -14,8 +14,9 @@ ExecStart=%h/.local/share/bun/bin/tiddlywiki --listen port="9191" anon-username=
 KillMode=mixed
 TimeoutStopSec=10
 SuccessExitStatus=0 143
-Restart=on-failure
-RestartSec=10
+
+# 失败时不要重试
+Restart=no
 
 StandardOutput=journal
 StandardError=journal
