@@ -1,11 +1,11 @@
 #!/usr/bin/env zsh
-# shrink_images.zsh — 批量将图片转换并压缩为 AVIF 格式
+# twks-shrink_images.zsh — 批量将图片转换并压缩为 AVIF 格式
 # 依赖: vips (libvips), coreutils (realpath) pretty-print.zsh
 
 # ── 工具函数 ─────────────────────────────────────────
 
 usage() {
-  cat << 'EOF'
+  cat <<'EOF'
 Usage: ${0} -s <SOURCE_DIR> -d <DEST_DIR> [Options]
 
 Options:
@@ -30,10 +30,10 @@ parse_size() {
     local num=$match[1]
     local unit=$match[2]
     case $unit in
-      K) print $(( num * 1024 )) ;;
-      M) print $(( num * 1024 * 1024 )) ;;
-      G) print $(( num * 1024 * 1024 * 1024 )) ;;
-      *) print $num ;;
+    K) print $((num * 1024)) ;;
+    M) print $((num * 1024 * 1024)) ;;
+    G) print $((num * 1024 * 1024 * 1024)) ;;
+    *) print $num ;;
     esac
   else
     _zlog error "错误: 无法解析大小参数 '$1'（示例: 500K 1M 2G）"
@@ -49,9 +49,9 @@ log_verbose() {
 check_deps() {
   local -a missing=()
   for cmd in (vips realpath); do
-    (( $+commands[$cmd] )) || missing+=($cmd)
+    (($+commands[$cmd])) || missing+=($cmd)
   done
-  if (( ${#missing} )); then
+  if ((${#missing})); then
     _zlog error "错误: 缺少依赖命令: ${(j:, :)missing}"
     return 1
   fi
@@ -69,12 +69,18 @@ main() {
     w: -width: \
     q: -quality: \
     e: -effort: \
-    m: -max-size: || { usage; return 1 }
+    m: -max-size: || {
+    usage
+    return 1
+  }
 
-  (( ${+opts[-h]} || ${+opts[--help]} )) && { usage; return 0 }
+  ((${+opts[-h]} || ${+opts[--help]})) && {
+    usage
+    return 0
+  }
 
   local verbose=false
-  (( ${+opts[-v]} || ${+opts[--verbose]} )) && verbose=true
+  ((${+opts[-v]} || ${+opts[--verbose]})) && verbose=true
 
   # 提取参数值（合并长短选项，设置默认值）
   local src_dir="${opts[-s]:-${opts[--source]}}"
@@ -82,12 +88,13 @@ main() {
   local width="${opts[-w]:-${opts[--width]:-1920}}"
   local quality="${opts[-q]:-${opts[--quality]:-85}}"
   local effort="${opts[-e]:-${opts[--effort]:-5}}"
-  local max_size_raw="${opts[-m]:-${opts[--max-size]:-0}}"
+  local max_size_raw="${opts[-m]:-${opts[--max - size]:-0}}"
 
   # ── 校验逻辑 ────────────────────────────────────────
   if [[ -z $src_dir || -z $dest_dir ]]; then
     _zlog error "错误: -s/--source 和 -d/--dest 为必填参数。"
-    usage; return 1
+    usage
+    return 1
   fi
   if [[ ! -d $src_dir ]]; then
     _zlog error "错误: 源目录不存在: $src_dir"
@@ -120,10 +127,10 @@ main() {
   setopt extended_glob local_options
 
   _zlog info "扫描源目录: $src_dir"
-  local -a source_files=( ${src_dir}/**/*.(#i)(jpg|jpeg|png|webp)(N.:a) )
+  local -a source_files=(${src_dir}/**/*.(#i)(jpg|jpeg|png|webp)(N.:a))
   local -i total_found=${#source_files}
 
-  if (( total_found == 0 )); then
+  if ((total_found == 0)); then
     _zlog info "未找到任何支持的图片文件，退出。"
     return 0
   fi
@@ -138,7 +145,7 @@ main() {
     local dest_file="$dest_dir/${rel_path:r}.avif"
 
     if [[ -f $dest_file && $src_file -ot $dest_file ]]; then
-      (( skip_count++ ))
+      ((skip_count++))
       log_verbose "跳过(已存在): $dest_file"
     else
       missing_files+=("$src_file")
@@ -146,15 +153,15 @@ main() {
   done
 
   # 2. 按大小过滤剩余文件 (批量调用 stat，成本其次)
-  if (( max_size_bytes > 0 && ${#missing_files} > 0 )); then
+  if ((max_size_bytes > 0 && ${#missing_files} > 0)); then
     local -a file_sizes
     zstat -A file_sizes +size "${missing_files[@]}"
 
     for i in {1..${#missing_files}}; do
-      if (( file_sizes[i] >= max_size_bytes )); then
+      if ((file_sizes[i] >= max_size_bytes)); then
         files_to_process+=("${missing_files[i]}")
       else
-        (( skip_count++ ))
+        ((skip_count++))
         log_verbose "跳过(大小 ${file_sizes[i]}B 不足): ${missing_files[i]:t}"
       fi
     done
@@ -167,11 +174,11 @@ main() {
   local -i success_count=0
   local -i err_count=0
 
-  if (( pending_count == 0 )); then
+  if ((pending_count == 0)); then
     _zlog info "所有符合条件的图片均已处理，无需重复转换。"
   else
     _zlog info "开始转换 ${pending_count} 张图片...\n"
-    
+
     local -A created_dirs # 缓存已确认创建的目录结构，减少 IO
 
     for src_file in "${files_to_process[@]}"; do
@@ -183,7 +190,7 @@ main() {
       if [[ -z ${created_dirs[$dest_parent]} && ! -d $dest_parent ]]; then
         if ! mkdir -p "$dest_parent"; then
           _zlog error "错误: 无法创建目录: $dest_parent"
-          (( err_count++ ))
+          ((err_count++))
           continue
         fi
         created_dirs[$dest_parent]=1
@@ -193,29 +200,29 @@ main() {
 
       # 执行转换
       if vips thumbnail \
-           "$src_file" \
-           "${dest_file}[Q=${quality},strip,effort=${effort}]" \
-           "$width" \
-           --size down \
-           --linear \
-           2>/dev/null; then
-        (( success_count++ ))
+        "$src_file" \
+        "${dest_file}[Q=${quality},strip,effort=${effort}]" \
+        "$width" \
+        --size down \
+        --linear \
+        2>/dev/null; then
+        ((success_count++))
       else
-        (( err_count++ ))
+        ((err_count++))
         _zlog error "  转换失败: $src_file"
       fi
     done
   fi
 
   # ── 运行报告 ────────────────────────────────────────
-  print "\n══════════════════════════════"
+  print "═══════════════════════════════════════════"
   print "  扫描图片总数:   ${total_found}"
   print "  成功转换:       ${success_count}"
   print "  跳过处理:       ${skip_count}"
   print "  转换失败:       ${err_count}"
-  print "══════════════════════════════"
+  print "═══════════════════════════════════════════"
 
-  return $(( err_count > 0 ? 1 : 0 ))
+  return $((err_count > 0 ? 1 : 0))
 }
 
 main "$@"
