@@ -48,10 +48,10 @@ log_verbose() {
 # 检查外部依赖
 check_deps() {
   local -a missing=()
-  for cmd (vips realpath); do
+  for cmd in (vips realpath); do
     (( $+commands[$cmd] )) || missing+=($cmd)
   done
-  if (( #missing )); then
+  if (( ${#missing} )); then
     _zlog error "错误: 缺少依赖命令: ${(j:, :)missing}"
     return 1
   fi
