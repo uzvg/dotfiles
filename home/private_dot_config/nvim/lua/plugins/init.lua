@@ -1,4 +1,4 @@
-return {
+local plugins = {
   -- 禁用文件树 (nvim-tree)
   -- {
   --   "nvim-tree/nvim-tree.lua",
@@ -33,3 +33,5 @@ return {
   	},
   },
 }
+
+return plugins
