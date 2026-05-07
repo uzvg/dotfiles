@@ -1,4 +1,10 @@
 return {
+  -- 禁用文件树 (nvim-tree)
+  -- {
+  --   "nvim-tree/nvim-tree.lua",
+  --   enabled = false,
+  -- },
+  --
   {
     "stevearc/conform.nvim",
     -- event = 'BufWritePre', -- uncomment for format on save
