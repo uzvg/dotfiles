@@ -23,14 +23,25 @@ local plugins = {
   { import = "nvchad.blink.lazyspec" },
 
   {
-  	"nvim-treesitter/nvim-treesitter",
-  	opts = {
-  		ensure_installed = {
-  			"vim", "lua", "vimdoc", "html", "css", "html",
-        "css", "python", "javascript", "typescript", "json",
-        "ron", "zsh", "bash",
-  		},
-  	},
+    "nvim-treesitter/nvim-treesitter",
+    opts = {
+      ensure_installed = {
+        "vim",
+        "lua",
+        "vimdoc",
+        "html",
+        "css",
+        "html",
+        "css",
+        "python",
+        "javascript",
+        "typescript",
+        "json",
+        "ron",
+        "zsh",
+        "bash",
+      },
+    },
   },
   {
     "kdheepak/lazygit.nvim",
@@ -44,14 +55,14 @@ local plugins = {
     },
     -- optional for floating window border decoration
     dependencies = {
-        "nvim-lua/plenary.nvim",
+      "nvim-lua/plenary.nvim",
     },
     -- setting the keybinding for LazyGit with 'keys' is recommended in
     -- order to load the plugin when the command is run for the first time
     keys = {
-        { "<leader>lg", "<cmd>LazyGit<cr>", desc = "LazyGit" }
-    }
-  }
+      { "<leader>lg", "<cmd>LazyGit<cr>", desc = "LazyGit" },
+    },
+  },
 }
 
 return plugins
