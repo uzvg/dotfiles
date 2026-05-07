@@ -2,7 +2,7 @@
 emulate -L zsh
 
 usage() {
-  cat << 'EOF'
+  cat <<'EOF'
 DESCRIPTION:
   twks-image-sync.zsh is a zsh shell script to sync images to the remote with rclone tool.
 USAGE:
@@ -26,13 +26,19 @@ main() {
     h -help \
     v -verbose \
     s: -source: \
-    d: -dest: \
-    || { usage; return 1 }
+    d: -dest: ||
+    {
+      usage
+      return 1
+    }
 
-  (( ${+opts[-h]} || ${+opts[--help]} )) && { usage; return 0 }
+  ((${+opts[-h]} || ${+opts[--help]})) && {
+    usage
+    return 0
+  }
 
   local verbose=false
-  (( ${+opts[-v]} || ${+opts[--verbose]} )) && verbose=true
+  ((${+opts[-v]} || ${+opts[--verbose]})) && verbose=true
 
   # 移除 zparseopts 留下的 -- 分隔符
   [[ ${1} == "--" ]] && shift
@@ -52,7 +58,8 @@ main() {
   # ── 校验逻辑 ────────────────────────────────────────
   if [[ -z $src_dir || -z $dest_path ]]; then
     _zlog error "错误: -s/--source 和 -d/--dest 不能为空。"
-    usage; return 1
+    usage
+    return 1
   fi
 
   if [[ ! -d $src_dir ]]; then
@@ -60,7 +67,7 @@ main() {
     return 1
   fi
 
-  (( ! ${+commands[rclone]} )) && {
+  ((!${+commands[rclone]})) && {
     _zlog error "rclone 命令不存在，请检查 rclone 是否已安装。"
     return 1
   }
@@ -71,11 +78,11 @@ main() {
     --exclude "*.meta" \
     --exclude "*.tid" \
     --delete-excluded && {
-      _zlog success "Images sync done"
-    } || {
-      _zlog error "Failing to sync images to ${dest_path}"
-      return 1
-    }
+    _zlog success "Images sync done"
+  } || {
+    _zlog error "Failing to sync images to ${dest_path}"
+    return 1
+  }
 }
 
 main "$@"

@@ -30,30 +30,30 @@ _zlog info "开始压缩图片..."
 source ${LIB_ROOT}/twks-image-shrink.zsh \
   --source "$SHRINK_SOURCE" \
   --dest "$SHRINK_DEST" || {
-    _zlog error "图片压缩失败"
-    _zlog info "当前工作目录: $PWD"
-    exit 1
-  }
+  _zlog error "图片压缩失败"
+  _zlog info "当前工作目录: $PWD"
+  exit 1
+}
 
 # 备份到OnedDrive
 _zlog info "开始备份到Onedrive..."
 source ${LIB_ROOT}/twks-image-sync.zsh \
   --source $BACKUP_SOURCE \
   --dest $BACKUP_DEST || {
-    _zlog error "图片备份失败"
-    _zlog info "当前工作目录: $PWD"
-    exit 1
-  }
+  _zlog error "图片备份失败"
+  _zlog info "当前工作目录: $PWD"
+  exit 1
+}
 
 # 上传到CloudFlare
 _zlog info "开始上传到CloudFlare..."
 source ${LIB_ROOT}/twks-image-sync.zsh \
   --source $PUBLISH_SOURCE \
   --dest $PUBLISH_DEST || {
-    _zlog error "图片备份失败"
-    _zlog info "当前工作目录: $PWD"
-    exit 1
-  }
+  _zlog error "图片备份失败"
+  _zlog info "当前工作目录: $PWD"
+  exit 1
+}
 
 _zlog "开始push到远程仓库..."
 
