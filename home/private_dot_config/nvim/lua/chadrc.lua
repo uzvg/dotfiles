@@ -27,7 +27,7 @@ M.ui = {
 
 M.ui = {
   statusline = {
-    separator_style = "arrow",
+    separator_style = "round",
     modules = nil,
   },
 }
