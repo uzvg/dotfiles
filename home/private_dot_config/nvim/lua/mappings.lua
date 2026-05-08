@@ -1,11 +1,11 @@
-require "nvchad.mappings"
+require("nvchad.mappings")
 local map = vim.keymap.set
 
 map("n", ";", ":", { desc = "CMD enter command mode" })
 map("i", "jk", "<ESC>")
 map("n", "Q", ":exit<CR>", { desc = "Exit neovim" })
-map("n", "qq", ":exit<CR>", { desc = "Exit neovim" })
-map("n", "S", ":w<CR>", { desc = "Save Changes" })
+map("n", "<leader>q", ":exit<CR>", { desc = "Exit neovim" })
+-- map("n", "S", ":w<CR>", { desc = "Save Changes" })
 
 -- 只有 y 和 d 允许触碰系统剪贴板
 map({ "n", "v" }, "y", '"+y')
