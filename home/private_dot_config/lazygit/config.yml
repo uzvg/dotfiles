@@ -1,0 +1,80 @@
+# Ayu Dark — Lazygit Color Theme
+# Generated from the official ayu color palette specification
+# https://github.com/ayu-theme/ayu-colors
+#
+# Color derivation reference:
+#   palette range 0.675:0.875, steps 5
+#
+#   syntax.markup   = palette.red.l2    → #F28086
+#   syntax.string   = palette.green.l4  → #DCEFB5
+#   syntax.func     = palette.yellow.l4 → #FFD8A6
+#   syntax.entity   = palette.blue.l3   → #8CD5FF
+#   syntax.regexp   = palette.teal.l5   → #CBF3E6
+#   syntax.constant = palette.purple.l3 → #C58CFF
+#   syntax.keyword  = palette.orange.l3 → #FFBC8C
+#   syntax.tag      = palette.indigo.l2 → #82D4EF
+#   common.accent   = #E6B450
+#   editor.fg       = #BFBDB6
+#   surface.base    = #0D1017
+#   surface.lift    = #10141C
+#   ui.fg           = #5A6378
+#   vcs.added       = #70BF56
+#   vcs.modified    = #73B8FF
+#   vcs.removed     = #F26D78
+
+gui:
+  theme:
+    # ── Borders ────────────────────────────────────────────────────────────
+    # Focused window border — accent gold
+    activeBorderColor:
+      - '#E6B450'
+      - bold
+
+    # Unfocused window border — muted ui.fg
+    inactiveBorderColor:
+      - '#5A6378'
+
+    # Search-mode focused border — teal/cyan
+    searchingActiveBorderColor:
+      - '#CBF3E6'
+      - bold
+
+    # ── Text ───────────────────────────────────────────────────────────────
+    # Default foreground — editor.fg
+    defaultFgColor:
+      - '#BFBDB6'
+
+    # Keybinding hint text at the bottom — syntax.tag (indigo)
+    optionsTextColor:
+      - '#82D4EF'
+
+    # ── Selected Line ──────────────────────────────────────────────────────
+    # Active selection background — editor.selection.active (~#1A2A3A)
+    selectedLineBgColor:
+      - '#1C2B3A'
+
+    # Inactive panel selection — just bold, no background color
+    inactiveViewSelectedLineBgColor:
+      - bold
+
+    # ── Git Status Colors ──────────────────────────────────────────────────
+    # Unstaged changes — vcs.removed red
+    unstagedChangesColor:
+      - '#F26D78'
+
+    # ── Cherry-pick / Rebase Markers ───────────────────────────────────────
+    # Cherry-picked commit foreground — syntax.func yellow
+    cherryPickedCommitFgColor:
+      - '#FFD8A6'
+
+    # Cherry-picked commit background — surface.lift darkened
+    cherryPickedCommitBgColor:
+      - '#4C4126'
+
+    # Marked base commit (rebase) foreground — syntax.keyword orange
+    markedBaseCommitFgColor:
+      - '#FFBC8C'
+
+    # Marked base commit (rebase) background
+    markedBaseCommitBgColor:
+      - '#3D2B1A'
