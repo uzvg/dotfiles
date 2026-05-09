@@ -76,7 +76,7 @@
 
     // Progress bar
     progress_bar: (
-        symbols: ["▕", "━", "●", "─", "▏"],
+        symbols: ["〚", "⠶", "⣿", "⠶", "〛"],
         track_style: (fg: "#1a2233"),
         elapsed_style: (fg: "#39bae6"),
         thumb_style: (fg: "#e6b450"),
