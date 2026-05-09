@@ -34,7 +34,7 @@
     preview_metadata_group_style: (fg: "#e6b450", modifiers: "Bold"),
 
     // List item highlight / current playing
-    highlighted_item_style: (fg: "#39bae6", modifiers: "Bold"),
+    highlighted_item_style: (fg: "#7fd962", modifiers: "Bold"),
     current_item_style: (fg: "#0d1017", bg: "#e6b450", modifiers: "Bold"),
 
     // Borders
