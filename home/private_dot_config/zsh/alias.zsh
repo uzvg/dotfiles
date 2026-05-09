@@ -155,7 +155,6 @@ alias logclean="sudo journalctl --vacuum-size=200M"
 # Sync system time
 alias timesync="systemctl restart systemd-timesyncd.service"
 
-
 # ==============================================
 # hugo
 # ==============================================
@@ -215,7 +214,7 @@ alias lyrics-tool="ZonyLrcTools.Cli"
 # alias stcfg="$EDITOR $XDG_CONFIG_HOME/starship.toml"
 
 # edit ghostty config
-# alias gstrc="chezmoi_edit $XDG_CONFIG_HOME/ghostty/config.ghostty"
+alias gstrc="chezmoi_edit $XDG_CONFIG_HOME/ghostty/config.ghostty"
 
 # yazi config
 alias rarc="chezmoi_edit $XDG_CONFIG_HOME/yazi/yazi.toml"
