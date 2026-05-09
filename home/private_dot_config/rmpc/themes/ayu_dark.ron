@@ -377,4 +377,25 @@
             ]
         )
     },
+
+    cava: (
+    // bar_symbols: ['▁', '▂', '▃', '▄', '▅', '▆', '▇', '█'],
+    bar_symbols: ['⣀', '⣄', '⣆', '⣇', '⡇', '⠇', '⠃', '⠁'],
+    inverted_bar_symbols: ['▔', '🮂', '🮃', '▀', '🮄', '🮅', '🮆', '█'],
+    inverted_bar_as_mask: false,
+    bg_color: "#0d1017",
+    bar_width: 1,
+    bar_spacing: 1,
+    orientation: Bottom,
+    // Ayu Dark rainbow gradient
+    // Low amplitudes start with Ayu cyan, flowing through green → orange → red at peaks
+    bar_color: Gradient({
+          0: "#95e6cb", // cyan    — 静谧低频
+         20: "#7fd962", // green   — 清新中低频
+         40: "#39bae6", // blue    — 明亮中频
+         60: "#a37acc", // purple  — 神秘中高频
+         80: "#e6b450", // orange  — 温暖高频
+        100: "#f07178", // red     — 峰值
+    }),
+),
 )
