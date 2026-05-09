@@ -85,7 +85,7 @@
 
     // Scrollbar
     scrollbar: (
-        symbols: ["│", "█", "▲", "▼"],
+        symbols: ["│", "⣿", "▲", "▼"],
         track_style: (fg: "#1a2233"),
         ends_style: (fg: "#5c6773"),
         thumb_style: (fg: "#39bae6"),
