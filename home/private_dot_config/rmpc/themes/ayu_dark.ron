@@ -43,10 +43,10 @@
 
     // File browser symbols
     symbols: (
-        song: "",
-        dir: "",
-        playlist: "",
-        marker: "●",
+        song:     "♪",
+        dir:      "󰉋",
+        playlist: "≡",
+        marker:   "➤",
         ellipsis: "…",
 
         song_style: (fg: "#bfbdb6"),
