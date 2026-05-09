@@ -1,4 +1,4 @@
-require("nvchad.mappings")
+require "nvchad.mappings"
 local map = vim.keymap.set
 
 map("n", ";", ":", { desc = "CMD enter command mode" })
@@ -28,4 +28,24 @@ map("n", "p", '"+p')
 map("n", "P", '"+P')
 map("v", "p", '"+P') -- 关键：可视模式用大写 P 的行为实现小写 p 的功能
 
--- map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")
+-- 如果 count 为 0 执行 gj/gk，否则执行 j/k
+map({ "n", "x", "v" }, "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true, desc = "Move cursor down" })
+map({ "n", "x", "v" }, "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true, desc = "Move cursor up" })
+
+-- Execute lua code
+map("n", "<space>rc", "<cmd>source %<cr>", { desc = "Source current file" })
+map("n", "<space>rl", ":.lua<cr>", { desc = "Execute current line" })
+map("v", "<space>rs", ":lua<cr>", { desc = "Execute selection" })
+
+-- commenting
+map("n", "gco", "o<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = "Add Comment Below" })
+map("n", "gcO", "O<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = "Add Comment Above" })
+
+-- editing neovim config
+map("n", "<leader>nc", function()
+  local config_path = vim.fn.stdpath "config"
+  vim.cmd("cd " .. config_path)
+  local nvim_tree_api = require "nvim-tree.api"
+  nvim_tree_api.tree.open { path = config_path, find_file = true }
+  print("Edit config in: " .. config_path)
+end, { desc = "Edit Neovim Config (NvimTree)" })
