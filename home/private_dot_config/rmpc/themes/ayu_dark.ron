@@ -245,7 +245,7 @@
             direction: Horizontal,
             panes: [
                 (size: "1", pane: Pane(Property(content: [(kind: Text(""))]))),
-                (size: "100%", pane: Pane(Volume(kind: Slider(symbols: (filled: "─", thumb: "●", track: "─"))))),
+                (size: "100%", pane: Pane(Volume(kind: Slider(symbols: (filled: "⠶", thumb: "⣿", track: "⠶"))))),
                 (size: "3", pane: Pane(Property(content: [(kind: Property(Status(Volume)), style: (fg: "#39bae6"))], align: Right))),
                 (size: "2", pane: Pane(Property(content: [(kind: Text("%"), style: (fg: "#39bae6"))]))),
             ]
