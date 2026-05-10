@@ -1,34 +1,246 @@
 {
-  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
-  "modules": [
-    "title",
-    "separator",
-    "os",
-    "kernel",
-    "uptime",
-    "shell",
-    "display",
-    "de",
-    "wm",
-    "wmtheme",
-    "theme",
-    "icons",
-    "font",
-    "cursor",
-    "terminal",
-    "terminalfont",
-    "break",
-    "colors"
-  ]
-}
+    // ╔══════════════════════════════════════════════╗
+    // ║         Fastfetch Configuration File         ║
+    // ║   Edit LOGO_PATH below to use a custom logo  ║
+    // ╚══════════════════════════════════════════════╝
 
-// 取消显示如下信息：
-//     "packages",
-//     "cpu",
-//     "gpu",
-//     "memory",
-//     "swap",
-//     "disk",
-//     "battery",
-//     "poweradapter",
-//     "locale",
+    "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+
+    // ─────────────────────────────────────────────────
+    //  LOGO SETTINGS
+    //  type: "file"   → 使用自定义 txt 文件 logo
+    //  type: "builtin"→ 使用内置发行版 logo
+    //
+    //  自定义 logo 路径配置：
+    //    将下方 "source" 改为你的 txt 文件路径，例如：
+    //    "source": "~/.config/fastfetch/logo.txt"
+    //    并将 "type" 改为 "file"
+    // ─────────────────────────────────────────────────
+    "logo": {
+        "type": "builtin",
+        // "type": "file",
+        // "source": "~/.config/fastfetch/logo.txt",
+        "height": 16,
+        "width": 32,
+        "padding": {
+            "top": 4,
+            "left": 2,
+            "right": 1
+        },
+        "preserveAspectRatio": true
+    },
+
+    // ─────────────────────────────────────────────────
+    //  GLOBAL DISPLAY SETTINGS
+    //
+    //  keyWidth: 强制 key 列固定宽度（字符数），使 → 对齐
+    //  所有 key 的可见文字宽度统一为 10 个字符：
+    //    "  icon  Label" = 2sp + icon(2w) + 2sp + label(最长6字) = 视觉宽10
+    // ─────────────────────────────────────────────────
+    "display": {
+        "separator": " → ",
+        "key": {
+            "width": 20
+        },
+        "color": {
+            "keys": "blue"
+        }
+    },
+
+    // ─────────────────────────────────────────────────
+    //  MODULES
+    //
+    //  Key 格式规范（所有行保持一致）：
+    //    " icon  Label  "
+    //    └1sp┘└icon┘└2sp┘└─── label pad to 7 chars ───┘
+    //  Nerd Font 图标渲染宽度 = 2 格，按 2 格计算对齐
+    // ─────────────────────────────────────────────────
+    "modules": [
+
+        "break",
+
+        // ┌─ USER ──────────────────────────────────────┐
+        {
+            "type": "custom",
+            "format": "\u001b[1;34m  {user.name}\u001b[0m\u001b[90m@\u001b[0m\u001b[1;34m{host.name}"
+        },
+        {
+            "type": "custom",
+            "format": "\u001b[90m  ─────────────────────────────────────────"
+        },
+        // └────────────────────────────────────────────┘
+
+        "break",
+
+        // ┌─ HARDWARE ──────────────────────────────────┐
+        {
+            "type": "custom",
+            "format": "\u001b[1;32m 󰌢  Hardware\u001b[0m"
+        },
+        {
+            "type": "host",
+            "key": " 󰍹  Machine",
+            "keyColor": "green"
+        },
+        {
+            "type": "cpu",
+            "key": " 󰻠  CPU    ",
+            "keyColor": "green",
+            "showPeCoreCount": true
+        },
+        {
+            "type": "gpu",
+            "key": " 󰢮  GPU    ",
+            "keyColor": "green",
+            "detectionMethod": "auto"
+        },
+        {
+            "type": "memory",
+            "key": " 󰍛  RAM    ",
+            "keyColor": "green"
+        },
+        {
+            "type": "swap",
+            "key": " 󰓡  Swap   ",
+            "keyColor": "green"
+        },
+        {
+            "type": "disk",
+            "key": " 󰋊  Disk   ",
+            "keyColor": "green",
+            "folders": "/"
+        },
+        // └────────────────────────────────────────────┘
+
+        "break",
+
+        // ┌─ SYSTEM ────────────────────────────────────┐
+        {
+            "type": "custom",
+            "format": "\u001b[1;33m   System\u001b[0m"
+        },
+        {
+            "type": "os",
+            "key": " 󰻀  OS     ",
+            "keyColor": "yellow"
+        },
+        {
+            "type": "kernel",
+            "key": " 󰌢  Kernel ",
+            "keyColor": "yellow"
+        },
+        {
+            "type": "bios",
+            "key": " 󰖙  BIOS   ",
+            "keyColor": "yellow"
+        },
+        {
+            "type": "packages",
+            "key": " 󰏖  Pkgs   ",
+            "keyColor": "yellow"
+        },
+        {
+            "type": "shell",
+            "key": " 󰆍  Shell  ",
+            "keyColor": "yellow"
+        },
+        // └────────────────────────────────────────────┘
+
+        "break",
+
+        // ┌─ DESKTOP ───────────────────────────────────┐
+        {
+            "type": "custom",
+            "format": "\u001b[1;35m 󰇄  Desktop\u001b[0m"
+        },
+        {
+            "type": "de",
+            "key": " 󰧨  DE     ",
+            "keyColor": "magenta"
+        },
+        {
+            "type": "wm",
+            "key": " 󱂬  WM     ",
+            "keyColor": "magenta"
+        },
+        {
+            "type": "wmtheme",
+            "key": " 󰉼  Theme  ",
+            "keyColor": "magenta"
+        },
+        {
+            "type": "icons",
+            "key": " 󰀻  Icons  ",
+            "keyColor": "magenta"
+        },
+        {
+            "type": "cursor",
+            "key": " 󰊠  Cursor ",
+            "keyColor": "magenta"
+        },
+        {
+            "type": "font",
+            "key": " 󰛖  Font   ",
+            "keyColor": "magenta"
+        },
+        {
+            "type": "terminal",
+            "key": " 󰄛  Term   ",
+            "keyColor": "magenta"
+        },
+        {
+            "type": "terminalfont",
+            "key": " 󰛖  TFont  ",
+            "keyColor": "magenta"
+        },
+        // └────────────────────────────────────────────┘
+
+        "break",
+
+        // ┌─ UPTIME / TIME ─────────────────────────────┐
+        {
+            "type": "custom",
+            "format": "\u001b[1;36m 󰅐  System Info\u001b[0m"
+        },
+        {
+            "type": "command",
+            "key": " 󰛡  OS Age ",
+            "keyColor": "cyan",
+            "text": "birth_install=$(stat -c %W / 2>/dev/null || echo 0); current=$(date +%s); diff=$(( (current - birth_install) / 86400 )); echo \"$diff days\""
+        },
+        {
+            "type": "uptime",
+            "key": " 󱫐  Uptime ",
+            "keyColor": "cyan"
+        },
+        {
+            "type": "datetime",
+            "key": " 󰃰  Time   ",
+            "keyColor": "cyan",
+            "format": "{year}-{month-pretty}-{day-pretty}  {hour-pretty}:{minute-pretty}:{second-pretty}"
+        },
+        {
+            "type": "localip",
+            "key": " 󰩟  IP     ",
+            "keyColor": "cyan",
+            "showIpv4": true,
+            "showIpv6": false
+        },
+        // └────────────────────────────────────────────┘
+
+        "break",
+
+        // ┌─ COLOR PALETTE ─────────────────────────────┐
+        {
+            "type": "colors",
+            "paddingLeft": 2,
+            "symbol": "circle",
+            "block": {
+                "width": 3,
+                "height": 1
+            }
+        }
+        // └────────────────────────────────────────────┘
+
+    ]
+}
