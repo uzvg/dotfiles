@@ -1,0 +1,80 @@
+[ui]
+show_top_bar = false
+# grid_zoom = 1    # starting zoom level for grid view: 0, 1, or 2 (clamped)
+# show_hidden = false  # show dotfiles and hidden files on startup (toggle with .)
+# start_in_grid = false  # open in grid view on startup (toggle with v)
+
+# Customize the Places pane. `entries` controls the pinned items in order;
+# `show_devices` keeps or hides the auto-detected Devices section.
+# Omit [places] entirely to keep the exact default sidebar.
+#
+# Built-in names: home, desktop, documents, downloads, pictures, music,
+# videos, root, trash
+# Use built-in ids like "downloads", not localized folder names like "Descargas".
+# Entries are deduped by resolved path: the first matching path wins.
+# Entry forms:
+# - "downloads"
+# - { builtin = "downloads", icon = "..." }
+# - { title = "Projects", path = "~/code", icon = "..." }
+# Any non-empty string works, but a single Nerd Font glyph usually looks best.
+#
+# [places]
+# show_devices = true
+# entries = [
+#   "home",
+#   "desktop",
+#   "documents",
+#   { builtin = "downloads", icon = "" },
+#   "pictures",
+#   "music",
+#   "videos",
+#   "root",
+#   { title = "Projects", path = "~/workspace", icon = "󰚝" },
+#   "trash",
+# ]
+#
+# Optional pane weights for the browser body. Values are relative: in
+# side-by-side layouts they control horizontal width, and when Preview stacks
+# below Files they control the Files / Preview vertical split.
+# Set a pane to 0 to hide it.
+#
+# If this table is omitted, Elio keeps the built-in responsive layout:
+# - horizontal layout: Places prefers 20 cols, Files / Preview use a 54 / 46
+#   split of the remaining width
+# - tighter windows: Places can shrink to 18 cols before Preview stacks
+# - stacked layout: Files / Preview use a 54 / 46 split of the available height
+# - height-constrained windows: Preview drops out instead of stacking too early
+#
+# Custom layouts keep visible panes side by side whenever they can still meet
+# minimum usable widths. If Preview can no longer fit horizontally but there is
+# enough height, it stacks below Files using the configured Files / Preview
+# weights.
+#
+# [layout.panes]
+# places = 10
+# files = 45
+# preview = 45
+
+# Rebind browser action keys. Each value must be a single character.
+# Reserved (never rebindable): h j k l g G ? [ ] + = - _ Space
+# Omit any key to keep the built-in default shown in the comment.
+#
+# [keys]
+# quit                 = "q"
+# yank                 = "y"
+# cut                  = "x"
+# paste                = "p"
+# trash                = "d"
+# create               = "a"
+# rename               = "r"
+# copy_path            = "c"
+# search_folders       = "f"
+# open                 = "o"
+# open_with            = "O"
+# sort                 = "s"
+# toggle_view          = "v"
+# toggle_hidden        = "."
+# scroll_preview_up    = "K"   # Shift+K
+# scroll_preview_down  = "J"   # Shift+J
+# scroll_preview_left  = "H"   # Shift+H
+# scroll_preview_right = "L"   # Shift+L
