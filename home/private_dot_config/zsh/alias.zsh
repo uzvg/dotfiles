@@ -239,3 +239,7 @@ alias dotfiles="lazygit -p $XDG_DATA_HOME/chezmoi"
 
 # uzvg zsh plugins dir
 alias uzpd="lazygit -p '$ZDOTDIR/plugins'"
+
+# Others
+alias weather="curl wttr.in/Shanghai"
+alias goodbye="lolcat -a -s 60 --spread 5 <(toilet 'Good Bye!' --font 'bigmono9')"
