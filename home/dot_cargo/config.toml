@@ -1,12 +1,18 @@
 # 镜像加速（中国大陆）
 [source.crates-io]
-replace-with = "bytedance"
+replace-with = 'rsproxy-sparse'
 
-[source.ustc]
-registry = "sparse+https://mirrors.ustc.edu.cn/crates.io-index/"
+[source.rsproxy]
+registry = "https://rsproxy.cn/crates.io-index"
 
-[source.bytedance]
+[source.rsproxy-sparse]
 registry = "sparse+https://rsproxy.cn/index/"
+
+[registries.rsproxy]
+index = "https://rsproxy.cn/crates.io-index"
+
+[net]
+git-fetch-with-cli = true
 
 # 编译器并行线程数
 [build]
