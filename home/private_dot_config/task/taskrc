@@ -1,0 +1,70 @@
+news.version=3.4.2
+data.location=$HOME/.local/share/task
+
+# taskwarrior-tui color configuration
+# Based on Ayu Dark theme (matched to Kitty terminal colors)
+#
+# Kitty color mapping reference:
+#   background       #0e1419   (dark navy)
+#   foreground       #e5e1cf   (warm white)
+#   color1  red      #ff3333   / color9  bright red    #ff6565
+#   color2  green    #b8cc52   / color10 bright green  #e9fe83
+#   color3  yellow   #e6c446   / color11 bright yellow #fff778
+#   color4  blue     #36a3d9   / color12 bright blue   #68d4ff
+#   color5  magenta  #f07078   / color13 bright mag    #ffa3aa
+#   color6  cyan     #95e5cb   / color14 bright cyan   #c7fffc
+
+# ── Standard task colors ─────────────────────────────────────────────────────
+
+# Active task: bright blue foreground on dark blue background (stands out clearly)
+color.active=bold color12 on color4
+
+# Overdue: bright red (urgent, attention-grabbing)
+color.overdue=bold color9
+
+# Due today: bright yellow (warning tone)
+color.due.today=color11
+
+# Due soon: blue (informational)
+color.due=color12
+
+# Completed: dark gray (de-emphasized)
+color.completed=color8
+
+# Deleted: dark gray + strikethrough
+color.deleted=color8
+
+# Blocked task: gray (muted, not actionable)
+color.blocked=color8
+
+# Blocking other tasks: magenta (needs attention)
+color.blocking=color13
+
+# Recurring task: cyan (distinctive but calm)
+color.recurring=color6
+
+# Tagged task: bright cyan
+color.tagged=color14
+
+# Alternate row: subtle dark tint for readability
+color.alternate=on color0
+
+# ── taskwarrior-tui specific styles ──────────────────────────────────────────
+
+# Active context indicator: bright green
+uda.taskwarrior-tui.style.context.active=bold color10
+
+# Calendar title: bright yellow
+uda.taskwarrior-tui.style.calendar.title=bold color11
+
+# Navbar: foreground on dark background
+uda.taskwarrior-tui.style.navbar=bold color12
+
+# Command line area: bright cyan
+uda.taskwarrior-tui.style.command=color14
+
+# Scrollbar: dark gray
+uda.taskwarrior-tui.style.report.scrollbar=color8
+
+# Scrollbar track area
+uda.taskwarrior-tui.style.report.scrollbar.area=color0
