@@ -37,14 +37,14 @@ export ALIYUNPAN_CONFIG_DIR="$HOME/.config/aliyunpan/config"
 # zoxide configuration
 # ==============================================
 # Specify the directory in which the database is stored
-# _ZO_DATA_DIR must be an absolute dir 
+# _ZO_DATA_DIR must be an absolute dir
 export _ZO_DATA_DIR="/home/uzvg/.local/share/"
 export _ZO_ECHO=0
 
 # ==============================================
 # Tiddlywiki Environment Variables
 # ==============================================
-export TIDDLYWIKI_PLUGIN_PATH="$XDG_DATA_HOME/tiddlywiki/plugins" 
+export TIDDLYWIKI_PLUGIN_PATH="$XDG_DATA_HOME/tiddlywiki/plugins"
 
 # ==============================================
 # Zellij Environment
@@ -90,6 +90,8 @@ ZVM_SYSTEM_CLIPBOARD_ENABLED=true
 # 启用sccache 提升rust编译速度
 #   Need to install sccache in advance
 export RUSTC_WRAPPER=sccache
+export RUSTUP_DIST_SERVER="https://rsproxy.cn"
+export RUSTUP_UPDATE_ROOT="https://rsproxy.cn/rustup"
 
 # 使用 mold 极速链接
 # export RUSTFLAGS="-C link-arg=-fuse-ld=mold"  # 若使用 mold
