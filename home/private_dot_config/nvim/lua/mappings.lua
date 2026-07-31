@@ -1,4 +1,4 @@
-require "nvchad.mappings"
+require("nvchad.mappings")
 local map = vim.keymap.set
 
 map("n", ";", ":", { desc = "CMD enter command mode" })
@@ -43,9 +43,8 @@ map("n", "gcO", "O<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = "Add Commen
 
 -- editing neovim config
 map("n", "<leader>nc", function()
-  local config_path = vim.fn.stdpath "config"
-  vim.cmd("cd " .. config_path)
-  local nvim_tree_api = require "nvim-tree.api"
-  nvim_tree_api.tree.open { path = config_path, find_file = true }
-  print("Edit config in: " .. config_path)
+	local config_path = vim.fn.stdpath("config")
+	local nvim_tree_api = require("nvim-tree.api")
+	nvim_tree_api.tree.open({ path = config_path, find_file = true })
+	print("Navigate to nvim config dir: " .. config_path)
 end, { desc = "Edit Neovim Config (NvimTree)" })
