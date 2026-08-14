@@ -139,6 +139,15 @@ alias wkrestart="systemctl restart wikispace --user"
 alias wklog="journalctl --user --unit wikispace -f"
 
 # ==============================================
+# DeepSeek harness
+# ==============================================
+alias dshstatus="systemctl status dsh-web --user"
+alias dshstart="systemctl start dsh-web --user"
+alias dshstop="systemctl stop dsh-web --user"
+alias dshrestart="systemctl restart dsh-web --user"
+alias dshlog="journalctl --user --unit dsh-web -f"
+
+# ==============================================
 # borg backup
 # ==============================================
 alias borgst="systemctl status borg-backup --user"
@@ -246,3 +255,6 @@ alias goodbye="lolcat -a -s 60 --spread 5 <(toilet 'Good Bye!' --font 'bigmono9'
 
 # opencode
 alias oc="opencode"
+
+# minimax
+alias mm="NVIM_APPNAME=nvim-minimax nvim"
