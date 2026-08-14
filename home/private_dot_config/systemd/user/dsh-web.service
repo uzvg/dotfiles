@@ -1,0 +1,20 @@
+[Unit]
+Description=DeepSeek Harness Web UI
+Documentation=https://github.com/deepseek-ai/deepseek-harness
+After=network.target
+
+[Service]
+Type=simple
+Environment=DSH_HOME=%h/.dsh
+WorkingDirectory=%h/.dsh
+ExecStart=%h/.local/share/bun/bin/dsh web --port 3080
+KillMode=mixed
+TimeoutStopSec=10
+SuccessExitStatus=0 143
+Restart=no
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=dsh-web
+
+[Install]
+WantedBy=default.target
