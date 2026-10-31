@@ -7,6 +7,11 @@ replace-with = 'rsproxy-sparse'
 [source.rsproxy-sparse]
 registry = "sparse+https://rsproxy.cn/index/"
 
+# 同上镜像，但注册为“备用 registry”，供 cargo install --registry / cargo install-update 使用
+# （cargo 的 --registry 只认 [registries.*]，不认 [source.*]）
+[registries.rsproxy-sparse]
+index = "sparse+https://rsproxy.cn/index/"
+
 [net]
 git-fetch-with-cli = true
 
