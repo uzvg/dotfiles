@@ -78,3 +78,8 @@ show_top_bar = true
 # scroll_preview_down  = "J"   # Shift+J
 # scroll_preview_left  = "H"   # Shift+H
 # scroll_preview_right = "L"   # Shift+L
+[open]
+rules = [
+  { ext = "md", command = "$EDITOR" },
+  { type = ["text", "code", "config"], command = "$EDITOR", terminal = true },
+]
