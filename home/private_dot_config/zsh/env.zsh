@@ -90,19 +90,6 @@ export ZIM_PLUGIN_CLEANUP=1
 ZVM_SYSTEM_CLIPBOARD_ENABLED=true
 
 # ==============================================
-# 提升rust编译速度
-# ==============================================
-# 启用sccache 提升rust编译速度（未安装时不要设置，否则 cargo 会直接报错）
-if (( ${+commands[sccache]} )); then
-  export RUSTC_WRAPPER=sccache
-fi
-export RUSTUP_DIST_SERVER="https://rsproxy.cn"
-export RUSTUP_UPDATE_ROOT="https://rsproxy.cn/rustup"
-
-# 使用 mold 极速链接
-# export RUSTFLAGS="-C link-arg=-fuse-ld=mold"  # 若使用 mold
-
-# ==============================================
 # 在终端中启动系统代理2080/3067/7890
 # ==============================================
 export http_proxy="http://127.0.0.1:2080"
