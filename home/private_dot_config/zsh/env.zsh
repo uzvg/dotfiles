@@ -4,7 +4,12 @@
 # ==============================================
 # Default editor
 # ==============================================
+# EDITOR 必须是单个可执行命令，不能写成 "VAR=val cmd" 形式，
+# 否则直接 exec 的程序会报 command not found。
+# 需要切换 Neovim 配置时，用 NVIM_APPNAME 环境变量单独指定。
+export NVIM_APPNAME='lazyvim'
 export EDITOR='nvim'
+export VISUAL="$EDITOR"
 
 # ==============================================
 # Rime Input Method Environment Variables

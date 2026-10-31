@@ -258,3 +258,5 @@ alias oc="opencode"
 
 # minimax
 alias mm="NVIM_APPNAME=nvim-minimax nvim"
+alias nv="NVIM_APPNAME=nvchad nvim"
+alias lv="NVIM_APPNAME=lazyvim nvim"
