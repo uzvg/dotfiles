@@ -1,23 +1,19 @@
 # 镜像加速（中国大陆）
+# 🔗 https://rsproxy.cn/#getStarted
+
 [source.crates-io]
 replace-with = 'rsproxy-sparse'
 
-[source.rsproxy]
-registry = "https://rsproxy.cn/crates.io-index"
-
 [source.rsproxy-sparse]
 registry = "sparse+https://rsproxy.cn/index/"
-
-[registries.rsproxy]
-index = "https://rsproxy.cn/crates.io-index"
 
 [net]
 git-fetch-with-cli = true
 
 # 编译器并行线程数
+# 16 核机器，但内存只有 13G，编译 anki 等大项目时限制为 8 个并行以防 OOM
 [build]
 jobs = 8
-target-dir = "/tmp/cargo-target"  # 可改到更快磁盘
 
 # 默认 linker（加速链接）
 [target.x86_64-unknown-linux-gnu]
