@@ -3,7 +3,7 @@
 # ===============================================
 zmodule environment
 zmodule input
-# 尽早接管键位,在zsh-autopair之前接管健位，避免覆盖zsh-autopair的定义
+# 尽早接管键位,在zsh-autopair之前接管键位，避免覆盖zsh-autopair的定义
 zmodule jeffreytse/zsh-vi-mode
 
 # ===============================================
@@ -37,7 +37,7 @@ zmodule asciiship
 zmodule zsh-users/zsh-completions
 # 执行compinit，初始化补全系统
 zmodule completion
-# 在compinit 之后，在语法高亮之后
+# 在 compinit 之后、语法高亮之前
 zmodule Aloxaf/fzf-tab
 
 # ===============================================

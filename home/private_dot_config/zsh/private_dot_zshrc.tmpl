@@ -1,25 +1,38 @@
-#!usr/bin/env zsh
+#!/usr/bin/env zsh
+# vim: ft=zsh
 
 # ==============================================
 # 性能分析开启
 # 🔗 https://gist.github.com/elalemanyo/cb3395af64ac23df2e0c3ded8bd63b2f
+# 用法: `time ZSH_DEBUGRC=1 zsh -i -c exit`
 # ==============================================
-if [[ -n "${ZSH_DEBUGRC}" ]]; then
+if [[ -n ${ZSH_DEBUGRC:-} ]]; then
   zmodload zsh/zprof
 fi
 
 # ==============================================
 # 基础路径与环境变量
 # ==============================================
-source $ZDOTDIR/env.zsh
-source $ZDOTDIR/alias.zsh
+if [[ -r ${ZDOTDIR}/env.zsh ]]; then
+  source "${ZDOTDIR}/env.zsh"
+fi
+if [[ -r ${ZDOTDIR}/alias.zsh ]]; then
+  source "${ZDOTDIR}/alias.zsh"
+fi
 
 # ==============================================
 # Module Preflight Configurations
 # 必须在 source init.zsh 之前
 # ==============================================
-# 重定向补全文件
-zstyle ':completion::complete:*' cache-path "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompcache"
+() {
+  local cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
+  [[ -d ${cache_dir} ]] || mkdir -p -- "${cache_dir}"
+  [[ -d ${cache_dir}/zcompcache ]] || mkdir -p -- "${cache_dir}/zcompcache"
+
+  # 补全缓存与 dump 文件统一放到 XDG cache，避免污染配置目录
+  zstyle ':completion::complete:*' cache-path "${cache_dir}/zcompcache"
+  zstyle ':zim:completion' dumpfile "${cache_dir}/zcompdump"
+}
 # Zimfw 模块特定设置
 zstyle ':zim:input' double-dot-expand yes
 # ZVM 兼容性钩子
@@ -32,28 +45,37 @@ function zvm_after_init() {
 }
 # zsh-history-substring-search
 function zvm_after_lazy_keybindings() {
-  # 历史搜索键位绑定
-  bindkey -M vicmd 'k' history-substring-search-up
-  bindkey -M vicmd 'j' history-substring-search-down
+  # 只绑定方向键。不要把 vicmd 的 j/k 覆盖成历史搜索，
+  # 否则会失去 vi normal 模式下最基本的上下移动。
+  # 同时覆盖普通模式(^[[A)和应用光标模式(^[OA)两种终端序列。
+  local key
+  for key in '^[[A' '^[OA'; do
+    bindkey -M viins "$key" history-substring-search-up
+    bindkey -M vicmd "$key" history-substring-search-up
+  done
+  for key in '^[[B' '^[OB'; do
+    bindkey -M viins "$key" history-substring-search-down
+    bindkey -M vicmd "$key" history-substring-search-down
+  done
 }
 
 # ===============================================
 # Zimfw Initialize
 # ===============================================
-ZIM_HOME=${ZDOTDIR:-${HOME}}/.zim
+ZIM_HOME=${ZDOTDIR:-$HOME/.config/zsh}/.zim
 # Download zimfw plugin manager if missing.
 if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
-  curl -fsSL --create-dirs -o ${ZIM_HOME}/zimfw.zsh \
+  curl -fsSL --create-dirs -o "${ZIM_HOME}/zimfw.zsh" \
     https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
 fi
 
 # Install missing modules, and update ${ZIM_HOME}/init.zsh if missing or outdated.
-if [[ ! ${ZIM_HOME}/init.zsh -nt ${ZDOTDIR:-${HOME}}/.zimrc ]]; then
-  source ${ZIM_HOME}/zimfw.zsh init -q
+if [[ ! ${ZIM_HOME}/init.zsh -nt ${ZDOTDIR:-$HOME/.config/zsh}/.zimrc ]]; then
+  source "${ZIM_HOME}/zimfw.zsh" init -q
 fi
 
 # Initialize modules.
-source ${ZIM_HOME}/init.zsh
+source "${ZIM_HOME}/init.zsh"
 
 # ===============================================
 # 性能分析输出
@@ -66,8 +88,6 @@ source ${ZIM_HOME}/init.zsh
 #   100% cpu: 这表示在执行该命令时，CPU 的使用率达到了 100%。这通常意味着在执行命令的过程中，CPU 的资源被完全利用。
 #   0.066 total: 这表示从开始到结束的总时间为 0.037 秒。这是 Zsh 启动并执行 exit 命令所花费的总时间。
 # ===============================================
-if [ -n "${ZSH_DEBUGRC+1}" ]; then
+if [[ -n ${ZSH_DEBUGRC:-} ]]; then
   zprof
 fi
-
-# vim: ft=zsh
