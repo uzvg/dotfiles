@@ -1,8 +1,12 @@
 # vim: ft=zsh
+
 # ================= Linux system environment ================= #
-export PATH=$PATH:$HOME/.local/bin:$HOME/.cargo/bin
+# 用户级目录优先于系统目录，同时利用 zsh 的 path 数组去重
+typeset -U path
+path=("$HOME/.local/bin" "$HOME/.cargo/bin" $path)
+export PATH
 # Added by LM Studio CLI (lms)
-# export PATH="$PATH:/home/uzvg/.lmstudio/bin"
+# path=("$HOME/.lmstudio/bin" $path)
 
 # export fpath=($ZDOTDIR $fpath)
 
@@ -13,7 +17,7 @@ export GTK_IM_MODULE=ibus
 export GLFW_IM_MODULE=ibus
 export QT_IM_MODULE=ibus
 export XMODIFIERS=@im=ibus
-# export RIME_USER_PATH="$HOME/.config/ibus/rime";;
+# export RIME_USER_PATH="$HOME/.config/ibus/rime"
 
 # ================= fcitx input method environment ================= #
 # https://fcitx-im.org/wiki/Using_Fcitx_5_on_Wayland
@@ -27,7 +31,8 @@ export XMODIFIERS=@im=ibus
 
 # ================= xdg-based environment value ================= #
 # 🔗 https://wiki.archlinux.org/title/XDG_Base_Directory#User_directories
-export XDG_CONFIG_HOME="$HOME/.config"
-export XDG_CACHE_HOME="$HOME/.cache"
-export XDG_DATA_HOME="$HOME/.local/share"
-export XDG_STATE_HOME="$HOME/.local/state"
+: "${XDG_CONFIG_HOME:=$HOME/.config}"
+: "${XDG_CACHE_HOME:=$HOME/.cache}"
+: "${XDG_DATA_HOME:=$HOME/.local/share}"
+: "${XDG_STATE_HOME:=$HOME/.local/state}"
+export XDG_CONFIG_HOME XDG_CACHE_HOME XDG_DATA_HOME XDG_STATE_HOME

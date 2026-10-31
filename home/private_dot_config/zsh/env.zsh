@@ -1,4 +1,4 @@
-#!/usr/bin/zsh
+# vim: ft=zsh
 
 #⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯SeparatorPlaceHolder⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯#
 # ==============================================
@@ -43,7 +43,7 @@ export ALIYUNPAN_CONFIG_DIR="$HOME/.config/aliyunpan/config"
 # ==============================================
 # Specify the directory in which the database is stored
 # _ZO_DATA_DIR must be an absolute dir
-export _ZO_DATA_DIR="/home/uzvg/.local/share/"
+export _ZO_DATA_DIR="${XDG_DATA_HOME:-$HOME/.local/share}"
 export _ZO_ECHO=0
 
 # ==============================================
@@ -92,9 +92,10 @@ ZVM_SYSTEM_CLIPBOARD_ENABLED=true
 # ==============================================
 # 提升rust编译速度
 # ==============================================
-# 启用sccache 提升rust编译速度
-#   Need to install sccache in advance
-export RUSTC_WRAPPER=sccache
+# 启用sccache 提升rust编译速度（未安装时不要设置，否则 cargo 会直接报错）
+if (( ${+commands[sccache]} )); then
+  export RUSTC_WRAPPER=sccache
+fi
 export RUSTUP_DIST_SERVER="https://rsproxy.cn"
 export RUSTUP_UPDATE_ROOT="https://rsproxy.cn/rustup"
 
@@ -105,9 +106,10 @@ export RUSTUP_UPDATE_ROOT="https://rsproxy.cn/rustup"
 # 在终端中启动系统代理2080/3067/7890
 # ==============================================
 export http_proxy="http://127.0.0.1:2080"
-export https_proxy="http://127.0.0.1:2080"
+export https_proxy="$http_proxy"
 export all_proxy="socks5://127.0.0.1:2080"
-export no_proxy="localhost,127.0.0.1,::1"
+export no_proxy="localhost,127.0.0.1,::1,.local"
+export NO_PROXY="$no_proxy"
 
 # export http_proxy="http://127.0.0.1:7890"
 # export https_proxy="http://127.0.0.1:7890"
@@ -127,13 +129,15 @@ export YAZI_LAST_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/yazi/lastdir"
 # bun npm manager configs
 # ==============================================
 # Installation path
-export BUN_INSTALL="$XDG_DATA_HOME/bun"
-# Add bun bin path into PATH
-export PATH="$BUN_INSTALL/bin:$PATH"
+export BUN_INSTALL="${XDG_DATA_HOME:-$HOME/.local/share}/bun"
 
 # ==============================================
 # GO Environment Variables
 # ==============================================
-export GOPATH="$XDG_DATA_HOME/go"
+export GOPATH="${XDG_DATA_HOME:-$HOME/.local/share}/go"
 export GOBIN="$HOME/.local/bin"
-export PATH="$GOBIN:$PATH"
+
+# 统一在最后合并 PATH，避免多次前置导致顺序难以维护
+typeset -U path
+path=("$GOBIN" "$BUN_INSTALL/bin" $path)
+export PATH
