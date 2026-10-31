@@ -3,10 +3,13 @@
 # Using this ra shell wrapper that provides the ability to change the current working directory when exiting Yazi.
 
 # 使用 zsh 的匿名函数封装，避免变量污染全局环境
-yazi "$@" --cwd-file="$YAZI_LAST_DIR"
-local cwd=$(<"$YAZI_LAST_DIR")
-[[ -n "$cwd" && "$cwd" != "$PWD" ]] && builtin cd -- "$cwd"
-rm -f "$YAZI_LAST_DIR"
+yazi "$@" --cwd-file="$YAZI_LAST_DIR" || return
+
+if [[ -f $YAZI_LAST_DIR ]]; then
+  local cwd=$(<"$YAZI_LAST_DIR")
+  [[ -n $cwd && $cwd != $PWD ]] && builtin cd -- "$cwd"
+  rm -f -- "$YAZI_LAST_DIR"
+fi
 
 # Replacing yazi with superfile
 # ${commands[spf]} "$@"

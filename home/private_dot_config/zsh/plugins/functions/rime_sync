@@ -16,7 +16,18 @@ function rime_sync {
         return 1
     fi
 
-    case $GTK_IM_MODULE in
+    if [[ ! -d "$RIME_SYNC_PATH" ]]; then
+        _zlog error "rime 同步仓库路径错误"
+        return 1
+    fi
+
+    local -r sync_dir="$RIME_SYNC_PATH/Archlinux@Legion_R7000p"
+    if [[ ! -d $sync_dir ]]; then
+        _zlog error "同步子目录不存在：$sync_dir"
+        return 1
+    fi
+
+    case ${GTK_IM_MODULE:-} in
         fcitx)
             fcitx5-remote -e || _zlog warn "fcitx5 未运行"
             ;;
@@ -31,36 +42,51 @@ function rime_sync {
 
     pushd "$RIME_USER_PATH" > /dev/null || return 1
     _zlog warn "词库合并中......"
-    rime_dict_manager -s &> /dev/null
+    rime_dict_manager -s &> /dev/null || _zlog warn "rime_dict_manager 执行失败"
 
     _zlog info "备份yaml文件......"
-    cp $RIME_USER_PATH/*.yaml $RIME_SYNC_PATH/Archlinux@Legion_R7000p/ && {
+    local -a yaml_files=("$RIME_USER_PATH"/*.yaml(N))
+    if (( ${#yaml_files} )) && cp -- "${yaml_files[@]}" "$sync_dir/"; then
       _zlog success "yaml文件备份完成"
-    } || {
+    else
       _zlog error "yaml文件备份失败"
-    }
+    fi
 
     popd > /dev/null
 
-    case $GTK_IM_MODULE in
+    case ${GTK_IM_MODULE:-} in
         fcitx) fcitx5-remote -o ;;
         ibus)  ibus start ;;
     esac
 
     _zlog success "词库合并成功, 开始同步......"
 
-    if [[ ! -d "$RIME_SYNC_PATH" ]]; then
-        _zlog error "rime 同步仓库路径错误"
+    local -r COMMIT_WORD="rime sync on Archlinux at $(date +%Y/%m/%d-%H:%M)"
+
+    pushd "$RIME_SYNC_PATH" > /dev/null || return 1
+    if ! git add -A; then
+        _zlog error "git add 失败"
+        popd > /dev/null
         return 1
     fi
 
-    local -r COMMIT_WORD="rime sync on Archlinux at $(date +%Y/%m/%d-%H:%M)"
+    if git diff --cached --quiet; then
+        _zlog info "没有需要提交的变更"
+        popd > /dev/null
+        return 0
+    fi
 
-    pushd "$RIME_SYNC_PATH"  > /dev/null || return 1
-    git add -A > /dev/null
-    git commit -m "$COMMIT_WORD" > /dev/null
-    git push &> /dev/null
+    if ! git commit -m "$COMMIT_WORD" > /dev/null; then
+        _zlog error "git commit 失败"
+        popd > /dev/null
+        return 1
+    fi
+
+    if git push > /dev/null 2>&1; then
+        _zlog success "词库同步成功"
+    else
+        _zlog warn "本地提交成功，但 git push 失败，请稍后重试"
+    fi
+
     popd > /dev/null
-
-    _zlog success "词库同步成功"
 }

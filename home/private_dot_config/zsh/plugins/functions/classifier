@@ -21,10 +21,10 @@ move_files() {
 
     if [[ ! -d "$target_dir" ]]; then
         _zlog info "📁 创建目标文件夹: $target_dir"
-        mkdir -p "$target_dir"
+        mkdir -p -- "$target_dir" || return 1
     fi
 
-    local files=(${(f)"$(fd $pattern -d 1 $DOWNLOAD_DIR)"})
+    local -a files=("${(@f)$(fd -d 1 -- "$pattern" "$DOWNLOAD_DIR")}")
 
     if [[ ${#files} -eq 0 ]]; then
         _zlog info "⚠️ 未找到匹配 '$pattern' 的文件"
@@ -32,18 +32,22 @@ move_files() {
     fi
 
     local moved_count=0
+    local file filename
     for file in "${files[@]}"; do
 
         # 如果目标文件不存在，则开始转移
-        filename=$(basename $file)
+        filename=${file:t}
         if [[ ! -f "$target_dir/$filename" ]]; then
-            _zlog info "📦 移动: $(basename "$file") ➡  $target_dir/"
-            mv "$file" "$target_dir/"
-            ((moved_count++))
+            _zlog info "📦 移动: ${file:t} ➡  $target_dir/"
+            if mv -- "$file" "$target_dir/"; then
+                (( ++moved_count ))
+            else
+                _zlog error "移动失败: $file"
+            fi
         else
             read -q "? The $file already exists in target dir, Do you want to delete it from the $DOWNLOAD_DIR?"
             if (( $? == 0 )); then
-              rm $file && {
+              rm -f -- "$file" && {
                 _zlog success "$file was deleted!"
               }
             fi

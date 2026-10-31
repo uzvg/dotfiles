@@ -3,27 +3,31 @@
 emulate -L zsh
 setopt err_return no_unset pipe_fail
 
-typeset key_name target_key_file identity_file decrypted_text
-
-key_name=$1
-target_key_file="$(chezmoi source-path)/secrets/keys/${key_name}.txt.age"
-identity_file="$HOME/.config/chezmoi/key.txt"
-
-# 参数检查
+# 参数检查必须放在 $1 之前，否则 no_unset 会先报 "parameter not set"
 if (( $# != 1 )); then
   _zlog error "参数错误。"
   _zlog info "正确格式：czm_decryptier key_name"
   return 1
 fi
 
+local key_name=$1
+local target_key_file="$(chezmoi source-path)/secrets/keys/${key_name}.txt.age"
+local identity_file="$HOME/.config/chezmoi/key.txt"
+local decrypted_text
+
+if (( ! ${+commands[age]} )); then
+  _zlog error "age 命令未找到"
+  return 1
+fi
+
 # 文件存在检查
-if [[ ! -f "$target_key_file" ]]; then
+if [[ ! -f $target_key_file ]]; then
   _zlog error "秘钥文件不存在：$target_key_file"
   return 1
 fi
 
 # identity 文件检查
-if [[ ! -f "$identity_file" ]]; then
+if [[ ! -f $identity_file ]]; then
   _zlog error "identity 文件不存在：$identity_file"
   _zlog info "请确认 age 私钥路径是否正确"
   return 1
@@ -32,7 +36,7 @@ fi
 # 解密
 if decrypted_text=$(age --decrypt -i "$identity_file" "$target_key_file"); then
   _zlog success "解密成功"
-  _zlog info '"$decrypted_text"'
+  _zlog info "$decrypted_text"
 else
   _zlog error "解密失败"
   return 1

@@ -1,20 +1,23 @@
-#!/usr/bin/zsh
+#!/usr/bin/env zsh
 # vim:et sts=2 sw=2 ft=zsh
 
-emulate -L zsh
-# _show_correct() { print -u1 -P "%F{green}✓%f %B%F{2}CORRECT:%f%b ${(j: :)@}" }
-# _show_tip() { print -u1 -P "%F{green}🛈%f %B%F{2}TIP:%f%b ${(j: :)@}" }
-# _show_warning() { print -u1 -P "%F{yellow}⚠%f %B%F{3}WARNING:%f%b ${(j: :)@}" }
-# _show_error() { print -u2 -P "%F{red}✗%f %B%F{1}ERROR:%f%b ${(j: :)@}" }
-
-# 打印回显信息
-# 调整颜色编号（1=红，2=绿，3=黄, 4=蓝）
+# 统一日志输出
+# 用法: _zlog [info|success|warn|error] <message...>
+# 注意：emulate 必须放在函数内部。若放在被 source 的文件顶层，
+# 会把 environment 模块设置的 AUTO_CD/EXTENDED_GLOB/NO_CLOBBER 等选项全部重置。
 _zlog() {
-  local level="$1"; shift
+  emulate -L zsh
+
+  local level=${1:-info}
+  (( $# )) && shift
   local msg="${(j: :)@}"
 
+  # 防止消息中的 % 被 print -P 当作提示符转义
+  msg=${msg//\%/%%}
+
   local color label icon fd=1
-  local ts="$(date '+%H:%M:%S')"
+  local ts
+  ts=$(date '+%H:%M:%S')
 
   case "$level" in
     info)    color=4; label="INFO"; icon="🛈" ;;

@@ -5,7 +5,7 @@ emulate -L zsh
 # setopt err_return no_unset pipe_fail
 
 _rime_deploy() {
-  local -r log_file=/tmp/rime_deploy.log
+  local -r log_file="${XDG_RUNTIME_DIR:-${TMPDIR:-/tmp}}/rime_deploy.log"
   local -r build_dir=${RIME_USER_PATH:?RIME_USER_PATH not set}/build
 
   (( ! ${+commands[rime_deployer]} )) && {
@@ -22,7 +22,7 @@ _rime_deploy() {
           "$build_dir" \
           >| "$log_file" 2>&1
       then
-        _zlog error $'Deployment failed. Log details:\n%B%F{red}'"$log_file"$'%f%b'
+        _zlog error "Deployment failed. Log details: $log_file"
         fcitx5-remote -o
         return 1
       fi
@@ -36,7 +36,7 @@ _rime_deploy() {
           "$build_dir" \
           >| "$log_file" 2>&1
       then
-        _zlog error $'Deployment failed. Log details:\n%B%F{red}'"$log_file"$'%f%b'
+        _zlog error "Deployment failed. Log details: $log_file"
         ibus-daemon -dr >/dev/null 2>&1
         return 1
       fi

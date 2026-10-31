@@ -14,7 +14,7 @@ typeset -r borg_repo="/mnt/backup/uzvg@archlinux"
 
 (( ${+commands[borg]} )) || {
   _zlog error "borg command is not valid."
-  exit 1
+  return 1
 }
 
 ${commands[borg]} create \
