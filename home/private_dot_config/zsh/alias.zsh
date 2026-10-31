@@ -229,7 +229,7 @@ alias gstrc="chezmoi_edit $XDG_CONFIG_HOME/ghostty/config.ghostty"
 alias rarc="chezmoi_edit $XDG_CONFIG_HOME/yazi/yazi.toml"
 
 # jump to bottles directory
-alias btshome="cd .var/app/com.usebottles.bottles/data/bottles/bottles/Quark-Drive/drive_c/users/steamuser"
+alias btshome='cd "$HOME/.var/app/com.usebottles.bottles/data/bottles/bottles/Quark-Drive/drive_c/users/steamuser"'
 
 # Replace sudo with sudo-rs
 # alias sudo="sudo-rs"
