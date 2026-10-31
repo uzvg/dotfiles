@@ -40,7 +40,7 @@
   // Nerd Font icons are treated as 2-column wide for alignment.
   // ─────────────────────────────────────────────────
   "modules": [
-    // user
+    // Identity
     {
       "type": "title",
       "keyWidth": 0,
