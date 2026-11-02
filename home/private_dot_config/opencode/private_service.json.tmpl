@@ -1,0 +1,3 @@
+{
+  "password": {{ include (joinPath .chezmoi.sourceDir "secrets/keys/opencode_service_password.txt.age") | decrypt | trim | quote }}
+}
