@@ -3,35 +3,35 @@
 # ==============================================
 alias ls='lsd'
 alias la='lsd -a'
-alias l='lsd -lha'
+alias l='lsd -l'
 alias ll='lsd -lha'
 alias g='lazygit'
 alias c='bat'
-alias t="btop --config $XDG_CONFIG_HOME/btop/btop_proc_only.conf --preset 1"
-alias e="$EDITOR"
+alias t='btop --config "$XDG_CONFIG_HOME/btop/btop_proc_only.conf" --preset 1'
+alias e='$EDITOR'
 # alias hx="helix"
-alias se="sudoedit"
+alias se='sudoedit'
 alias q='exit'
 alias Q='exit'
 alias zdebug='time ZSH_DEBUGRC=1 zsh -i -c exit'
-alias df="duf"
+alias df='duf'
 # alias du="dust -X Games"
-alias du="dust"
+alias du='dust'
 # alias fd="fd -H -E Games -E ExtendDisk"
-alias udd='update-desktop-database $XDG_DATA_HOME/applications/'
-alias gedit="gnome-text-editor"
-alias macc="macchina -t Helium"
+alias udd='update-desktop-database "$XDG_DATA_HOME/applications/"'
+alias gedit='gnome-text-editor'
+alias macc='macchina -t Helium'
 # gdu but exclude Games disk
 # alias gdu="gdu -i $HOME/Games -i $HOME/ExtendDisk"
-alias ff="fastfetch"
+alias ff='fastfetch'
 
 # ==============================================
 # zellij alias
 # ==============================================
 # alias zj="zellij"
 # zellij_doc_url="https://github.com/zellij-org/zellij/blob/main/zellij-utils/assets/config/default.kdl"
-# alias zjdoc="gio open $zellij_doc_url" &> /dev/null
-# alias zjrc="chezmoi_edit $XDG_CONFIG_HOME/zellij/config.kdl"
+# alias zjdoc='gio open "$zellij_doc_url" &> /dev/null'
+# alias zjrc='chezmoi_edit "$XDG_CONFIG_HOME/zellij/config.kdl"'
 
 # ==============================================
 # taskwarrior-tui alias
@@ -41,27 +41,27 @@ alias tt='taskwarrior-tui'
 # ==============================================
 # zsh
 # ==============================================
-alias zshrc="chezmoi_edit '$ZDOTDIR/.zshrc'"
-alias alrc="chezmoi_edit '$ZDOTDIR/alias.zsh'"
-alias envrc="chezmoi_edit '$ZDOTDIR/env.zsh'"
-alias zimrc="chezmoi_edit $ZDOTDIR/.zimrc"
+alias zshrc='chezmoi_edit "$ZDOTDIR/.zshrc"'
+alias alrc='chezmoi_edit "$ZDOTDIR/alias.zsh"'
+alias envrc='chezmoi_edit "$ZDOTDIR/env.zsh"'
+alias zimrc='chezmoi_edit "$ZDOTDIR/.zimrc"'
 
 # ----------------------------------------------
 # chezmoi edit
 # ----------------------------------------------
 # fontconfig
-alias ftrc="chezmoi_edit $XDG_CONFIG_HOME/fontconfig/conf.d/40-family-prefer.conf"
+alias ftrc='chezmoi_edit "$XDG_CONFIG_HOME/fontconfig/conf.d/40-family-prefer.conf"'
 
 # wezterm
-# alias wtrc="_chezmoi_edit $HOME/.config/wezterm/wezterm.lua"
+# alias wtrc='chezmoi_edit "$HOME/.config/wezterm/wezterm.lua"'
 
 # alacritty
-alias altrc="chezmoi_edit $XDG_CONFIG_HOME/alacritty/alacritty.toml"
+alias altrc='chezmoi_edit "$XDG_CONFIG_HOME/alacritty/alacritty.toml"'
 
 # kitty
-alias ktrc="chezmoi_edit $XDG_CONFIG_HOME/kitty/kitty.conf"
-alias ktmp="chezmoi_edit $XDG_CONFIG_HOME/kitty/keymaps.conf"
-alias ktbrc="chezmoi_edit $XDG_CONFIG_HOME/kitty/tab_bar.conf"
+alias ktrc='chezmoi_edit "$XDG_CONFIG_HOME/kitty/kitty.conf"'
+alias ktmp='chezmoi_edit "$XDG_CONFIG_HOME/kitty/keymaps.conf"'
+alias ktbrc='chezmoi_edit "$XDG_CONFIG_HOME/kitty/tab_bar.conf"'
 
 # ==============================================
 # git bare repository alias for managing dotfiles
@@ -118,11 +118,11 @@ alias czmrc="chezmoi edit-config-template"
 # rime input method alias
 # ==============================================
 # check rime emoji icons
-alias ckemj="bat /usr/share/rime-data/opencc/emoji_word.txt"
+alias ckemj='bat /usr/share/rime-data/opencc/emoji_word.txt'
 # customize rime icon
-alias rimeicon="rime_edit '$RIME_USER_PATH/uggx_fluency.custom.yaml'"
-# edit rime custom_phrse.txt and re-deploy rime automatically
-alias rimewd="rime_edit '$RIME_USER_PATH/custom_phrase.txt'"
+alias rimeicon='rime_edit "$RIME_USER_PATH/uggx_fluency.custom.yaml"'
+# edit rime custom_phrase.txt and re-deploy rime automatically
+alias rimewd='rime_edit "$RIME_USER_PATH/custom_phrase.txt"'
 # get rime ascii mode (deprecated, but still useful)
 # alias get-ascii-mode="gdbus call --session \
 #   --dest com.github.rime.ibus.Rime \
@@ -151,7 +151,7 @@ alias dshlog="journalctl --user --unit dsh-web -f"
 # borg backup
 # ==============================================
 alias borgst="systemctl status borg-backup --user"
-alias borgex="chezmoi_edit $XDG_CONFIG_HOME/borg/excludes"
+alias borgex='chezmoi_edit "$XDG_CONFIG_HOME/borg/excludes"'
 alias borgls="borg list /mnt/backup/uzvg@archlinux"
 alias borglog="journalctl --user --unit borg-backup -f"
 
@@ -171,7 +171,7 @@ alias timesync="systemctl restart systemd-timesyncd.service"
 # alias hgd="hugo server -s $blogDir -D"
 
 # ==============================================
-# Killing motherfucker QQ wechat & steam background jobs
+# Kill background QQ, WeChat & Steam processes
 # ==============================================
 # alias fkqq="killall qq"
 # alias fkvv="flatpak kill com.valvesoftware.Steam"
@@ -194,8 +194,8 @@ alias timesync="systemctl restart systemd-timesyncd.service"
 # mpd
 # ==============================================
 # mpd config
-alias mpdrc="chezmoi_edit $XDG_CONFIG_HOME/mpd/mpd.conf"
-alias rrc="chezmoi_edit $XDG_CONFIG_HOME/rmpc/config.ron"
+alias mpdrc='chezmoi_edit "$XDG_CONFIG_HOME/mpd/mpd.conf"'
+alias rrc='chezmoi_edit "$XDG_CONFIG_HOME/rmpc/config.ron"'
 # lyrics download tool
 alias lyrics-tool="ZonyLrcTools.Cli"
 
@@ -203,10 +203,11 @@ alias lyrics-tool="ZonyLrcTools.Cli"
 # others
 # ==============================================
 # gnome-terminal 主题修改👉https://gogh-co.github.io/Gogh/
-# alias gogh= bash -c "$(curl -sLo- https://git.io/vQgMr)"
+# alias gogh='bash -c "$(curl -sLo- https://git.io/vQgMr)"'
 
 # starship config
 # alias ssrc="$EDITOR $HOME/.config/starship.toml"
+# alias stcfg="$EDITOR $XDG_CONFIG_HOME/starship.toml"
 
 # tmux config
 # alias tmxcfg="$EDITOR $XDG_CONFIG_HOME/tmux/tmux.conf"
@@ -219,23 +220,20 @@ alias lyrics-tool="ZonyLrcTools.Cli"
 # alias ssstart="sudo sslocal -c /etc/shadowsocks/config.json -d start"
 # alias ssstop="sudo sslocal -c /etc/shadowsocks/config.json -d stop"
 
-# starship config
-# alias stcfg="$EDITOR $XDG_CONFIG_HOME/starship.toml"
-
 # edit ghostty config
-alias gstrc="chezmoi_edit $XDG_CONFIG_HOME/ghostty/config.ghostty"
+alias gstrc='chezmoi_edit "$XDG_CONFIG_HOME/ghostty/config.ghostty"'
 
 # yazi config
-alias rarc="chezmoi_edit $XDG_CONFIG_HOME/yazi/yazi.toml"
+alias rarc='chezmoi_edit "$XDG_CONFIG_HOME/yazi/yazi.toml"'
 
-# jump to bottles directory
-alias btshome='cd "$HOME/.var/app/com.usebottles.bottles/data/bottles/bottles/Quark-Drive/drive_c/users/steamuser"'
+# jump to the Bottles windows11 steamuser directory
+alias btshome='cd "$HOME/.var/app/com.usebottles.bottles/data/bottles/bottles/windows11/drive_c/users/steamuser"'
 
 # Replace sudo with sudo-rs
 # alias sudo="sudo-rs"
 
 # sync wallpapers
-alias wpsync="rclone sync $HOME/Pictures/Wallpapers OneDrive:Wallpapers --progress"
+alias wpsync='rclone sync "$HOME/Pictures/Wallpapers" OneDrive:Wallpapers --progress'
 
 # CloudServer
 # alias rmsv="ssh -i $HOME/.ssh/id_rsa -l $CloudUser $CloudServer"
@@ -244,19 +242,19 @@ alias wpsync="rclone sync $HOME/Pictures/Wallpapers OneDrive:Wallpapers --progre
 # alias dkstart="systemctl start docker.service"
 
 # manage dotfiles
-alias dotfiles="lazygit -p $XDG_DATA_HOME/chezmoi"
+alias dotfiles='lazygit -p "$XDG_DATA_HOME/chezmoi"'
 
 # uzvg zsh plugins dir
-alias uzpd="lazygit -p '$ZDOTDIR/plugins'"
+alias uzpd='lazygit -p "$ZDOTDIR/plugins"'
 
 # Others
 alias weather="curl wttr.in/Shanghai"
-alias goodbye="lolcat -a -s 60 --spread 5 <(toilet 'Good Bye!' --font 'bigmono9')"
+alias goodbye='lolcat -a -s 60 --spread 5 <(toilet "Good Bye!" --font "bigmono9")'
 
 # opencode
 alias oc="opencode"
 
-# minimax
+# Neovim per-app configs
 alias mm="NVIM_APPNAME=nvim-minimax nvim"
 alias nv="NVIM_APPNAME=nvchad nvim"
 alias lv="NVIM_APPNAME=lazyvim nvim"
