@@ -38,8 +38,9 @@
 
 1. **`.chezmoiignore.tmpl` 按 OS 过滤**。模式匹配的是**目标路径**（`.config/zsh`），不是源文件名；忽略目录会连同子文件一起忽略。忽略 `.chezmoiscripts/` 下的脚本必须写全前缀（`.chezmoiscripts/foo.sh`），只写文件名无效。
    - `{{ if ne .chezmoi.os "linux" }}`：zsh、systemd、kitty、ghostty、alacritty、btop、mpd、rmpc、dae、ibus、borg、zellij、scripts、fontconfig、git/hooks、`kitty.desktop`、`pull_kitty_icon.sh`、`decrypt-private-key.sh`。
-   - `{{ if ne .chezmoi.os "windows" }}`：`AppData`、`.taskrc`、`decrypt-private-key.ps1`。
+   - `{{ if ne .chezmoi.os "windows" }}`：`AppData`、`.taskrc`、`Documents/PowerShell`、`Documents/WindowsPowerShell`、`decrypt-private-key.ps1`。
 2. **`.chezmoitemplates` 共享内容 + 每平台薄包装**，对应 chezmoi 文档 "Handle different file locations on different systems with the same contents"。
+   - PowerShell alias 只在 Windows 部署：`Documents/PowerShell/aliases.ps1` 与 `Documents/WindowsPowerShell/aliases.ps1` 都是 `.chezmoitemplates/powershell-aliases.ps1` 的薄包装；两个 `Microsoft.PowerShell_profile.ps1` 仅初始化 starship 并 dot-source 同目录的 `aliases.ps1`。不要直接编辑部署后的文件，改模板后重新 apply。
 
 目标路径映射（`%APPDATA%` = `%USERPROFILE%\AppData\Roaming`，而 chezmoi 在 Windows 上的目标根就是 `%USERPROFILE%`）：
 
@@ -60,15 +61,15 @@
 验证：
 
 ```bash
-chezmoi managed --include files | wc -l     # Linux 应为 93
+chezmoi managed --include files | wc -l     # Linux 应为 97
 chezmoi ignored                             # 应包含 AppData、.taskrc、secrets
 ```
 
-Windows 分支可在 Linux 上模拟：把源树复制到临时目录，将 `.chezmoiignore.tmpl` 里两个平台块中的 `ne` 都改成 `eq`，再跑 `chezmoi -S <副本>/home managed --include files`（应为 23 个）。
+Windows 分支可在 Linux 上模拟：把源树复制到临时目录，将 `.chezmoiignore.tmpl` 里所有 `{{ if ne .chezmoi.os ... }}` 中的 `ne` 都改成 `eq`，再跑 `chezmoi -S <副本>/home managed --include files`（应为 31 个）。
 
 ## 环境相关注意事项
 
-- `~/.zshenv` 仅设置 `ZDOTDIR=$HOME/.config/zsh`。Shell 配置随后来自 `~/.config/zsh/.zshenv`、`env.zsh`、`alias.zsh` 以及 `.zshrc` 模板。别名添加到 `alias.zsh`；编辑受管理的配置请用 `chezmoi_edit` 辅助函数。
+- `~/.zshenv` 仅设置 `ZDOTDIR=$HOME/.config/zsh`。Shell 配置随后来自 `~/.config/zsh/.zshenv`、`env.zsh`、`alias.zsh` 以及 `.zshrc` 模板。别名添加到 `alias.zsh`；编辑受管理的配置请用 `chezmoi_edit` 辅助函数。Windows PowerShell 别名添加到 `.chezmoitemplates/powershell-aliases.ps1`。
 - `env.zsh` 设置了 `NVIM_APPNAME=lazyvim`，因此直接运行 `nvim` 加载的是 `~/.config/lazyvim`，而不是本仓库位于 `~/.config/nvim` 的 NvChad 配置。测试时用 `NVIM_APPNAME=nvim nvim`（或 unset `NVIM_APPNAME`）。
 - `home/private_dot_config/systemd/user/` 下的 systemd 用户单元会被部署，但不会被启用。修改后需运行 `systemctl --user daemon-reload` 和 `systemctl --user enable --now <unit>`。
 - 尽管名字如此，`auto_commit.zsh` 和 `auto_publish.zsh` 自动化的是外部仓库 `~/Documents/wikis/WikiSpace`，而非这些 dotfiles。它们依赖 tiddlywiki、rclone、fd 和 rg。
