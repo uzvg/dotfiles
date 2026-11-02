@@ -2,10 +2,8 @@
 	name = "uzvg"
 	email =  "uzvg@qq.com"
 [core]
-	editor = nvim
-{{- if eq .chezmoi.os "linux" }}
-	hooksPath = /home/uzvg/.config/git/hooks
-{{- end }}
+	editor = nvim{{ if eq .chezmoi.os "linux" }}
+	hooksPath = /home/uzvg/.config/git/hooks{{ end }}
 [init]
 	defaultBranch = main
 [diff]
@@ -20,16 +18,8 @@
 [pull]
 	rebase = true
 [credential "https://github.com"]
-	helper = 
-{{- if eq .chezmoi.os "linux" }}
-	helper = !/usr/bin/gh auth git-credential
-{{- else }}
-	helper = !gh auth git-credential
-{{- end }}
+	helper ={{ " " }}
+	helper = !{{ if eq .chezmoi.os "windows" }}{{ else }}/usr/bin/{{ end }}gh auth git-credential
 [credential "https://gist.github.com"]
-	helper = 
-{{- if eq .chezmoi.os "linux" }}
-	helper = !/usr/bin/gh auth git-credential
-{{- else }}
-	helper = !gh auth git-credential
-{{- end }}
+	helper ={{ " " }}
+	helper = !{{ if eq .chezmoi.os "windows" }}{{ else }}/usr/bin/{{ end }}gh auth git-credential
