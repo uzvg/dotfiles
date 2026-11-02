@@ -8,7 +8,7 @@
   "logo": {
     // "type": "builtin",
     "type": "file",
-    "source": "~/.config/fastfetch/logo.txt",
+    "source": {{ if eq .chezmoi.os "windows" }}"{{ .chezmoi.homeDir }}/AppData/Roaming/fastfetch/logo.txt"{{ else }}"~/.config/fastfetch/logo.txt"{{ end }},
     "padding": {
       "right": 2,
     },
