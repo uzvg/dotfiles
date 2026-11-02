@@ -1,0 +1,15 @@
+# Windows 版 key 引导脚本；Linux 使用同名的 .sh 版本。
+# 逻辑与 run_onchange_before_decrypt-private-key.sh.tmpl 保持一致。
+
+$homeDir = if ($env:USERPROFILE) { $env:USERPROFILE } else { $env:HOME }
+$decryptKey = Join-Path $homeDir '.config\chezmoi\key.txt'
+$encryptKey = '{{ .chezmoi.sourceDir }}/secrets/keys/key.txt.age'
+
+if (-not (Test-Path -LiteralPath $decryptKey)) {
+    $keyDir = Split-Path -Parent $decryptKey
+    New-Item -ItemType Directory -Force -Path $keyDir | Out-Null
+    & chezmoi age decrypt --output "$decryptKey" --passphrase "$encryptKey"
+    if ($LASTEXITCODE -ne 0) {
+        throw "chezmoi age decrypt failed with exit code $LASTEXITCODE"
+    }
+}

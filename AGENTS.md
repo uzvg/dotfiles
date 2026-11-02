@@ -27,7 +27,7 @@
 ## 密钥与 apply 副作用
 
 - 加密使用 **age**，不是 GPG；README 中的“GPG passphrase”措辞已过时。age recipient 硬编码在 `home/.chezmoi.toml.tmpl` 和 `czm_encryptier` 中。
-- age identity 是 `~/.config/chezmoi/key.txt`，首次 apply 时由 `home/.chezmoiscripts/run_onchange_before_decrypt-private-key.sh.tmpl` 从 `home/secrets/keys/key.txt.age` 解密得到。全新机器上会提示输入 passphrase。
+- age identity 是 `~/.config/chezmoi/key.txt`，首次 apply 时由 `home/.chezmoiscripts/run_onchange_before_decrypt-private-key.{sh,ps1}.tmpl`（按平台二选一）从 `home/secrets/keys/key.txt.age` 解密得到。全新机器上会提示输入 passphrase。
 - 交互式 zsh 辅助函数：`czm_encryptier <key_name> <key_text>` 写入 `secrets/keys/<key_name>.txt.age`，并复制一段可直接粘贴的 include 片段；`czm_decryptier <key_name>` 负责解密。
 - `run_onchange_*` 这类 apply 脚本仅在其内容变化时重新运行。在全新机器上，其中包含通过 `curl` 下载 Kitty 图标，因此 apply 需要联网。
 - `secrets/keys/*.age` 是有意以加密形式提交的。绝不要提交明文密钥。
@@ -37,8 +37,8 @@
 仓库同时支持 Linux 与**原生 Windows**（非 WSL），靠两个机制区分：
 
 1. **`.chezmoiignore.tmpl` 按 OS 过滤**。模式匹配的是**目标路径**（`.config/zsh`），不是源文件名；忽略目录会连同子文件一起忽略。忽略 `.chezmoiscripts/` 下的脚本必须写全前缀（`.chezmoiscripts/foo.sh`），只写文件名无效。
-   - `{{ if ne .chezmoi.os "linux" }}`：zsh、systemd、kitty、ghostty、alacritty、btop、mpd、rmpc、dae、ibus、borg、zellij、scripts、fontconfig、git/hooks、`kitty.desktop`、`pull_kitty_icon.sh`。
-   - `{{ if ne .chezmoi.os "windows" }}`：`AppData`、`.taskrc`。
+   - `{{ if ne .chezmoi.os "linux" }}`：zsh、systemd、kitty、ghostty、alacritty、btop、mpd、rmpc、dae、ibus、borg、zellij、scripts、fontconfig、git/hooks、`kitty.desktop`、`pull_kitty_icon.sh`、`decrypt-private-key.sh`。
+   - `{{ if ne .chezmoi.os "windows" }}`：`AppData`、`.taskrc`、`decrypt-private-key.ps1`。
 2. **`.chezmoitemplates` 共享内容 + 每平台薄包装**，对应 chezmoi 文档 "Handle different file locations on different systems with the same contents"。
 
 目标路径映射（`%APPDATA%` = `%USERPROFILE%\AppData\Roaming`，而 chezmoi 在 Windows 上的目标根就是 `%USERPROFILE%`）：
@@ -53,7 +53,7 @@
 - 加密的 rclone / aliyunpan 只保留一份密文（`.chezmoitemplates/*.age`），包装模板用 `{{ (include ".chezmoitemplates/<name>.age") | decrypt }}` 解密，避免两份密文漂移。
 - 内容层面的平台差异也可用模板条件表达，例如 `fastfetch-config.jsonc` 的 `logo.source` 按 `.chezmoi.os` 切换。
 - `git/config.tmpl` 在非 Linux 上不写 `hooksPath`，credential helper 去掉 `/usr/bin/` 前缀。
-- key 引导脚本 `run_onchange_before_decrypt-private-key.sh.tmpl` 是 POSIX `sh`（`home="${HOME:-${USERPROFILE:-}}"`），Windows 上依赖 Git for Windows 提供的 `sh`；同时仍需手动安装外部 `age`（`encryption = "age"` 且未启用 builtin）。
+- key 引导脚本分平台两份：Linux 用 `run_onchange_before_decrypt-private-key.sh.tmpl`（POSIX `sh`），Windows 用 `run_onchange_before_decrypt-private-key.ps1.tmpl`（chezmoi 默认 `.ps1` 解释器，优先 `pwsh`、回退 `powershell`，不再依赖 Git for Windows 的 `sh`）；`.chezmoiignore.tmpl` 在各自平台忽略另一份。同时仍需手动安装外部 `age`（`encryption = "age"` 且未启用 builtin）。
 - 走路径映射而非 symlink/junction，因此 Windows 上不需要开发者模式；但若 `%APPDATA%\...` 已存在真实目录，首次 apply 会报冲突，需先移走。
 - 这些配置在 Windows 上读取的字体/编辑器/主题包仍需单独安装，仓库只负责文件落位。
 

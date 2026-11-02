@@ -28,12 +28,14 @@ secrets/keys/*
 .config/git/hooks
 .local/share/applications
 .chezmoiscripts/pull_kitty_icon.sh
+.chezmoiscripts/decrypt-private-key.sh
 {{ end }}
 
 # ── Windows 专属：非 Windows 平台不部署 ─────────────────────────────
 {{ if ne .chezmoi.os "windows" }}
 AppData
 .taskrc
+.chezmoiscripts/decrypt-private-key.ps1
 {{ end }}
 
 # ── 平台专属的 Linux 路径（Windows 走 AppData/ 或 ~/.taskrc）──────────
