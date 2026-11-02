@@ -1,6 +1,6 @@
 [user]
-	name = "uzvg"
-	email =  "uzvg@qq.com"
+	name = {{ .name | quote }}
+	email = {{ .email | quote }}
 [core]
 	editor = nvim{{ if eq .chezmoi.os "linux" }}
 	hooksPath = /home/uzvg/.config/git/hooks{{ end }}

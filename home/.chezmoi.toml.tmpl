@@ -1,32 +1,22 @@
 # Using neovim's diff mode in chezmoi: https://www.chezmoi.io/user-guide/tools/merge/
 # Example chezmoi.toml file 👉 https://github.com/twpayne/dotfiles/blob/master/home/.chezmoi.toml.tmpl
 
-{{- /* 在go模板中，可以用{{"{{"}}来转义{{ */ -}}
-{{- printf "%q" "{{ .Target }}" }}, ] -}}
-# encryption 要被添加在最开始的位置
-
+# 注意：本文件是 Go 模板，TOML 值中的花括号需要转义（见下方 args）。
+# encryption 必须放在所有 table 之前
 encryption = "age"
 
 [merge]
     command = "nvim"
-    args = [ "-d",
-            {{ printf "%q" "{{ .Destination }}" }},
-            {{ printf "%q" "{{ .Source }}" }} ]
+    args = ["-d", "{{"{{"}} .Destination {{"}}"}}", "{{"{{"}} .Source {{"}}"}}"]
 
 [diff]
     command = "nvim"
     args = ["-d", "{{"{{"}} .Destination {{"}}"}}", "{{"{{"}} .Target {{"}}"}}"]
     exclude = ["scripts"]
 
-# [status]
-#    exclude = ["scripts"]
-
 [data]
     name = "uzvg"
-    email = "1497911983@qq.com"
-
-[scriptEnv]
-    AGE_KEY_DIR = "{{ .chezmoi.config.sourceDir }}/secrets/keys"
+    email = "uzvg@qq.com"
 
 [age]
     identity = "~/.config/chezmoi/key.txt"
