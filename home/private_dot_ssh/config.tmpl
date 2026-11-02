@@ -1,0 +1,6 @@
+Host github.com
+    Hostname ssh.github.com
+    Port 443
+    User git
+    ProxyCommand {{ if eq .chezmoi.os "windows" }}C:/PROGRA~1/Git/ucrt64/bin/connect.exe -5 -S 127.0.0.1:2080{{ else }}ncat --proxy 127.0.0.1:2080 --proxy-type socks5{{ end }} %h %p
+    # ProxyCommand ncat --proxy 127.0.0.1:3067 --proxy-type socks5 %h %p
