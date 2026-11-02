@@ -1,5 +1,7 @@
 # 🔧 Dotfiles by uzvg
 
+**English** | [简体中文](README.zh-CN.md)
+
 Personal dotfiles managed with [chezmoi](https://www.chezmoi.io/). Everything lives in the tracked `home/` tree (`.chezmoiroot` is `home`) and is deployed to `$HOME`.
 
 ## 📦 What's included
