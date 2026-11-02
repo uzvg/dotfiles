@@ -1,40 +1,76 @@
 # AGENTS.md
 
-Personal chezmoi dotfiles deployed to `$HOME` (remote: `git@github.com:uzvg/dotfiles.git`). The tracked `home/` tree is the source of truth; live files under `~/` may have unrelated drift.
+个人 chezmoi dotfiles，部署到 `$HOME`（远程仓库：`git@github.com:uzvg/dotfiles.git`）。受版本管理的 `home/` 目录树是唯一事实来源；`~/` 下的实际文件可能存在与之无关的漂移。
 
-## Source layout and naming
+## 源目录结构与命名
 
-- `.chezmoiroot` is `home`, so every managed source lives under `home/`, not the repo root.
-- Chezmoi encodes the target name and mode in filenames:
-  - `dot_` → leading `.`; `private_` → no prefix and mode `0600`. Example: `home/private_dot_config/zsh/private_dot_zshrc.tmpl` → `~/.config/zsh/.zshrc`.
-  - `executable_` → executable bit; `encrypted_…age` → age-decrypted target. Example: `home/private_dot_ssh/encrypted_private_id_ed25519.age` → `~/.ssh/id_ed25519`.
-  - `.tmpl` → Go template. Render with `chezmoi execute-template`; `home/.chezmoi.toml.tmpl` needs `chezmoi execute-template --init`.
-- `home/secrets/` is tracked but excluded from deployment by `home/.chezmoiignore.tmpl`. Templates pull secrets with `{{ include (joinPath .chezmoi.sourceDir "secrets/keys/<name>.txt.age") | decrypt | trim }}`; see `home/private_dot_config/private_borg/env.tmpl`.
+- `.chezmoiroot` 为 `home`，因此所有受管理源文件都位于 `home/` 下，而非仓库根目录。
+- Chezmoi 通过文件名编码目标名称与权限模式：
+  - `dot_` → 前导 `.`；`private_` → 无前缀且权限为 `0600`。示例：`home/private_dot_config/zsh/private_dot_zshrc.tmpl` → `~/.config/zsh/.zshrc`。
+  - `executable_` → 可执行位；`encrypted_…age` → 经 age 解密后的目标。示例：`home/private_dot_ssh/encrypted_private_id_ed25519.age` → `~/.ssh/id_ed25519`。
+  - `.tmpl` → Go 模板。用 `chezmoi execute-template` 渲染；`home/.chezmoi.toml.tmpl` 需要 `chezmoi execute-template --init`。
+- `home/secrets/` 受版本管理，但被 `home/.chezmoiignore.tmpl` 排除在部署之外。模板通过 `{{ include (joinPath .chezmoi.sourceDir "secrets/keys/<name>.txt.age") | decrypt | trim }}` 取用密钥；参见 `home/private_dot_config/private_borg/env.tmpl`。
+- `home/.chezmoitemplates/` 存放跨平台共享的配置内容，**不会被部署**。目标侧只放一行 `{{- template "<name>" . -}}` 的薄包装，据此让同一份内容落到各平台的原生路径。
 
-## Editing and verification
+## 编辑与验证
 
-- Edit the `home/...` source, then deploy with `chezmoi apply <absolute-target>`. Do not edit `~/.config/...` directly: changes are overwritten and untracked. To import a live edit instead, use `chezmoi re-add <target>`.
-- `chezmoi status` is the fast drift check; `chezmoi verify` exits non-zero when the destination differs.
-- Do **not** run `chezmoi diff` or `chezmoi apply --dry-run` unattended. `home/.chezmoi.toml.tmpl` sets `diff.command = "nvim"`, so both launch interactive nvim and hang. Use `chezmoi diff --use-builtin-diff` for a text diff. `chezmoi edit` is also interactive.
-- There is no build, test, lint, or CI suite. Validate changes with:
-  - `zsh -n <file>` for zsh scripts/functions
-  - `python3 -m py_compile <file>` for the Python script
-  - `chezmoi execute-template < file.tmpl` for templates
-- Commits use the observed `[component] lowercase description` style, e.g. `[alias] add opencode alias`.
+- 编辑 `home/...` 下的源文件，然后用 `chezmoi apply <绝对目标路径>` 部署。不要直接编辑 `~/.config/...`：改动会被覆盖，且不受版本管理。若要把线上改动导入回来，改用 `chezmoi re-add <target>`。
+- `chezmoi status` 是快速的漂移检查；当目标文件与源不一致时，`chezmoi verify` 会以非零状态退出。
+- **不要**在无人值守的情况下运行 `chezmoi diff` 或 `chezmoi apply --dry-run`。`home/.chezmoi.toml.tmpl` 设置了 `diff.command = "nvim"`，两者都会启动交互式 nvim 并卡住。查看文本 diff 请用 `chezmoi diff --use-builtin-diff`。`chezmoi edit` 同样是交互式的。
+- 没有 build、test、lint 或 CI 流程。用以下方式验证改动：
+  - zsh 脚本/函数：`zsh -n <file>`
+  - POSIX sh 脚本：`sh -n <file>`
+  - Python 脚本：`python3 -m py_compile <file>`
+  - 模板：`chezmoi execute-template < file.tmpl`
+- 提交信息沿用现有的 `[component] 小写描述` 风格，例如 `[alias] add opencode alias`。
 
-## Secrets and apply side effects
+## 密钥与 apply 副作用
 
-- Encryption is **age**, not GPG; the README's “GPG passphrase” wording is stale. The age recipient is hardcoded in `home/.chezmoi.toml.tmpl` and `czm_encryptier`.
-- The age identity is `~/.config/chezmoi/key.txt`, decrypted from `home/secrets/keys/key.txt.age` by `home/.chezmoiscripts/run_onchange_before_decrypt-private-key.sh.tmpl` on first apply. A fresh machine prompts for the passphrase.
-- Interactive zsh helpers: `czm_encryptier <key_name> <key_text>` writes `secrets/keys/<key_name>.txt.age` and copies a ready-to-paste include snippet; `czm_decryptier <key_name>` decrypts.
-- The `run_onchange_*` apply scripts re-run only when their contents change. On a fresh machine this includes downloading a Kitty icon via `curl`, so applying needs network.
-- `secrets/keys/*.age` are intentionally committed encrypted. Never commit plaintext secrets.
+- 加密使用 **age**，不是 GPG；README 中的“GPG passphrase”措辞已过时。age recipient 硬编码在 `home/.chezmoi.toml.tmpl` 和 `czm_encryptier` 中。
+- age identity 是 `~/.config/chezmoi/key.txt`，首次 apply 时由 `home/.chezmoiscripts/run_onchange_before_decrypt-private-key.sh.tmpl` 从 `home/secrets/keys/key.txt.age` 解密得到。全新机器上会提示输入 passphrase。
+- 交互式 zsh 辅助函数：`czm_encryptier <key_name> <key_text>` 写入 `secrets/keys/<key_name>.txt.age`，并复制一段可直接粘贴的 include 片段；`czm_decryptier <key_name>` 负责解密。
+- `run_onchange_*` 这类 apply 脚本仅在其内容变化时重新运行。在全新机器上，其中包含通过 `curl` 下载 Kitty 图标，因此 apply 需要联网。
+- `secrets/keys/*.age` 是有意以加密形式提交的。绝不要提交明文密钥。
 
-## Environment quirks
+## 平台差异（Linux / 原生 Windows）
 
-- `~/.zshenv` only sets `ZDOTDIR=$HOME/.config/zsh`. Shell setup then comes from `~/.config/zsh/.zshenv`, `env.zsh`, `alias.zsh`, and the `.zshrc` template. Add aliases to `alias.zsh`; use the `chezmoi_edit` helper for managed config edits.
-- `env.zsh` sets `NVIM_APPNAME=lazyvim`, so plain `nvim` loads `~/.config/lazyvim`, not this repo's NvChad config at `~/.config/nvim`. Test it with `NVIM_APPNAME=nvim nvim` (or unset `NVIM_APPNAME`).
-- systemd user units under `home/private_dot_config/systemd/user/` are deployed but not enabled. After changing them run `systemctl --user daemon-reload` and `systemctl --user enable --now <unit>`.
-- Despite their names, `auto_commit.zsh` and `auto_publish.zsh` automate the external `~/Documents/wikis/WikiSpace` repo, not these dotfiles. They require tiddlywiki, rclone, fd, and rg.
-- Absolute `/home/uzvg` paths appear in systemd units and WikiSpace scripts; this repo is tailored to this machine/user and is not portable as-is.
-- Global `core.hooksPath` points to `~/.config/git/hooks`. Its `pre-push` is a dispatcher that only acts on TiddlyWiki repos (`.tiddlywiki`) or when `.git/hooks/pre-push` exists; dotfiles pushes get no special checks.
+仓库同时支持 Linux 与**原生 Windows**（非 WSL），靠两个机制区分：
+
+1. **`.chezmoiignore.tmpl` 按 OS 过滤**。模式匹配的是**目标路径**（`.config/zsh`），不是源文件名；忽略目录会连同子文件一起忽略。忽略 `.chezmoiscripts/` 下的脚本必须写全前缀（`.chezmoiscripts/foo.sh`），只写文件名无效。
+   - `{{ if ne .chezmoi.os "linux" }}`：zsh、systemd、kitty、ghostty、alacritty、btop、mpd、rmpc、dae、ibus、borg、zellij、scripts、fontconfig、git/hooks、`kitty.desktop`、`pull_kitty_icon.sh`。
+   - `{{ if ne .chezmoi.os "windows" }}`：`AppData`、`.taskrc`。
+2. **`.chezmoitemplates` 共享内容 + 每平台薄包装**，对应 chezmoi 文档 "Handle different file locations on different systems with the same contents"。
+
+目标路径映射（`%APPDATA%` = `%USERPROFILE%\AppData\Roaming`，而 chezmoi 在 Windows 上的目标根就是 `%USERPROFILE%`）：
+
+| 内容 | Linux | Windows |
+|---|---|---|
+| yazi / lazygit / fastfetch / superfile / elio | `.config/<app>/` | `AppData/Roaming/<app>/` |
+| taskwarrior | `.config/task/taskrc` | `.taskrc` |
+| rclone | `.config/rclone/rclone.conf` | `AppData/Roaming/rclone/rclone.conf` |
+| aliyunpan | `.config/aliyunpan/config/` | `AppData/Roaming/aliyunpan/` |
+
+- 加密的 rclone / aliyunpan 只保留一份密文（`.chezmoitemplates/*.age`），包装模板用 `{{ (include ".chezmoitemplates/<name>.age") | decrypt }}` 解密，避免两份密文漂移。
+- 内容层面的平台差异也可用模板条件表达，例如 `fastfetch-config.jsonc` 的 `logo.source` 按 `.chezmoi.os` 切换。
+- `git/config.tmpl` 在非 Linux 上不写 `hooksPath`，credential helper 去掉 `/usr/bin/` 前缀。
+- key 引导脚本 `run_onchange_before_decrypt-private-key.sh.tmpl` 是 POSIX `sh`（`home="${HOME:-${USERPROFILE:-}}"`），Windows 上依赖 Git for Windows 提供的 `sh`；同时仍需手动安装外部 `age`（`encryption = "age"` 且未启用 builtin）。
+- 走路径映射而非 symlink/junction，因此 Windows 上不需要开发者模式；但若 `%APPDATA%\...` 已存在真实目录，首次 apply 会报冲突，需先移走。
+- 这些配置在 Windows 上读取的字体/编辑器/主题包仍需单独安装，仓库只负责文件落位。
+
+验证：
+
+```bash
+chezmoi managed --include files | wc -l     # Linux 应为 93
+chezmoi ignored                             # 应包含 AppData、.taskrc、secrets
+```
+
+Windows 分支可在 Linux 上模拟：把源树复制到临时目录，将 `.chezmoiignore.tmpl` 里两个平台块中的 `ne` 都改成 `eq`，再跑 `chezmoi -S <副本>/home managed --include files`（应为 23 个）。
+
+## 环境相关注意事项
+
+- `~/.zshenv` 仅设置 `ZDOTDIR=$HOME/.config/zsh`。Shell 配置随后来自 `~/.config/zsh/.zshenv`、`env.zsh`、`alias.zsh` 以及 `.zshrc` 模板。别名添加到 `alias.zsh`；编辑受管理的配置请用 `chezmoi_edit` 辅助函数。
+- `env.zsh` 设置了 `NVIM_APPNAME=lazyvim`，因此直接运行 `nvim` 加载的是 `~/.config/lazyvim`，而不是本仓库位于 `~/.config/nvim` 的 NvChad 配置。测试时用 `NVIM_APPNAME=nvim nvim`（或 unset `NVIM_APPNAME`）。
+- `home/private_dot_config/systemd/user/` 下的 systemd 用户单元会被部署，但不会被启用。修改后需运行 `systemctl --user daemon-reload` 和 `systemctl --user enable --now <unit>`。
+- 尽管名字如此，`auto_commit.zsh` 和 `auto_publish.zsh` 自动化的是外部仓库 `~/Documents/wikis/WikiSpace`，而非这些 dotfiles。它们依赖 tiddlywiki、rclone、fd 和 rg。
+- systemd 单元和 WikiSpace 脚本中出现了绝对路径 `/home/uzvg`；本仓库是针对这台机器/该用户定制的，不能原样移植。
+- 全局 `core.hooksPath` 指向 `~/.config/git/hooks`，且只在 Linux 上写入（Windows 既不部署 hooks，也不写该键）。其 `pre-push` 是一个分发器，只对 TiddlyWiki 仓库（`.tiddlywiki`）生效，或当 `.git/hooks/pre-push` 存在时才生效；dotfiles 的 push 不会做任何特殊检查。
