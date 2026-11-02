@@ -1,0 +1,1 @@
+{{ (include ".chezmoitemplates/aliyunpan_config.json.age") | decrypt }}
