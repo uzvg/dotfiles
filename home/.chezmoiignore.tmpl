@@ -6,3 +6,44 @@ secrets/keys/*
 
 # Ignore external vscode setting file
 # origin_settings.json
+
+# ── Linux 专属：非 Linux 平台不部署 ──────────────────────────────────
+{{ if ne .chezmoi.os "linux" }}
+.zshenv
+.config/zsh
+.config/systemd
+.config/environment.d
+.config/fontconfig
+.config/kitty
+.config/ghostty
+.config/alacritty
+.config/btop
+.config/mpd
+.config/rmpc
+.config/dae
+.config/ibus
+.config/borg
+.config/zellij
+.config/scripts
+.config/git/hooks
+.local/share/applications
+.chezmoiscripts/pull_kitty_icon.sh
+{{ end }}
+
+# ── Windows 专属：非 Windows 平台不部署 ─────────────────────────────
+{{ if ne .chezmoi.os "windows" }}
+AppData
+.taskrc
+{{ end }}
+
+# ── 平台专属的 Linux 路径（Windows 走 AppData/ 或 ~/.taskrc）──────────
+{{ if ne .chezmoi.os "linux" }}
+.config/aliyunpan
+.config/elio
+.config/fastfetch
+.config/lazygit
+.config/rclone
+.config/superfile
+.config/task
+.config/yazi
+{{ end }}

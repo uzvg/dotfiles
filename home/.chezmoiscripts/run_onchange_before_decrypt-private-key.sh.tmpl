@@ -1,12 +1,14 @@
-#!/usr/bin/env zsh
+#!/bin/sh
 
-# 脚本来自于官方示例：https://www.chezmoi.io/user-guide/frequently-asked-questions/encryption/#how-do-i-configure-chezmoi-to-encrypt-files-but-only-request-a-passphrase-the-first-time-chezmoi-init-is-run
+# 脚本来自官方示例：https://www.chezmoi.io/user-guide/frequently-asked-questions/encryption/#how-do-i-configure-chezmoi-to-encrypt-files-but-only-request-a-passphrase-the-first-time-chezmoi-init-is-run
+# 保持 POSIX sh 语法，以便原生 Windows 上也能通过 Git for Windows 自带的 sh 运行。
 
-typeset -r decrypt_key="$HOME/.config/chezmoi/key.txt"
-typeset -r encrypt_key="{{ .chezmoi.sourceDir }}/secrets/keys/key.txt.age"
+home="${HOME:-${USERPROFILE:-}}"
+decrypt_key="$home/.config/chezmoi/key.txt"
+encrypt_key="{{ .chezmoi.sourceDir }}/secrets/keys/key.txt.age"
 
-if [[ ! -f ${decrypt_key} ]]; then
-    mkdir -p ${decrypt_key:h}
-    chezmoi age decrypt --output ${decrypt_key} --passphrase ${encrypt_key}
-    chmod 600 ${decrypt_key}
+if [ ! -f "$decrypt_key" ]; then
+    mkdir -p "$(dirname "$decrypt_key")"
+    chezmoi age decrypt --output "$decrypt_key" --passphrase "$encrypt_key"
+    chmod 600 "$decrypt_key"
 fi
