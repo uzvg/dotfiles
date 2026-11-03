@@ -67,6 +67,9 @@ if (_HasCommand lsd) {
     function ll { ls -lha @args }
 }
 
+# Get-Command is PowerShell's which.
+Set-Alias which Get-Command
+
 if (_HasCommand lazygit) { Set-Alias g lazygit }
 
 if (_HasCommand bat) {
