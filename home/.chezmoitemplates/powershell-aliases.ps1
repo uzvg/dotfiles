@@ -139,12 +139,6 @@ if (_HasCommand gdu_windows_amd64.exe) {
 }
 if (_HasCommand opencode) { Set-Alias oc opencode }
 
-if (_HasCommand rclone) {
-    function wpsync {
-        rclone sync "$HOME\Pictures\Wallpapers" OneDrive:Wallpapers --progress @args
-    }
-}
-
 # ---------------------------------------------------------------
 # Neovim per-app configs
 # ---------------------------------------------------------------

@@ -232,9 +232,6 @@ alias btshome='cd "$HOME/.var/app/com.usebottles.bottles/data/bottles/bottles/wi
 # Replace sudo with sudo-rs
 # alias sudo="sudo-rs"
 
-# sync wallpapers
-alias wpsync='rclone sync "$HOME/Pictures/Wallpapers" OneDrive:Wallpapers --progress'
-
 # CloudServer
 # alias rmsv="ssh -i $HOME/.ssh/id_rsa -l $CloudUser $CloudServer"
 

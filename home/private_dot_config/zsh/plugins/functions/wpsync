@@ -1,0 +1,56 @@
+# vim:et sts=2 sw=2 ft=zsh
+#
+# wpsync — 双向同步壁纸
+#
+# 同步策略
+#   - 用 rclone bisync 在 ~/Pictures/Wallpapers（Path1，本地）和
+#     OneDrive:Wallpapers（Path2，远端）之间做双向同步：新增、修改、删除
+#     都会传播到另一侧。
+#   - 首次运行、~/.cache/rclone/bisync 被清空、或上次中断（rclone 退出码 7）
+#     时，自动加 --resync 重建基线。resync 是双向并集，冲突时默认以本地为准，
+#     不会删掉只存在于远端的文件。
+#   - 同步状态由 rclone 存在 ~/.cache/rclone/bisync/；同一对路径不能并发运行，
+#     也不能在多台机器上同时用同一个远端目录跑 bisync。
+#
+# 备份策略
+#   - 只备份“远端删除或覆盖导致本地文件即将被删”的情况（--backup-dir1）。
+#   - 备份发生在删除之前，按相对于 ~/Pictures/Wallpapers 的路径存放。
+#   - 反方向（本地删除 → 远端删除）不经过这里，文件进入 OneDrive 自带回收站
+#     （个人版保留 30 天），rclone 侧没有额外备份。
+#   - 同一相对路径反复被删除时，新备份会覆盖旧备份（rclone 默认不加后缀）。
+#
+# 备份位置
+#   ${XDG_DATA_HOME:-$HOME/.local/share}/wpsync-trash/
+#   例如远端删掉 foo/bar.jpg，本地会保留为
+#   ~/.local/share/wpsync-trash/foo/bar.jpg。
+#   这是普通目录，不会被“清空回收站”清理，需要手动删除。
+
+function wpsync {
+  emulate -L zsh
+
+  (( ${+commands[rclone]} )) || { _zlog error "rclone 命令不存在"; return 1 }
+
+  local src="${HOME}/Pictures/Wallpapers"
+  local dst="OneDrive:Wallpapers"
+  # Path1（本地）被远端改动波及时的备份目录，保留相对路径结构
+  local bdir="${XDG_DATA_HOME:-${HOME}/.local/share}/wpsync-trash"
+  [[ -d $src ]] || { _zlog error "壁纸目录不存在：${src}"; return 1 }
+
+  _zlog info "双向同步：${src} ↔ ${dst}"
+  rclone bisync "$src" "$dst" --backup-dir1 "$bdir" --progress
+  local rc=$?
+
+  # 退出码 7：缺少上次的 listing 或上次中断，rclone 要求先重建基线
+  if (( rc == 7 )); then
+    _zlog warn "bisync 状态缺失，使用 --resync 重建基线"
+    rclone bisync "$src" "$dst" --backup-dir1 "$bdir" --resync --progress
+    rc=$?
+  fi
+
+  if (( rc == 0 )); then
+    _zlog success "壁纸同步完成"
+  else
+    _zlog error "壁纸同步失败（rclone exit ${rc}）"
+  fi
+  return $rc
+}
