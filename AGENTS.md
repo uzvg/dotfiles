@@ -28,7 +28,7 @@
 
 - 加密使用 **age**，不是 GPG；README 中的“GPG passphrase”措辞已过时。age recipient 硬编码在 `home/.chezmoi.toml.tmpl` 和 `czm_encryptier` 中。
 - age identity 是 `~/.config/chezmoi/key.txt`，首次 apply 时由 `home/.chezmoiscripts/run_onchange_before_decrypt-private-key.{sh,ps1}.tmpl`（按平台二选一）从 `home/secrets/keys/key.txt.age` 解密得到。全新机器上会提示输入 passphrase。
-- 交互式 zsh 辅助函数：`czm_encryptier <key_name> <key_text>` 写入 `secrets/keys/<key_name>.txt.age`，并复制一段可直接粘贴的 include 片段；`czm_decryptier <key_name>` 负责解密。
+- 交互式 zsh 辅助函数：`czm_encryptier <key_name> <key_text|file>` 写入 `secrets/keys/<key_name>.txt.age`，并复制一段可直接粘贴的 include 片段；`czm_decryptier <key_name>` 负责解密。
 - `run_onchange_*` 这类 apply 脚本仅在其内容变化时重新运行。在全新机器上，其中包含通过 `curl` 下载 Kitty 图标，因此 apply 需要联网。
 - `secrets/keys/*.age` 是有意以加密形式提交的。绝不要提交明文密钥。
 
