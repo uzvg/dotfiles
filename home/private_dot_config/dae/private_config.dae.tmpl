@@ -67,8 +67,9 @@ dns {
 # 订阅地址
 subscription {
     # mitce: '{{ include (joinPath .chezmoi.sourceDir "secrets/keys/mitce.txt.age") | decrypt | trim }}'
-    japan: '{{ include (joinPath .chezmoi.sourceDir "secrets/keys/japan.txt.age") | decrypt | trim }}'
-    # xingjiabi: '{{ include (joinPath .chezmoi.sourceDir "secrets/keys/xingjiabi.txt.age") | decrypt | trim }}'
+    # japan: '{{ include (joinPath .chezmoi.sourceDir "secrets/keys/japan.txt.age") | decrypt | trim }}'
+    chuixueyun: {{ include (joinPath .chezmoi.sourceDir "secrets/keys/chuixueyun.txt.age") | decrypt | trim | quote}}
+    xingjiabi: {{ include (joinPath .chezmoi.sourceDir "secrets/keys/xingjiabi.txt.age") | decrypt | trim | quote}}
     # new_google_v2: '{{ include (joinPath .chezmoi.sourceDir "secrets/keys/new_google_v2.txt.age") | decrypt | trim }}'
 }
 
