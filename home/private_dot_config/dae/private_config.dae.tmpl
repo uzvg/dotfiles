@@ -4,6 +4,9 @@
 global {
     log_level: info
 
+    # 延迟差在此范围内不切换节点，避免在毫秒级抖动上来回抢选
+    check_tolerance: 50ms
+
     # 只代理本机流量；需要代理局域网设备时再设 lan_interface
     wan_interface: auto
     enable_local_tcp_fast_redirect: true
@@ -57,21 +60,23 @@ group {
     proxy {
         # 只选日本节点
         filter: subtag(chuixueyun) && name(keyword: '日本')
-        policy: min_moving_avg
+        # min_avg10 取最近 10 次检测的平均，比 min_moving_avg 更抗单次抖动
+        policy: min_avg10
     }
 }
 
 routing {
+    # DNS 规则必须先于 pname 规则：NetworkManager 的连通性探测会解析
+    # ping.archlinux.org，走 cfdns 拨 1.1.1.1:443；若被判为直连必然超时
+    dip(1.1.1.1) && dport(443) -> proxy
+    dip(223.5.5.5) && dport(53) -> must_direct
+
     # NetworkManager 自身流量直连
     pname(NetworkManager) -> direct
 
     # 组播/广播、私网直连
     dip(224.0.0.0/3, 'ff00::/8') -> must_direct
     dip(geoip:private) -> direct
-
-    # DNS：bootstrap 直连，Cloudflare DoH 必须走代理
-    dip(223.5.5.5) && dport(53) -> must_direct
-    dip(1.1.1.1) && dport(443) -> proxy
 
     # 国内直连
     dip(geoip:cn) -> direct
