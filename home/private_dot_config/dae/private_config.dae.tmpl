@@ -1,124 +1,85 @@
-# 参考链接：
-    # https://blog.hellowood.dev/posts/dae-proxy-configuration/
-    # https://github.com/daeuniverse/dae/blob/main/example.dae
+# dae 配置
+# 文档：https://github.com/daeuniverse/dae/tree/main/docs/zh/configuration
 
-# 全局配置
 global {
-    # Log level: error, warn, info, debug, trace.
-    # log_level: info
-    log_level: debug
-    # log_level: trace
-    # 代理流量的 LAN 接口
-    # lan_interface: wlan0
-    
-    # 代理 WAN 接口，代理本机流量
+    log_level: info
+
+    # 只代理本机流量；需要代理局域网设备时再设 lan_interface
     wan_interface: auto
     enable_local_tcp_fast_redirect: true
 
-    # 代理模式：ip/domain/domain+/domain++
+    # 按域名分流；DNS 必须经过 dae
     dial_mode: domain
-    # allow_insecure: true
+
+    # 仅用于启动阶段解析 DoH 域名和节点域名，不参与日常查询
+    bootstrap_resolver: '223.5.5.5:53'
 }
 
-# DNS 配置
-# See https://github.com/daeuniverse/dae/blob/main/docs/en/configuration/dns.md for full examples.
-
 dns {
-    # 上游 DNS
-    # IPv6 在中国环境更容易污染 / 异常，优先选ipv4
+    # 只返回 IPv4，避免应用走 IPv6 绕过代理
     ipversion_prefer: 4
+
     upstream {
-        # 阿里云 DNS，用于国内域名查询
-        alidns: 'udp://223.5.5.5:53'
-        # alidns: 'https://dns.alidns.com/dns-query'
-        # alidns: 'h3://dns.alidns.com:443/dns-query'
-
-        # CloudFlare DNS
-        cfdns: 'tcp+udp://1.1.1.1:53'
-        # cfdns: 'https://cloudflare-dns.com/dns-query'
-        # cfdns: 'h3://cloudflare-dns.com:443/dns-query'
-
-        # google DNS
-        # googledns: 'tcp+udp://8.8.8.8:53'
-        # googledns: 'https://dns.google/dns-query'
-        # googledns: 'h3://dns.google:443/dns-query'
+        # 国内域名：阿里 DoH，直连
+        alidns: 'https://dns.alidns.com/dns-query'
+        # 国外域名：Cloudflare DoH，走代理
+        cfdns: 'https://1.1.1.1/dns-query'
     }
 
-    # DNS 查询规则
     routing {
         request {
-            # qtype(https, svcb) -> reject
             qname(geosite:category-ads-all) -> reject
+            # 局域网主机名交给路由器
+            qname(suffix: lan) -> asis
             qname(geosite:cn) -> alidns
+            # dae 自己拉订阅/解析节点域名时直连，避免启动死锁
+            sub(any) -> alidns
+            subnode(any) -> alidns
             fallback: cfdns
         }
 
         response {
-            # Trusted upstream. Always accept its result.
+            # Cloudflare 的结果可信
             upstream(cfdns) -> accept
-            # Possibly polluted, re-lookup using cfdns.
+            qname(suffix: lan) -> accept
+            # 非国内域名返回私网 IP，回查 cfdns 防污染
             ip(geoip:private) && !qname(geosite:cn) -> cfdns
-            # fallback is also called default.
             fallback: accept
         }
     }
 }
 
-# 订阅地址
 subscription {
-    # mitce: '{{ include (joinPath .chezmoi.sourceDir "secrets/keys/mitce.txt.age") | decrypt | trim }}'
-    # japan: '{{ include (joinPath .chezmoi.sourceDir "secrets/keys/japan.txt.age") | decrypt | trim }}'
     chuixueyun: {{ include (joinPath .chezmoi.sourceDir "secrets/keys/chuixueyun.txt.age") | decrypt | trim | quote}}
-    xingjiabi: {{ include (joinPath .chezmoi.sourceDir "secrets/keys/xingjiabi.txt.age") | decrypt | trim | quote}}
-    # new_google_v2: '{{ include (joinPath .chezmoi.sourceDir "secrets/keys/new_google_v2.txt.age") | decrypt | trim }}'
 }
 
-# 节点分组
 group {
     proxy {
-        # filter: subtag(mitce) && name(keyword: 'JP')
-        # filter: subtag(vpncc) && name(keyword: 'JP')
-        # filter: subtag(new_google_v2) && name(keyword: '日本')
-        # filter: subtag(xingjiabi) && name(keyword: '日本')
-        filter: subtag(japan)
+        # 只选日本节点
+        filter: subtag(chuixueyun) && name(keyword: '日本')
         policy: min_moving_avg
-        # policy: min_avg10
     }
 }
 
-# 路由配置
-# https://github.com/daeuniverse/dae/blob/main/docs/zh/configuration/routing.md
 routing {
-    pname('NetworkManager','systemd-resolved','dnsmasq') -> must_direct
+    # NetworkManager 自身流量直连
+    pname(NetworkManager) -> direct
 
-    # DNS 地址或域名，强制直连
+    # 组播/广播、私网直连
     dip(224.0.0.0/3, 'ff00::/8') -> must_direct
     dip(geoip:private) -> direct
+
+    # DNS：bootstrap 直连，Cloudflare DoH 必须走代理
     dip(223.5.5.5) && dport(53) -> must_direct
-    # dip(1.1.1.1) && dport(53) -> proxy
-    # dip(8.8.8.8) && dport(53) -> proxy
- 
-    # 目标 IP 多播、广播地址，直连
+    dip(1.1.1.1) && dport(443) -> proxy
+
+    # 国内直连
     dip(geoip:cn) -> direct
     domain(geosite:cn) -> direct
+    domain(suffix: alidns.com) -> direct
+    # 自定义站点；不再使用可删
     domain(suffix: kukuw.com) -> direct
 
-    # 域名规则：
-    # domain(suffix: v2raya.org) -> my_group # 相当于 domain(v2raya.org) -> my_group 
-    # domain(full: dns.google) -> my_group
-    # domain(keyword: facebook) -> my_group
-    # domain(regex: '\.goo.*\.com$') -> my_group
-    # domain(geosite:category-ads) -> block
-    # domain(geosite:cn)->direct
-
-    domain(geosite: google, geosite: github, geosite: anthropic) -> proxy
-    domain(geosite:archlinux, geosite:flatpak, geosite: docker) -> proxy
-    domain(suffix: visualstudio.com) -> proxy
-    domain(suffix: wallhaven.cc) -> proxy
-    domain(suffix: unsplash.com) -> proxy
-    # domain(suffix: uzvg.site) -> proxy
-    domain(suffix: mongodb.com) -> proxy
-    domain(geosite:geolocation-!cn) -> proxy
-    # 未命中上面的规则的走 proxy 代理
+    # 其余全部走代理（含 Cloudflare DoH）
     fallback: proxy
 }
