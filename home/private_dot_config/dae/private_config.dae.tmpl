@@ -54,7 +54,6 @@ dns {
 
 subscription {
     chuixueyun: {{ include (joinPath .chezmoi.sourceDir "secrets/keys/chuixueyun.txt.age") | decrypt | trim | quote}}
-    xingjiabi: {{ include (joinPath .chezmoi.sourceDir "secrets/keys/xingjiabi.txt.age") | decrypt | trim | quote}}
     mitce: {{ include (joinPath .chezmoi.sourceDir "secrets/keys/mitce.txt.age") | decrypt | trim | quote}}
 }
 
