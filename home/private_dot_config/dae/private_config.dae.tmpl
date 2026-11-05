@@ -14,6 +14,9 @@ global {
     # 按域名分流；DNS 必须经过 dae
     dial_mode: domain
 
+    # 模拟 Chrome 的 TLS ClientHello，降低 TLS 指纹干扰
+    tls_implementation: utls
+
     # 仅用于启动阶段解析 DoH 域名和节点域名，不参与日常查询
     bootstrap_resolver: '223.5.5.5:53'
 }
@@ -32,12 +35,19 @@ dns {
     routing {
         request {
             qname(geosite:category-ads-all) -> reject
+            # 禁掉 HTTPS/SVCB 记录，避免 ECH 把 SNI 藏起来导致分流失效
+            qtype(https, svcb) -> reject
             # 局域网主机名交给路由器
             qname(suffix: lan) -> asis
-            qname(geosite:cn) -> alidns
             # dae 自己拉订阅/解析节点域名时直连，避免启动死锁
             sub(any) -> alidns
             subnode(any) -> alidns
+            # Google 中国相关域名走远端解析，routing 里再送 proxy_hk
+            qname(suffix: googleapis.cn, suffix: xn--ngstr-lra8j.com) -> cfdns
+            # 国内域名、国内特供服务和私有域名走本地 DNS
+            qname(geosite:cn, geosite:microsoft@cn, geosite:apple@cn, geosite:private) -> alidns
+            # AUR 直连解析，不依赖时好时坏的代理
+            qname(suffix: aur.archlinux.org) -> alidns
             fallback: cfdns
         }
 
@@ -45,6 +55,8 @@ dns {
             # Cloudflare 的结果可信
             upstream(cfdns) -> accept
             qname(suffix: lan) -> accept
+            # 私有域名结果可信，避免被下面的规则送去 cfdns 重查
+            qname(geosite:private) -> accept
             # 非国内域名返回私网 IP，回查 cfdns 防污染
             ip(geoip:private) && !qname(geosite:cn) -> cfdns
             fallback: accept
@@ -58,10 +70,24 @@ subscription {
 }
 
 group {
+    proxy_us {
+        filter: name(regex: '(?i)(^|[^a-z])(us|usa|united states)([^a-z]|$)|美国|🇺🇸') && !name(regex: '(?i)剩余|流量|套餐|到期|过期|重置|官网|订阅|expire|traffic|直连')
+        policy: min_avg10
+    }
+
+    proxy_jp {
+        filter: name(regex: '(?i)(^|[^a-z])(jp|japan)([^a-z]|$)|日本|🇯🇵') && !name(regex: '(?i)剩余|流量|套餐|到期|过期|重置|官网|订阅|expire|traffic|直连')
+        policy: min_avg10
+    }
+
+    proxy_hk {
+        filter: name(regex: '(?i)(^|[^a-z])(hk|hkg|hong ?kong)([^a-z]|$)|香港|🇭🇰') && !name(regex: '(?i)剩余|流量|套餐|到期|过期|重置|官网|订阅|expire|traffic|直连')
+        policy: min_avg10
+    }
+
+    # 兜底：所有真实节点（相当于参考配置的 Final）
     proxy {
-        # 只选日本节点
-        filter: name(regex: '(?i)jp|japan|日本')
-        # min_avg10 取最近 10 次检测的平均，比 min_moving_avg 更抗单次抖动
+        filter: !name(regex: '(?i)剩余|流量|套餐|到期|过期|重置|官网|订阅|expire|traffic|直连')
         policy: min_avg10
     }
 }
@@ -75,9 +101,15 @@ routing {
     # NetworkManager 自身流量直连
     pname(NetworkManager) -> direct
 
+    # 阻止 DoT 绕过 dae DNS
+    dport(853) -> block
+
     # 组播/广播、私网直连
     dip(224.0.0.0/3, 'ff00::/8') -> must_direct
     dip(geoip:private) -> direct
+
+    # 必须抢在 geosite:cn 前：Google 中国相关域名仍走代理
+    domain(suffix: googleapis.cn, suffix: xn--ngstr-lra8j.com) -> proxy_hk
 
     # 国内直连
     dip(geoip:cn) -> direct
@@ -85,7 +117,31 @@ routing {
     domain(suffix: alidns.com) -> direct
     # 自定义站点；不再使用可删
     domain(suffix: kukuw.com) -> direct
+    # AUR 可直连，代理抖动时不跟着断
+    domain(suffix: aur.archlinux.org) -> direct
 
-    # 其余全部走代理（含 Cloudflare DoH）
+    # 国内特供服务直连，必须放在全球 geosite 前
+    domain(geosite:microsoft@cn) -> direct
+    domain(geosite:apple@cn) -> direct
+    domain(geosite:steam@cn) -> direct
+
+    # 按服务选国别
+    domain(suffix: withgoogle.com, suffix: notebooklm.google, geosite:category-ai-!cn) -> proxy_us
+    domain(geosite:youtube) -> proxy_hk
+    domain(geosite:google) -> proxy_hk
+    domain(geosite:github) -> proxy_jp
+    domain(geosite:onedrive) -> proxy_jp
+    domain(geosite:microsoft) -> proxy_jp
+    domain(geosite:apple) -> proxy_hk
+    domain(geosite:telegram) -> proxy_hk
+    domain(geosite:tiktok) -> proxy_us
+    domain(geosite:netflix) -> proxy_us
+    domain(geosite:paypal) -> proxy_us
+    # 交易所对美区 IP 限制较多，走香港
+    domain(geosite:binance, geosite:okx, geosite:category-cryptocurrency) -> proxy_hk
+    domain(geosite:steam) -> proxy_hk
+
+    # 其余国外域名走香港；未知域名兜底全部节点
+    domain(geosite:geolocation-!cn) -> proxy_hk
     fallback: proxy
 }
