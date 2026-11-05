@@ -54,12 +54,14 @@ dns {
 
 subscription {
     chuixueyun: {{ include (joinPath .chezmoi.sourceDir "secrets/keys/chuixueyun.txt.age") | decrypt | trim | quote}}
+    xingjiabi: {{ include (joinPath .chezmoi.sourceDir "secrets/keys/xingjiabi.txt.age") | decrypt | trim | quote}}
+    mitce: {{ include (joinPath .chezmoi.sourceDir "secrets/keys/mitce.txt.age") | decrypt | trim | quote}}
 }
 
 group {
     proxy {
         # 只选日本节点
-        filter: subtag(chuixueyun) && name(keyword: '日本')
+        filter: name(regex: '(?i)jp|japan|日本')
         # min_avg10 取最近 10 次检测的平均，比 min_moving_avg 更抗单次抖动
         policy: min_avg10
     }
