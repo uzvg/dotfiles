@@ -92,20 +92,12 @@ ZVM_SYSTEM_CLIPBOARD_ENABLED=true
 # ==============================================
 # 在终端中启动系统代理2080/3067/7890
 # ==============================================
-# export http_proxy="http://127.0.0.1:2080"
-# export https_proxy="$http_proxy"
-# export all_proxy="socks5://127.0.0.1:2080"
-# export no_proxy="localhost,127.0.0.1,::1,.local"
-# export NO_PROXY="$no_proxy"
+export http_proxy="http://127.0.0.1:2080"
+export https_proxy="$http_proxy"
+export all_proxy="socks5://127.0.0.1:2080"
+export no_proxy="localhost,127.0.0.1,::1,.local"
+export NO_PROXY="$no_proxy"
 
-# export http_proxy="http://127.0.0.1:7890"
-# export https_proxy="http://127.0.0.1:7890"
-# export all_proxy="socks5://127.0.0.1:7890"
-#
-# export http_proxy="http://127.0.0.1:3067"
-# export https_proxy="http://127.0.0.1:3067"
-# export all_proxy="socks5://127.0.0.1:3067"
-#
 # ==============================================
 # 指定superfile/yazi 的运行时暂存路径
 # ==============================================
