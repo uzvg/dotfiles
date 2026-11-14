@@ -71,7 +71,7 @@ AppData
 | kitty / ghostty / alacritty | `~/.config/<app>` | 不部署 | Linux 专属 |
 | btop / mpd / rmpc / dae / ibus / borg / zellij / scripts / fontconfig | `~/.config/...` | 不部署 | Linux 专属 |
 | yazi | `~/.config/yazi` | `%APPDATA%\yazi` | 共享模板 + wrapper |
-| lazygit | `~/.config/lazygit` | `%APPDATA%\lazygit` | 共享模板 + wrapper |
+| lazygit | `~/.config/lazygit` | `%LOCALAPPDATA%\lazygit` | 共享模板 + wrapper（lazygit 用 `adrg/xdg`，Windows 配置目录是 Local 而非 Roaming） |
 | fastfetch | `~/.config/fastfetch` | `%APPDATA%\fastfetch` | 共享模板 + wrapper |
 | superfile | `~/.config/superfile` | `%APPDATA%\superfile` | 共享模板 + wrapper |
 | elio | `~/.config/elio` | `%APPDATA%\elio` | 共享模板 + wrapper |

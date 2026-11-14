@@ -46,11 +46,13 @@
 
 | 内容 | Linux | Windows |
 |---|---|---|
-| yazi / lazygit / fastfetch / superfile / elio | `.config/<app>/` | `AppData/Roaming/<app>/` |
+| yazi / fastfetch / superfile / elio | `.config/<app>/` | `AppData/Roaming/<app>/` |
+| lazygit | `.config/lazygit/` | `AppData/Local/lazygit/` |
 | taskwarrior | `.config/task/taskrc` | `.taskrc` |
 | rclone | `.config/rclone/rclone.conf` | `AppData/Roaming/rclone/rclone.conf` |
 | aliyunpan | `.config/aliyunpan/config/` | `AppData/Roaming/aliyunpan/` |
 
+- lazygit 在 Windows 上通过 `adrg/xdg` 读取配置目录，实际路径是 `%LOCALAPPDATA%\lazygit`（`lazygit -cd` 可确认），不是其他 XDG 应用使用的 `%APPDATA%`；部署到 Roaming 不会被读取。
 - 加密的 rclone / aliyunpan 只保留一份密文（`.chezmoitemplates/*.age`），包装模板用 `{{ (include ".chezmoitemplates/<name>.age") | decrypt }}` 解密，避免两份密文漂移。
 - 内容层面的平台差异也可用模板条件表达，例如 `fastfetch-config.jsonc` 的 `logo.source` 按 `.chezmoi.os` 切换。
 - `git/config.tmpl` 在非 Linux 上不写 `hooksPath`，credential helper 去掉 `/usr/bin/` 前缀。

@@ -143,7 +143,8 @@ chezmoi status -- "$target"   # 仅用于展示
 |---|---|---|
 | zsh | `~/.config/zsh` | 不部署 |
 | systemd / kitty / ghostty / alacritty / btop / mpd / rmpc / dae / ibus / borg / zellij / scripts / fontconfig | `~/.config/...` | 不部署 |
-| yazi / lazygit / fastfetch / superfile / elio | `~/.config/<app>/` | `%APPDATA%\<app>\` |
+| yazi / fastfetch / superfile / elio | `~/.config/<app>/` | `%APPDATA%\<app>\` |
+| lazygit | `~/.config/lazygit/` | `%LOCALAPPDATA%\lazygit\` |
 | taskwarrior | `~/.config/task/taskrc` | `~/.taskrc` |
 | rclone | `~/.config/rclone/rclone.conf` | `%APPDATA%\rclone\rclone.conf` |
 | aliyunpan | `~/.config/aliyunpan/config/` | `%APPDATA%\aliyunpan\` |
