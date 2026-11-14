@@ -23,6 +23,9 @@
 #   vcs.removed     = #F26D78
 
 gui:
+{{- if eq .chezmoi.os "windows" }}
+  language: 'en'
+{{- end }}
   theme:
     # ── Borders ────────────────────────────────────────────────────────────
     # Focused window border — accent gold
