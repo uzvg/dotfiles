@@ -1,0 +1,67 @@
+#!/usr/bin/env python3
+"""Rename wallpaperflare* files to wallpaperflare-<md5[:6]>.<ext> in the current directory."""
+
+import argparse
+import hashlib
+import re
+import sys
+from pathlib import Path
+
+PREFIX = "wallpaperflare"
+ALREADY = re.compile(rf"^{PREFIX}-[0-9a-f]{{6}}\.")
+CHUNK = 1 << 20
+
+
+def digest(path: Path, salt: int = 0) -> str:
+    h = hashlib.md5()
+    if salt:
+        h.update(f"{salt}:".encode())
+    with path.open("rb") as fh:
+        for chunk in iter(lambda: fh.read(CHUNK), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("-d", "--dir", default=".", help="directory to scan (default: current)")
+    ap.add_argument("--apply", action="store_true", help="rename for real (default: preview only)")
+    args = ap.parse_args()
+
+    root = Path(args.dir)
+    if not root.is_dir():
+        sys.exit(f"not a directory: {root}")
+
+    taken = {p.name for p in root.iterdir()}
+    sources = sorted(
+        p for p in root.iterdir()
+        if p.is_file() and p.name.startswith(PREFIX) and not ALREADY.match(p.name)
+    )
+
+    planned: list[tuple[Path, str]] = []
+    for src in sources:
+        salt = 0
+        while True:
+            name = f"{PREFIX}-{digest(src, salt)[:6]}{src.suffix}"
+            if name not in {n for _, n in planned}:
+                break
+            # shortcut: md5[:6] collisions get a salted re-hash so suffix stays 6 chars; widen to 8 hex digits once the collection grows large
+            salt += 1
+            if salt > 99:
+                sys.exit(f"no free name for {src.name}")
+        if name in taken:
+            print(f"skip {src.name}: {name} already exists", file=sys.stderr)
+            continue
+        planned.append((src, name))
+
+    for src, name in planned:
+        print(f"{src.name} -> {name}")
+        if args.apply:
+            src.rename(src.with_name(name))
+
+    print(f"{len(planned)} file(s) {'renamed' if args.apply else 'ready (dry run, use --apply)'}")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
