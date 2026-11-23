@@ -1,0 +1,27 @@
+# vim:et sts=2 sw=2 ft=zsh
+
+# 生成随机密码并打印到标准输出。
+# 用法: get-passwd [长度]，默认 24。
+# 结果保证同时包含大写、小写、数字和符号；要改字符集只改下面 chars 一行
+# （tr 的集合里 '-' 必须放末尾，否则会被当成范围）。
+
+emulate -L zsh
+setopt err_return no_unset pipe_fail
+
+local n=${1:-24}
+if [[ $n != <-> || $n -lt 4 ]]; then
+  print -u2 -r -- "get-passwd: 长度需为 >=4 的整数"
+  return 1
+fi
+
+local chars='A-Za-z0-9!@#%^&*()_=+-'
+local p
+while :; do
+  # 固定字节数读取，避免 tr 被 head 截断后收到 SIGPIPE（pipe_fail 下会中断函数）
+  p=$(LC_ALL=C head -c $(( n * 8 )) /dev/urandom | LC_ALL=C tr -dc "$chars")
+  (( ${#p} >= n )) || continue
+  p=${p[1,n]}
+  [[ $p == *[A-Z]* && $p == *[a-z]* && $p == *[0-9]* && $p == *[!0-9A-Za-z]* ]] && break
+done
+
+print -r -- "$p"
