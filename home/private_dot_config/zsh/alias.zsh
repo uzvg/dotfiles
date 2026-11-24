@@ -17,7 +17,7 @@ alias zdebug='time ZSH_DEBUGRC=1 zsh -i -c exit'
 alias df='duf'
 # alias du="dust -X Games"
 alias du='dust'
-# alias fd="fd -H -E Games -E ExtendDisk"
+alias fd="fd -H -E Games -E ExtendDisk"
 alias udd='update-desktop-database "$XDG_DATA_HOME/applications/"'
 alias gedit='gnome-text-editor'
 alias macc='macchina -t Helium'
@@ -250,6 +250,9 @@ alias goodbye='lolcat -a -s 60 --spread 5 <(toilet "Good Bye!" --font "bigmono9"
 
 # opencode
 alias oc="opencode"
+
+# gemini-cli: Node fetch ignores HTTP(S)_PROXY without NODE_USE_ENV_PROXY
+alias gemini='NODE_USE_ENV_PROXY=1 gemini'
 
 # Neovim per-app configs
 alias mm="NVIM_APPNAME=nvim-minimax nvim"
